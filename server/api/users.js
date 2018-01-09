@@ -10,14 +10,14 @@ router.get('/', (req, res, next) => {
     attributes: ['id', 'email', 'isAdmin', 'streetAddress', 'city', 'stateCode', 'zipCode', 'firstName', 'lastName']
   })
     .then(users => res.json(users))
-    .catch(err => console.error(err))
+    .catch(next)
 })
 
 router.get('/:id', (req, res, next) => {
   let id = req.params.id
   User.findById(id)
   .then(user => res.json(user))
-  .catch(err => console.error(err))
+  .catch(next)
 })
 
 router.post('/', (req, res, next) => {
@@ -31,7 +31,7 @@ router.post('/', (req, res, next) => {
   })
   .spread(user => user)
   .then(user => res.json(user))
-  .catch(err => console.error(err))
+  .catch(next)
 })
 
 router.put('/:id', (req, res, next) => {
@@ -40,7 +40,8 @@ router.put('/:id', (req, res, next) => {
   .then(user => {
     user.update(req.body)
   })
-  .catch(err => console.error(err))
+  .then(() => res.sendStatus(200))
+  .catch(next)
 })
 
 router.delete('/:id', (req, res, next) => {
@@ -49,5 +50,5 @@ router.delete('/:id', (req, res, next) => {
     where: { id }
   })
   .then(() => res.sendStatus(204))
-  .catch(err => console.error(err))
+  .catch(next)
 })
