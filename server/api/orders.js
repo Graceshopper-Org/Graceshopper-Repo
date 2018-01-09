@@ -1,45 +1,38 @@
 const router = require('express').Router()
-const { Category, Product, Review } = require('../db/models')
+const { Order, Product, User } = require('../db/models')
 const Promise = require('bluebird')
+
 module.exports = router
 
 router.get('/', (req, res, next) => {
-  Product.findAll({
+  Order.findAll({
     include: [{
-      model: Category
-    }, {
-      model: Review
+      model: Product
     }]
   })
-    .then(products => res.json(products))
+    .then(orders => res.json(orders))
     .catch(next)
 })
 
 router.get('/:id', (req, res, next) => {
   let id = req.params.id
-  Product.findAll({
+  Order.findAll({
     where: { id },
     include: [{
-      model: Category
-    }, {
-      model: Review
+      model: Product
     }]
   })
-  .then(product => res.json(product))
+  .then(order => res.json(order))
   .catch(next)
 })
 
 router.post('/', (req, res, next) => {
-  Product.findOrCreate({
+  Order.findOrCreate({
     where: {
-      title: req.body.title,
-      description: req.body.description,
-      price: req.body.price,
-      inventory: req.body.inventory,
-      photo: req.body.photo && req.body.photo
+      status: req.body.status
     }
   })
-    .spread(product => product)
+    .spread(order => order)
     .then(product => {
       if (req.body.categories) {
         let promiseArray = []
@@ -62,21 +55,3 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
-router.put('/:id', (req, res, next) => {
-  let id = req.params.id
-  Product.findById(id)
-  .then(product => {
-    product.update(req.body)
-  })
-  .then(() => res.sendStatus(200))
-  .catch(next)
-})
-
-router.delete('/:id', (req, res, next) => {
-  let id = req.params.id
-  Product.destroy({
-    where: { id }
-  })
-  .then(() => res.sendStatus(204))
-  .catch(next)
-})

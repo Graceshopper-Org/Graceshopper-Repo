@@ -10,28 +10,98 @@
  * Now that you've got the main idea, check it out in practice below!
  */
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const { Category, User } = require('../server/db/models')
 
-async function seed () {
-  await db.sync({ force: true })
+
+// const reviews = [
+//   {description: 'great product!', stars: 5},
+//   {description: 'not so great, would avoid', stars: 1},
+//   {description: 'very nice', stars: 4},
+//   {description: 'needs improvement', stars: 2},
+//   {description: 'bad', stars: 1},
+//   {description: 'good stuff', stars: 3}
+// ]
+
+const categories = [
+  {
+    categoryName: 'T-Shirts'
+  },
+  {
+    categoryName: 'Hoodies'
+  },
+  {
+    categoryName: 'Mugs'
+  },
+  {
+    categoryName: 'Koozies'
+  },
+  {
+    categoryName: 'Everything Else'
+  }
+]
+
+const users =
+[
+  {
+    email: "guy@aemail.com",
+    password:"asjeas"
+  },
+  {
+    email: "person@yahHOOOOO.com",
+    password:"awesomepassword"
+  },
+  {
+    email: "nipbelter@hotmail.com",
+    password:"nippy"
+  },
+  {
+    email: "hermet_elbowton@yooohooo.com",
+    password:"hermybaby"
+  },
+  {
+    email: "uncleTerry@heybro.com",
+    password:"YEAHBROTHER"
+  },
+  {
+    email: "clydeDavis@countryman.com",
+    password:"yeeeehaw"
+  },
+  {
+    email: "orangeFeet@getsomesocks.com",
+    password:"help"
+  },
+  {
+    email: "rebecca@rebec.com",
+    password:"iamrebecca"
+  }
+]
+
+function seed () {
+db.sync({ force: true })
+.then(() => {
   console.log('db synced!')
+  Promise.all(categories.map(category =>
+    Category.create(category)))
+})
+.then(() => {
+  return Promise.all(users.map(user => User.create(user)))
+})
+// .then(() => {
+//   console.log(`seeded successfully`)
+// })
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
 
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
-  ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
+  // console.log(`seeded ${categories.length} categories`)
 }
 
 // Execute the `seed` function
 // `Async` functions always return a promise, so we can use `catch` to handle any errors
 // that might occur inside of `seed`
 seed()
+  .then(() => console.log('seeded successfully'))
   .catch(err => {
     console.error(err.message)
     console.error(err.stack)
