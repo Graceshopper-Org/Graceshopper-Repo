@@ -6,7 +6,8 @@ const Product = db.define('product', {
     type: Sequelize.STRING
   },
   photo: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: '/images/defaultphoto.jpg'
   },
   description: {
     type: Sequelize.TEXT

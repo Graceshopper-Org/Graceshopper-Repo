@@ -3,7 +3,8 @@ const db = require('../db')
 
 const Category = db.define('category', {
   categoryName: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false
   }
 })
 
