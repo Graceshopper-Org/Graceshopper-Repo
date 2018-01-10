@@ -11,6 +11,7 @@
  */
 const db = require('../server/db')
 const {User, Product, Category, Cart, Order, productCart, Review} = require('../server/db/models')
+const Promise = require('bluebird')
 
 async function seed () {
   await db.sync({force: true})
@@ -109,33 +110,26 @@ async function seed () {
     })
   ])
 
+  const productCategory = [
+      {productId: 1, categoryId: 1},
+      {productId: 2, categoryId: 3},
+      {productId: 3, categoryId: 4},
+      {productId: 4, categoryId: 2},
+      {productId: 5, categoryId: 5}
+  ]
+
   const categories = await Promise.all([
     Category.create({categoryName: 'T-Shirts'}),
     Category.create({categoryName: 'Hoodies'}),
     Category.create({categoryName: 'Mugs'}),
     Category.create({categoryName: 'Koozies'}),
     Category.create({categoryName: 'Everything Else'})
-  ])
-
-  // const productCategory = [
-  //     {productId: 1, categoryId: 1},
-  //     {productId: 2, categoryId: 3},
-  //     {productId: 3, categoryId: 4},
-  //     {productId: 4, categoryId: 2},
-  //     {productId: 5, categoryId: 5}
-  // ]
-
-  // const productCategories = await Promise.all(
-  //     console.log(data[productCategory])
-  //   //   Promise.map(Object.keys(data), name => {
-  //   //   return Promise.map(data[name], item => {
-  //   //   console.log('ITEM: ', item)
-  //   //   console.log('NAME: ', name)
-  //   //   return db.model(name)
-  //   //   .create(item)
-  //   //   })
-  //   // })
-  // )
+  ]).then(categories => {
+    categories[1].addProduct(1);
+    categories[2].addProduct(2);
+    categories[3].addProduct(3);
+    categories[4].addProduct(4)
+  })
 
   const carts = await Promise.all([
     Cart.create({userId: 1}),
@@ -148,13 +142,13 @@ async function seed () {
   ])
 
   const orders = await Promise.all([
-    Order.create({status: 'created', userId: 1, product: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}']}),
-    Order.create({product: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'processing', userId: 2}),
-    Order.create({status: 'cancelled', userId: 3}),
-    Order.create({status: 'complete', userId: 4}),
-    Order.create({status: 'created', userId: 5}),
-    Order.create({status: 'processing', userId: 6}),
-    Order.create({status: 'cancelled', userId: 7})
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}', '{\"id\": 2, \"quantity\": 4, \"price\": 17.05}"}'], status: 'created', userId: 1}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}', '{\"id\": 2, \"quantity\": 1, \"price\": 22.95}"}'], status: 'processing', userId: 2}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'cancelled', userId: 3}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'complete', userId: 4}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'created', userId: 5}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'processing', userId: 6}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'cancelled', userId: 7})
   ])
 
   const reviews = await Promise.all([
@@ -182,13 +176,13 @@ async function seed () {
     ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded ${products.length} products`)
-  console.log(`seeded ${categories.length} categories`)
-  console.log(`seeded ${carts.length} carts`)
-  console.log(`seeded ${orders.length} orders`)
-  console.log(`seeded ${reviews.length} reviews`)
-  console.log(`seeded ${productCarts.length} productCarts`)
+  // console.log(`seeded ${users.length} users`)
+  // console.log(`seeded ${products.length} products`)
+  // console.log(`seeded ${categories.length} categories`)
+  // console.log(`seeded ${carts.length} carts`)
+  // console.log(`seeded ${orders.length} orders`)
+  // console.log(`seeded ${reviews.length} reviews`)
+  // console.log(`seeded ${productCarts.length} productCarts`)
   console.log(`seeded successfully`)
 }
 
