@@ -22,12 +22,14 @@ router.get('/:id', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  Order.findOrCreate({
-    where: {
-      products: req.body.products
-    }
+  Order.create({
+      products: req.body.products,
+      userId: req.body.userId,
+      streetAddress: req.body.streetAddress,
+      city: req.body.city,
+      stateCode: req.body.stateCode,
+      zipCode: req.body.zipCode
   })
-  .spread(order => order)
   .then(order => res.json(order))
   .catch(next)
 })
