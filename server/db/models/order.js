@@ -9,6 +9,8 @@ const Order = db.define('order', {
   createdAt: Sequelize.DATE,
   status: {
     type: Sequelize.STRING
+    // should we set a default value of "pending" so when an order is placed
+    // a user would immediately be able to see that order status
   },
 })
 
