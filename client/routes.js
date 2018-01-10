@@ -4,13 +4,17 @@ import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome} from './components'
+import AllProducts from './components/Products/AllProducts'
+import { fetchProducts } from './store/products'
 import {me} from './store'
+
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
   componentDidMount () {
+    const productsThunk = fetchProducts();
     this.props.loadInitialData()
   }
 
@@ -22,6 +26,7 @@ class Routes extends Component {
         <Main>
           <Switch>
             {/* Routes placed here are available to all visitors */}
+            <Route path='/' component={AllProducts} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             {
@@ -55,6 +60,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
+      dispatch(fetchProducts())
     }
   }
 }
