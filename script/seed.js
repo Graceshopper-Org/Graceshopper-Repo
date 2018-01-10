@@ -117,15 +117,13 @@ async function seed () {
     Category.create({categoryName: 'Everything Else'})
   ])
 
-  const data = {
-    productCategory: [
-      {productId: 1, categoryId: 1},
-      {productId: 2, categoryId: 3},
-      {productId: 3, categoryId: 4},
-      {productId: 4, categoryId: 2},
-      {productId: 5, categoryId: 5}
-    ]
-  }
+  // const productCategory = [
+  //     {productId: 1, categoryId: 1},
+  //     {productId: 2, categoryId: 3},
+  //     {productId: 3, categoryId: 4},
+  //     {productId: 4, categoryId: 2},
+  //     {productId: 5, categoryId: 5}
+  // ]
 
   // const productCategories = await Promise.all(
   //     console.log(data[productCategory])
@@ -150,8 +148,8 @@ async function seed () {
   ])
 
   const orders = await Promise.all([
-    Order.create({status: 'created', userId: 1, product: '{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'}),
-    Order.create({product: '{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}', status: 'processing', userId: 2}),
+    Order.create({status: 'created', userId: 1, product: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}']}),
+    Order.create({product: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'processing', userId: 2}),
     Order.create({status: 'cancelled', userId: 3}),
     Order.create({status: 'complete', userId: 4}),
     Order.create({status: 'created', userId: 5}),
