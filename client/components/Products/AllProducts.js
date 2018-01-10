@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { addProduct } from '../reducers/products';
+import { addProduct } from '../../store/products';
 import SingleProduct from './SingleProduct';
 
 class AllProducts extends Component {
@@ -10,10 +10,11 @@ class AllProducts extends Component {
   }
 
   render() {
+    console.log('//=========== props: ', this.props)
     return (
       <div>
-        <div className="products">
-          {this.getProducts()}
+        <div className="productsView">
+          { this.getProducts() }
           {/*}
 // ============ NEW PRODUCT FORM FOR ADMIN ============  //
           <div>
@@ -78,7 +79,6 @@ class AllProducts extends Component {
 
 const mapStateToProps = ({ products }) => ({ products });
 
-const mapDispatchToProps = {};
-// { addProducts }
+const mapDispatchToProps = { addProduct };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllProducts);
