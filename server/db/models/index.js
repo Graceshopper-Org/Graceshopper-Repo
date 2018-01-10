@@ -22,14 +22,19 @@ const Cart = require('./cart')
 
 Product.belongsToMany(Cart, {through: productCart})
 Cart.belongsToMany(Product, {through: productCart}, { onDelete: 'cascade', hooks: true })
+
 Product.belongsToMany(Category, {through: 'productCategory'})
 Category.belongsToMany(Product, {through: 'productCategory'})
+
 User.hasMany(Order)
 Order.belongsTo(User)
+
 Product.hasMany(Review, { onDelete: 'cascade', hooks: true })
 Review.belongsTo(Product)
+
 User.hasMany(Review)
 Review.belongsTo(User)
+
 Cart.belongsTo(User)
 
 module.exports = {

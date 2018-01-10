@@ -13,17 +13,26 @@ router.get('/', (req, res, next) => {
     .then(carts => res.json(carts))
     .catch(next)
 })
-//
-router.get('/:id', (req, res, next) => {
+
+router.param('id', async (req, res, next) => {
   let id = req.params.id
-  Cart.findAll({
+  const cart = await Cart.findOne({
     where: { id },
     include: [{
       model: Product
     }]
   })
-  .then(cart => res.json(cart))
-  .catch(next)
+  if (cart.userId === req.user.id) {
+    req.cart = cart
+    next()
+  }
+  else {
+    req.send(401)
+  }
+})
+//
+router.get('/:id', (req, res, next) => {
+  res.json(req.cart)
 })
 
 router.post('/', (req, res, next) => {
@@ -97,15 +106,42 @@ router.put('/:id', (req, res, next) => {
   .catch(next)
 })
 
-router.delete('/:id', (req, res, next) => {
-  let id = req.params.id
-  Cart.destroy({
-    where: {
-      id
-    }
-  })
-  .then(() => {
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await req.cart.destroy()
     res.sendStatus(204)
-  })
-  .catch(next)
+  }
+  catch (error) {
+    next(error)
+  }
 })
+
+
+GET /products
+if user is admin
+  return all the products
+else
+  return all the products where street date < now
+
+
+
+
+GET /products
+return all the products where street date < now
+
+GET /admin/products
+return all the products
+
+app.use('/admin', (req, res, next) => {
+  if (req.user.isAdmin) {
+    next()
+  }
+  else {
+    next('Must be an admin')
+  }
+})
+
+
+
+
+

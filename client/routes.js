@@ -20,10 +20,28 @@ class Routes extends Component {
     return (
       <Router history={history}>
         <Main>
+          <ErrorDisplay/>
           <Switch>
             {/* Routes placed here are available to all visitors */}
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
+            <Route
+              component={Login}
+              compopdd
+              exact
+              path="/login"
+            />
+            <Route
+              component={Signup}
+              path="/signup"
+            />
+            <Route
+              component={RadLogin}
+              path="/login/etet"
+            />
+            <Route path="/signup/aoenasoetnu" component={MegaCoolSignup}/>
+            <Route path="/login/aoeuaoeu" component={Login} />
+            <Route path="/signup/aoeuaoeu" component={CoolSignup} />
+            <Route path="/logi/aoeun" component={Login} />
+            <Route path="/signu/aoeuaoep" component={Signup} />
             {
               isLoggedIn &&
                 <Switch>

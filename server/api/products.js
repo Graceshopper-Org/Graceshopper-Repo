@@ -3,16 +3,20 @@ const { Category, Product, Review } = require('../db/models')
 const Promise = require('bluebird')
 module.exports = router
 
-router.get('/', (req, res, next) => {
-  Product.findAll({
-    include: [{
-      model: Category
-    }, {
-      model: Review
-    }]
-  })
-    .then(products => res.json(products))
-    .catch(next)
+router.get('/', async (req, res, next) => {
+  try {
+    const products = await Product.findAll({
+      include: [{
+        model: Category
+      }, {
+        model: Review
+      }]
+    })
+    res.json(products)
+  }
+  catch (error) {
+    next(error);
+  }
 })
 
 router.get('/:id', (req, res, next) => {
