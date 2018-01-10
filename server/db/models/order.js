@@ -8,7 +8,8 @@ const Order = db.define('order', {
   },
   createdAt: Sequelize.DATE,
   status: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: "pending"
   },
 })
 
