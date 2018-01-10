@@ -6,7 +6,8 @@ module.exports = router
 router.get('/', (req, res, next) => {
   Review.findAll({
     include: [{
-      model: User
+      model: User,
+      attributes: ['firstName', 'lastName']
     }]
   })
   .then(reviews => res.json(reviews))
@@ -18,7 +19,8 @@ router.get('/:id', (req, res, next) => {
   Review.findAll({
     where: { id },
     include: [{
-      model: User
+      model: User,
+      attributes: ['firstName', 'lastName']
     }]
   })
   .then(review => res.json(review))
