@@ -43,69 +43,69 @@ async function seed () {
       title: 'password-shirt',
       photo: './images/alexaimages_shirts_bags/shirt4',
       description: 'Sweet T featuring Steve Carrell and insecure passwords',
-      price: 35.00,
+      price: 3500,
       inventory: 1}),
     Product.create({
       title: 'putting out the fire mug',
       photo: '/images/patimages_mugs/mug1.jpg',
       description: 'when you pay the minimum on your credit card',
-      price: 8.99,
+      price: 899,
       inventory: 11
     }),
     Product.create({
       title: 'liver-crossfit-koozie',
       photo: './images/alexaimages_shirts_bags/coosy.jpg',
       description: 'Liver crossfit koozie',
-      price: 10.00,
+      price: 1000,
       inventory: 1
     }),
     Product.create({
       title: 'Don\'t act like you\'re not impressed',
       photo: './images/alexaimages_shirts_bags/bag3.jpg',
       description: 'Drawstring bag with Will Farrell...don\'t act like you\'re not impressed.',
-      price: 100.25,
+      price: 10025,
       inventory: 17
     }),
     Product.create({
       title: 'grandparents mug',
       photo: '/images/patimages_mugs/mug2.jpg',
       description: 'when ur telling ur grandparents about ur job and they have no clue what ur talking about but they\'re supportive',
-      price: 5.00,
+      price: 500,
       inventory: 15
     }),
     Product.create({
       title: 'bad life choices mug',
       photo: '/images/patimages_mugs/mug3.jpg',
       description: 'me --- (sad music) ---> my problems',
-      price: 7.99,
+      price: 799,
       inventory: 7
     }),
     Product.create({
       title: 'no wifi mug',
       photo: '/images/patimages_mugs/mug4.jpg',
       description: 'when your wifi is down for ten minutes',
-      price: 10.00,
+      price: 1000,
       inventory: 12
     }),
     Product.create({
       title: 'airplane funeral mug',
       photo: '/images/patimages_mugs/mug5.jpg',
       description: 'when the plane hits the slightest bit of turbulence so you take a shot and start planning your funeral',
-      price: 14.99,
+      price: 1499,
       inventory: 25
     }),
     Product.create({
       title: 'your company mug',
       photo: '/images/patimages_mugs/mug7.jpg',
       description: 'to find someone who asks for nothing but your company',
-      price: 13.99,
+      price: 1399,
       inventory: 18
     }),
     Product.create({
       title: 't.j. maxx mug',
       photo: '/images/patimages_mugs/mug8.jpg',
       description: 'tj maxx cashier: did you find everything you were looking for? | *me unloading full cart* first of all, i wasn\'t looking for any of this',
-      price: 17.00,
+      price: 1700,
       inventory: 15
     })
   ])
@@ -161,18 +161,18 @@ async function seed () {
   ])
 
   const productCarts = await Promise.all([
-    productCart.create({quantity: 1, price: 15.00, productId: 1, cartId: 1}),
-    productCart.create({quantity: 1, price: 1.00, productId: 2, cartId: 1}),
-    productCart.create({quantity: 1, price: 7.75, productId: 3, cartId: 1}),
-    productCart.create({quantity: 2, price: 18.99, productId: 4, cartId: 2}),
-    productCart.create({quantity: 1, price: 100.01, productId: 5, cartId: 3}),
-    productCart.create({quantity: 2, price: 15.00, productId: 1, cartId: 4}),
-    productCart.create({quantity: 1, price: 100.01, productId: 5, cartId: 4}),
-    productCart.create({quantity: 2, price: 7.75, productId: 3, cartId: 5}),
-    productCart.create({quantity: 1, price: 18.99, productId: 4, cartId: 5}),
-    productCart.create({quantity: 3, price: 1.00, productId: 2, cartId: 6}),
-    productCart.create({quantity: 1, price: 18.99, productId: 4, cartId: 7}),
-    productCart.create({quantity: 5, price: 16.00, productId: 3, cartId: 7})
+    productCart.create({quantity: 1, price: 1500, productId: 1, cartId: 1}),
+    productCart.create({quantity: 1, price: 100, productId: 2, cartId: 1}),
+    productCart.create({quantity: 1, price: 775, productId: 3, cartId: 1}),
+    productCart.create({quantity: 2, price: 1899, productId: 4, cartId: 2}),
+    productCart.create({quantity: 1, price: 10001, productId: 5, cartId: 3}),
+    productCart.create({quantity: 2, price: 1500, productId: 1, cartId: 4}),
+    productCart.create({quantity: 1, price: 10001, productId: 5, cartId: 4}),
+    productCart.create({quantity: 2, price: 775, productId: 3, cartId: 5}),
+    productCart.create({quantity: 1, price: 1899, productId: 4, cartId: 5}),
+    productCart.create({quantity: 3, price: 100, productId: 2, cartId: 6}),
+    productCart.create({quantity: 1, price: 1899, productId: 4, cartId: 7}),
+    productCart.create({quantity: 5, price: 1600, productId: 3, cartId: 7})
     ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
