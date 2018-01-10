@@ -30,8 +30,8 @@ router.post('/', (req, res, next) => {
     where:{
       description: req.body.description,
       stars: req.body.stars,
-      productId: req.body.productId && req.body.productId,
-      userId: req.body.userId && req.body.userId
+      productId: req.body.productId,
+      userId: req.body.userId
     }
   })
   .spread(review => review)
