@@ -9,6 +9,7 @@ import AllProducts from './components/Products/AllProducts'
 import ProductDetail from './components/Products/ProductDetail'
 import { fetchProducts } from './store/products'
 import { me } from './store'
+import Category from './components/category'
 
 
 /**
@@ -39,6 +40,11 @@ class Routes extends Component {
               exact
               path="/products/:id"
               component={ProductDetail} />
+            <Route
+              exact
+              path='/category/:id'
+              component={Category}
+            />
             <Route
               path="/login"
               component={Login}

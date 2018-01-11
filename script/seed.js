@@ -111,11 +111,11 @@ async function seed () {
   ])
 
   const productCategory = [
-      {productId: 1, categoryId: 1},
-      {productId: 2, categoryId: 3},
-      {productId: 3, categoryId: 4},
-      {productId: 4, categoryId: 2},
-      {productId: 5, categoryId: 5}
+      {productId: 1, categoryId: 3},
+      {productId: 2, categoryId: 2},
+      {productId: 3, categoryId: 5},
+      {productId: 4, categoryId: 3},
+      {productId: 5, categoryId: 4}
   ]
 
   const categories = await Promise.all([
