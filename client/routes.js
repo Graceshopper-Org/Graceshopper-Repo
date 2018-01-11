@@ -3,12 +3,14 @@ import { connect } from 'react-redux'
 import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import { Main, Login, Signup, UserHome } from './components'
+import {Main, Login, Signup, UserHome, UserOrders, SingleOrder} from './components'
+import {fetchCategories} from './store/category'
 import AllProducts from './components/Products/AllProducts'
 import ProductDetail from './components/Products/ProductDetail'
 import { fetchProducts } from './store/products'
 import { me } from './store'
-
+import Category from './components/category'
+import SearchBar from './components/search'
 
 /**
  * COMPONENT
@@ -16,6 +18,8 @@ import { me } from './store'
 
 class Routes extends Component {
   componentDidMount () {
+
+    const categoryThunk = fetchCategories()
     const productsThunk = fetchProducts();
     this.props.loadInitialData()
   }
@@ -38,6 +42,11 @@ class Routes extends Component {
               path="/products/:id"
               component={ProductDetail} />
             <Route
+              exact
+              path='/category/:id'
+              component={Category}
+            />
+            <Route
               path="/login"
               component={Login}
               />
@@ -49,10 +58,9 @@ class Routes extends Component {
               isLoggedIn &&
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
-                  <Route
-                    path="/home"
-                    component={UserHome}
-                    />
+                  <Route path="/home" component={UserHome} />
+                  <Route exact path="/orders" component={UserOrders} />
+                  <Route exact path="/orders/:orderId" component={SingleOrder} />
                 </Switch>
             }
             {/* Displays our Login component as a fallback */}
@@ -81,6 +89,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
+      dispatch(fetchCategories())
       dispatch(fetchProducts())
     }
   }
@@ -95,3 +104,5 @@ Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
+
+

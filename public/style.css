@@ -22,6 +22,11 @@ form div {
 
 textarea {
    resize: none;
+
+#navbar {
+  margin-top: -5px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .pageTitle {
@@ -52,6 +57,7 @@ textarea {
   justify-content: space-between;
 }
 
+
 .product-edit-div {
   display: flex;
   justify-content: flex-start;
@@ -73,10 +79,7 @@ textarea {
   display: flex;
   flex-direction: column;
   background-color: lightgray;
-
 }
-
-
 
 #logo{
   display: block;
