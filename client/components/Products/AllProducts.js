@@ -21,13 +21,10 @@ class AllProducts extends Component {
     return (
       <div>
         <div>
-          { this.getProducts() }
-          {/*}
-// ============ NEW PRODUCT FORM: ADMIN ONLY ============  //
-          <div>
-            {this.newProductForm()}
-          </div>
-          */}
+          {this.newProductForm()}
+        </div>
+        <div>
+          {this.getProducts()}
         </div>
       </div>
     );
@@ -38,17 +35,17 @@ class AllProducts extends Component {
       <div>
         <form id="addProductsFrom" onSubmit={this.onSubmit}>
           <div>
-            <h2> Add New Product </h2>
+            <h5> Admin-Only </h5>
+            <h4> Add Product: </h4>
             <div>
               <label> Title: </label>
               <input name="title" type="text" required placeholder="Product Title" />
               <label> Description: </label>
-              <input name="description" type="text" required placeholder="description..." />
+              <textarea name="desc" type="text" form="addProductsFrom" placeholder="Enter description here..." />
+              <label> Price: </label>
+              <input name="price" type="number" required placeholder="enter price" />
               <label> Image Url: </label>
-              {
-              /* how would we get an upload image feature? */
-              }
-              <input name="image" type="text"placeholder="Image Url" />
+              <input name="imageUrl" type="text" defaultValue="/images/defaultphoto.jpg" />
             </div>
           </div>
           <div>
@@ -76,10 +73,16 @@ class AllProducts extends Component {
   onSubmit(event) {
     event.preventDefault();
     const product = {
-      name: event.target.name.value,
+      title: event.target.title.value,
+      description: event.target.desc.value,
+      price: event.target.price.value,
+      photo: event.target.imageUrl.value
     };
     this.props.addProduct(product);
-    event.target.name.value = '';
+    event.target.title.value = '';
+    event.target.desc.value = '';
+    event.target.price.value = '';
+    event.target.imageUrl.value = '';
   }
 
 }

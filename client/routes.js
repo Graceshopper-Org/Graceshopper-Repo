@@ -15,6 +15,7 @@ import SearchBar from './components/search'
 /**
  * COMPONENT
  */
+
 class Routes extends Component {
   componentDidMount () {
 
