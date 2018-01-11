@@ -32,7 +32,8 @@ export default function reducer(carts = [], action) {
 //thunks
 export const fetchCarts = () => dispatch => {
   axios.get('/api/carts')
-    .then(res => dispatch(initCart(res.data)))
+    .then(res => {
+      dispatch(initCart(res.data))})
     .catch(err => console.error('Error fetching cart', err))
 }
 

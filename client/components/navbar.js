@@ -9,7 +9,7 @@ export class Navbar extends Component {
 
   render() {
     return (
-      <div id="navbar" class="ui menu">
+      <div id="navbar" className="ui menu">
         <img id="logo" src="/images/logo.png" />
       </div>
     )

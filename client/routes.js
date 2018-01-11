@@ -12,6 +12,7 @@ import {me} from './store'
  */
 class Routes extends Component {
   componentDidMount () {
+    fetchCarts()
     this.props.loadInitialData()
   }
 
@@ -25,7 +26,7 @@ class Routes extends Component {
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route path="/cart" component={Cart} />
+            <Route exact path="/cart" component={Cart} />
             {
               isLoggedIn &&
                 <Switch>

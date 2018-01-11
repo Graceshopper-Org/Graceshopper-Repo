@@ -6,5 +6,5 @@
 export {default as Main} from './main'
 export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
-export { Cart } from './Cart'
+export {default as Cart} from './Cart'
 export {Navbar} from './navbar'
