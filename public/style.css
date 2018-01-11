@@ -20,10 +20,39 @@ form div {
   display: inline-block;
 }
 
+
 #navbar{
   margin-top: -5px;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+}
+
+.pageTitle {
+  font-size: 20px;
+  font-weight: bold;
+  width: 100%;
+  padding-top: 2rem;
+  padding-left: 2rem;
+  padding-bottom: 2rem;
+}
+.productsDisplay {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.productView {
+  padding-bottom: 2rem;
+}
+
+.productImage {
+  width: 320px;
+}
+
+.productInfo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 #logo{

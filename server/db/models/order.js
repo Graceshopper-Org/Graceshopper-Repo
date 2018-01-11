@@ -9,8 +9,23 @@ const Order = db.define('order', {
   createdAt: Sequelize.DATE,
   status: {
     type: Sequelize.STRING,
-    defaultValue: "pending"
+    defaultValue: 'pending'
   },
+  streetAddress: {
+    type: Sequelize.STRING
+  },
+  city: {
+    type: Sequelize.STRING
+  },
+  stateCode: {
+    type: Sequelize.STRING
+  },
+  zipCode: {
+    type: Sequelize.INTEGER,
+    validate: {
+      len: [5, 5]
+    }
+  }
 })
 
 module.exports = Order

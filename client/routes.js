@@ -1,18 +1,24 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome} from './components'
-import {me} from './store'
 import {fetchCategories} from './store/category'
+import AllProducts from './components/Products/AllProducts'
+import ProductDetail from './components/Products/ProductDetail'
+import { fetchProducts } from './store/products'
+import { me } from './store'
+
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
   componentDidMount () {
+
     const categoryThunk = fetchCategories()
+    const productsThunk = fetchProducts();
     this.props.loadInitialData()
   }
 
@@ -24,17 +30,37 @@ class Routes extends Component {
         <Main>
           <Switch>
             {/* Routes placed here are available to all visitors */}
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
+            <Route
+              exact
+              path='/'
+              component={AllProducts}
+              />
+            <Route
+              exact
+              path="/products/:id"
+              component={ProductDetail} />
+            <Route
+              path="/login"
+              component={Login}
+              />
+            <Route
+              path="/signup"
+              component={Signup}
+              />
             {
               isLoggedIn &&
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
-                  <Route path="/home" component={UserHome} />
+                  <Route
+                    path="/home"
+                    component={UserHome}
+                    />
                 </Switch>
             }
             {/* Displays our Login component as a fallback */}
-            <Route component={Login} />
+            <Route
+              component={Login}
+              />
           </Switch>
         </Main>
       </Router>
@@ -58,6 +84,7 @@ const mapDispatch = (dispatch) => {
     loadInitialData () {
       dispatch(me())
       dispatch(fetchCategories())
+      dispatch(fetchProducts())
     }
   }
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
+import AllProducts from './products/AllProducts'
 import {logout} from '../store'
 import {Navbar} from './index'
 
@@ -17,7 +18,6 @@ const Main = (props) => {
   return (
     <div>
       <Navbar />
-      <h1>BOILERMAKER</h1>
       <nav>
         {
           isLoggedIn
