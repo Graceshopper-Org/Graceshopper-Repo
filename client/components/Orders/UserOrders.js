@@ -29,36 +29,48 @@ class UserOrders extends Component {
     }
   }
 
+
+
   render () {
 
+
     if (this.props.orders.length > 0) {
-      let total = 0
-      this.props.orders.products.forEach(product => {
-      total += (product.price) * (product.quantity)
+
+      console.log('ORDERS: ', this.props.orders)
+
+      this.props.orders.forEach(order => {
+        let orderTotal = 0;
+        let orderProducts = order.products.map(product => JSON.parse(product))
+        orderProducts.forEach(product => {
+          orderTotal += (+product.quantity * +product.price) / 100
+        })
+        order.total = orderTotal.toFixed(2)
       })
-      total = (total / 100)
 
     return (
-      <table>
-        <tr>
-          <th>Order ID</th>
-          <th>Date</th>
-          <th>Address</th>
-          <th>Total</th>
-          <th>Status</th>
-        </tr>
-        {this.props.orders.map(order => (
-          <tr key={ order.id }>
-            <Link to={`/orders/${ order.id }`}>
-              <td>{ order.id }</td>
-            </Link>
-            <td>{ order.createdAt }</td>
-            <td>{ order.streetAdress }, { order.city }, { order.stateCode }, { order.zipCode }</td>
-            <td>$ { total }</td>
-            <td>{ order.status }</td>
-          </tr>
-        ))}
-      </table>
+      <div>
+        <h4>Click on Order No. for order details</h4>
+        <table>
+          <tbody>
+            <tr>
+              <th>Order No.</th>
+              <th>Date</th>
+              <th>Address</th>
+              <th>Total</th>
+              <th>Status</th>
+            </tr>
+            {this.props.orders.map((order, index) => (
+              <tr key={ order.id }>
+                <td><Link to={`/orders/${ order.id }`}>{ index + 1 }</Link></td>
+                <td>{ order.createdAt.slice(0, 10) }</td>
+                <td>{ order.streetAddress }, { order.city }, { order.stateCode }, { order.zipCode }</td>
+                <td>${ order.total }</td>
+                <td>{ order.status }</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     )
     } else {
       return (

@@ -8,8 +8,6 @@ import AllProducts from './components/Products/AllProducts'
 import { fetchProducts } from './store/products'
 import {me} from './store'
 
-
-
 /**
  * COMPONENT
  */
@@ -27,16 +25,16 @@ class Routes extends Component {
         <Main>
           <Switch>
             {/* Routes placed here are available to all visitors */}
-            <Route exact path='/' component={AllProducts} />
+            <Route exact path="/" component={AllProducts} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
-            <Route exact path="/orders" component={UserOrders} />
-            <Route exact path="/orders/:orderId" component={SingleOrder} />
             {
               isLoggedIn &&
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
                   <Route path="/home" component={UserHome} />
+                  <Route exact path="/orders" component={UserOrders} />
+                  <Route exact path="/orders/:orderId" component={SingleOrder} />
                 </Switch>
             }
             {/* Displays our Login component as a fallback */}
@@ -77,3 +75,5 @@ Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
+
+

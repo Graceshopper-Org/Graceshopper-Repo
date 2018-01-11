@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import { Link } from 'react-router-dom'
+
 
 
 class SingleOrder extends Component {
@@ -13,11 +15,13 @@ class SingleOrder extends Component {
   }
 
   getOrder(orderId) {
-    axios.get(`/api/orders/${orderId}`)
-      .then(res => res.data)
+    axios.get(`/api/orders/${ orderId }`)
+      .then(res => {
+        return res.data
+      })
       .then(order => {
         this.setState({
-          order: order[0]
+          order: order
         })
       })
       .catch(err => console.error(err))
@@ -30,33 +34,47 @@ class SingleOrder extends Component {
 
   render () {
 
-    const order = this.state.order
+    if (this.state.order.id) {
 
-    return (
-      <div>
-        <table>
-            <tr>
-              <th>Product</th>
-              <th>Quantity</th>
-              <th>Price</th>
-            </tr>
-            {order.products.map(product => (
-              <tr key={ product.id }>
-                <Link to={`/products/${ product.id }`}>
-                  <td>{ product.id }</td>
-                </Link>
-                <td>{ product.createdAt }</td>
-                <td>{ product.streetAdress }, { product.city }, { product.stateCode }, { product.zipCode }</td>
-                <td>$ { total }</td>
-                <td>{ product.status }</td>
-              </tr>
-            ))}
-          </table>
-          <h1>Shipping Address: { order.streetAdress }, { order.city }, { order.stateCode }, { order.zipCode }</h1>
-          <h1>Order Status: { order.status }</h1>
-          <h1>Order Total: $ { order.total }</h1>
+      let order = this.state.order
+      let orderTotal = 0;
+      let orderProducts = order.products.map(product => JSON.parse(product))
+      orderProducts.forEach(product => {
+        orderTotal += (+product.quantity * +product.price) / 100
+      })
+      order.total = orderTotal.toFixed(2)
+
+      return (
+        <div>
+          <h5>Click on Product No. for product info</h5>
+          <table>
+            <tbody>
+                <tr>
+                  <th>Product No.</th>
+                  <th>Name</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                </tr>
+                {orderProducts.map((product, index) => (
+                  <tr key={ product.id }>
+                    <td><Link to={`/products/${ product.id }`}>{ index + 1 }</Link></td>
+                    <td>{ product.name }</td>
+                    <td>{ product.quantity }</td>
+                    <td>${ product.price / 100 }</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <h4>Shipping Address: { order.streetAddress }, { order.city }, { order.stateCode }, { order.zipCode }</h4>
+            <h4>Order Total: ${ order.total }</h4>
+            <h4>Order Status: { order.status }</h4>
         </div>
-    )
+      )
+      } else {
+        return (
+          <h1>Order not found</h1>
+        )
+      }
   }
 
 }
