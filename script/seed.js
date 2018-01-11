@@ -142,13 +142,14 @@ async function seed () {
   ])
 
   const orders = await Promise.all([
-    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}', '{\"id\": 2, \"quantity\": 4, \"price\": 17.05}"}'], status: 'created', userId: 1}),
-    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}', '{\"id\": 2, \"quantity\": 1, \"price\": 22.95}"}'], status: 'processing', userId: 2}),
-    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'cancelled', userId: 3}),
-    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'complete', userId: 4}),
-    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'created', userId: 5}),
-    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'processing', userId: 6}),
-    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'cancelled', userId: 7})
+    Order.create({products: ['{\"id\": 1, \"name\":\"password-shirt\", \"quantity\": 3, \"price\": 1495}', '{\"id\": 2, \"name\":\"putting out the fire mug\", \"quantity\": 4, \"price\": 1705}'], status: 'created', userId: 1, streetAddress: '200 Wonderful Rd', city: 'Wonderfulness', stateCode: 'IL', zipCode: 61616}),
+    Order.create({products: ['{\"id\": 1, \"name\":\"password-shirt\", \"quantity\": 3, \"price\": 1495}'], status: 'cancelled', userId: 1, streetAddress: '200 Wonderful Rd', city: 'Wonderfulness', stateCode: 'IL', zipCode: 61616}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}', '{\"id\": 2, \"quantity\": 1, \"price\": 2295}'], status: 'processing', userId: 2}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'cancelled', userId: 3}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'complete', userId: 4}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'created', userId: 5}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'processing', userId: 6}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'cancelled', userId: 7})
   ])
 
   const reviews = await Promise.all([
