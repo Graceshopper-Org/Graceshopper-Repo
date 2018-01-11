@@ -1,36 +1,49 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { deleteProduct } from '../store/cart'
-import { Button, Icon, Item } from 'semantic-ui-react'
+import { Button, Icon, Item, Image as ImageComponent } from 'semantic-ui-react'
 
 const Cart = props => {
 
-    const { carts } = props
+    const { carts, products} = props
 
-    console.log('PRODUCTS: ', carts)
+    console.log('CART: ', carts)
+    console.log('PRODUCTS: ', products)
+
     return (
-        <div>
+      <div>
         <h1>Cart</h1>
-        <Item.Group divided>
-        <Item>
-          <Item.Image/>
-        </Item>
-
-        <Item>
-          <Item.Image src='/assets/images/wireframe/image.png' />
-        </Item>
-
-        <Item image='/assets/images/wireframe/image.png' />
-      </Item.Group>
-        <Button icon>
-          <Icon />
-        </Button>
+        {
+          products.length && products.map(product => {
+            return (
+            <Item.Group>
+            <Item>
+              <Item.Image size='tiny' src={product[0].photo} />
+              <Item.Content>
+              <Item.Header>{product[0].title}</Item.Header>
+              <Item.Meta>
+              <span className='price'>{product[0].price}</span>
+              </Item.Meta>
+              <Item.Description>{product[0].description}</Item.Description>
+              </Item.Content>
+            </Item>
+            </Item.Group>
+            )
+          })
+        }
       </div>
-      )
+  )
 }
 
 //container
-const mapStateToProps = ({carts}) => ({carts})
+const mapStateToProps = state => {
+  const products = state.carts.map(cart => cart.products)
+  return {
+    carts: state.carts,
+    products
+  }
+
+}
 
 // const mapDispatch
 
