@@ -10,6 +10,7 @@ import ProductDetail from './components/Products/ProductDetail'
 import { fetchProducts } from './store/products'
 import { me } from './store'
 import Category from './components/category'
+import SearchBar from './components/search'
 
 
 /**

@@ -3,6 +3,8 @@ import { render } from 'react-dom'
 import { Link, withRouter } from 'react-router-dom'
 import {logout} from '../store'
 import {connect} from 'react-redux'
+import { Search } from 'semantic-ui-react'
+import SearchBar from './search'
 
 class Navbar extends Component {
   constructor(props){
@@ -26,7 +28,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const {isLoggedIn, handleClick, category} = this.props
+    const {isLoggedIn, handleClick, category, products} = this.props
     return (
       <div id="navbar" className="ui menu">
         <Link className="item" to="/">
@@ -46,10 +48,7 @@ class Navbar extends Component {
           </div>
         </div>
         <div id="searchcontainer">
-          <div className="ui icon input" id="navbarsearch">
-            <input type="text" placeholder="Search..." />
-            <i aria-hidden="true" className="search icon"></i>
-          </div>
+          <SearchBar id="navbarsearch" fluid={true} />
         </div>
         <div className="right menu">
         <div className="ui dropdown item" onMouseEnter={this.displayAccountInfo}>
@@ -83,10 +82,10 @@ class Navbar extends Component {
 ///CONTAINER///
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     isLoggedIn: !!state.user.id,
-    category: state.category
+    category: state.category,
+    products: state.prodcuts
   }
 }
 
