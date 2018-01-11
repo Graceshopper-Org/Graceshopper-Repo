@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { removeProduct } from '../../store/products';
+import { Button } from 'semantic-ui-react'
 
 class SingleProduct extends Component {
   constructor(props) {
@@ -13,17 +14,24 @@ class SingleProduct extends Component {
     const { product } = this.props;
     return (
       <div className="productView">
-            <img className="productImage" src={product.photo} />
+        <img className="productImage" src={ product.photo } />
+        <div className="productInfo">
           <NavLink className="single-product-link" activeClassName="active" to={`/products/${product.id}`}>
-            <div id="campusName">
-              {product.title}
+            <div id="productTitle">
+              { product.title }
             </div>
           </NavLink>
-          <button
-            className="submitButton"
-            onClick={this.removeProduct}>
+          <div id="productPrice">
+            ${ product.price }
+          </div>
+        </div>
+          {/*
+// ============ REMOVE PRODUCT BUTTON: ADMIN ONLY ============  //
+            <Button
+            onClick={ this.removeProduct }>
             Remove
-          </button>
+          </Button>
+          */}
       </div>
     )
   }

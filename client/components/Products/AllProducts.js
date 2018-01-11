@@ -3,6 +3,14 @@ import { connect } from 'react-redux';
 import { addProduct } from '../../store/products';
 import SingleProduct from './SingleProduct';
 
+
+/*
+====== Structure Notes ======
+• AllProducts: Renders all the products(<SingleProduct />)currently available
+• SingleProduct: Single product components rendered in the AllProducts view
+• ProductDetail: After clicking on a product, this is the view you see with product details
+*/
+
 class AllProducts extends Component {
   constructor(props) {
     super(props);
@@ -10,13 +18,12 @@ class AllProducts extends Component {
   }
 
   render() {
-    console.log('//=========== props: ', this.props)
     return (
       <div>
-        <div className="productsView">
+        <div>
           { this.getProducts() }
           {/*}
-// ============ NEW PRODUCT FORM FOR ADMIN ============  //
+// ============ NEW PRODUCT FORM: ADMIN ONLY ============  //
           <div>
             {this.newProductForm()}
           </div>
@@ -56,7 +63,7 @@ class AllProducts extends Component {
     return (
       <div className="productsDisplay">
         <div className="pageTitle">
-          <h3>Products</h3>
+          All Products
         </div>
         {
           this.props.products
