@@ -143,6 +143,7 @@ async function seed () {
 
   const orders = await Promise.all([
     Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}', '{\"id\": 2, \"quantity\": 4, \"price\": 17.05}"}'], status: 'created', userId: 1}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'cancelled', userId: 1}),
     Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}', '{\"id\": 2, \"quantity\": 1, \"price\": 22.95}"}'], status: 'processing', userId: 2}),
     Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'cancelled', userId: 3}),
     Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 14.95}"}'], status: 'complete', userId: 4}),
