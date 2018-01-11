@@ -9,20 +9,20 @@ export class Navbar extends Component {
 
   render() {
     return (
-      <div id="navbar" class="ui menu">
-        <a class="item">
+      <div id="navbar" className="ui menu">
+        <a className="item">
           <img id="logo" src="/images/logo.png" />
         </a>
-        <a class="item">Categories</a>
+        <a className="item">Categories</a>
         <div id="searchcontainer">
-          <div class="ui icon input" id="navbarsearch">
+          <div className="ui icon input" id="navbarsearch">
             <input type="text" placeholder="Search..." />
-            <i aria-hidden="true" class="search icon"></i>
+            <i aria-hidden="true" className="search icon"></i>
           </div>
         </div>
-        <div class="right menu">
-          <a class="item">My Account</a>
-          <a class="item">Cart</a>
+        <div className="right menu">
+          <a className="item">My Account</a>
+          <a className="item">Cart</a>
         </div>
       </div>
     )

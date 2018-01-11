@@ -20,6 +20,10 @@ form div {
   display: inline-block;
 }
 
+textarea {
+   resize: none;
+}
+
 .pageTitle {
   font-size: 20px;
   font-weight: bold;
@@ -47,6 +51,31 @@ form div {
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
+.product-edit-div {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 1rem;
+}
+
+.editProductform {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.editTitles {
+  font-weight: bold;
+}
+
+#addProductsFrom {
+  display: flex;
+  flex-direction: column;
+  background-color: lightgray;
+
+}
+
 
 
 #logo{

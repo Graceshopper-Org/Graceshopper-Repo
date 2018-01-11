@@ -13,6 +13,7 @@ import { me } from './store'
 /**
  * COMPONENT
  */
+
 class Routes extends Component {
   componentDidMount () {
     const productsThunk = fetchProducts();
