@@ -33,11 +33,11 @@ export default function reducer(carts = [], action) {
 export const fetchCarts = () => dispatch => {
   axios.get('/api/carts')
     .then(res => dispatch(initCart(res.data)))
-    .catch(err => console.error('Error fetching cart: ', err))
+    .catch(err => console.error('Error fetching cart', err))
 }
 
-export const deleteCart = (cart) => dispatch => {
-  dispatch(removeCart(cart.id))
-  axios.delete(`/api/carts/${cart.id}`)
-    .catch(err => console.error(`Error deleting cart: ${cart}`, err))
-}
+// export const deleteCart = (cart) => dispatch => {
+//   dispatch(removeCart(cart.id))
+//   axios.delete(`/api/carts/${cart.id}`)
+//     .catch(err => console.error(`Error deleting cart: ${cart}`, err))
+// }

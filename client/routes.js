@@ -4,6 +4,7 @@ import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome, Cart} from './components'
+import { fetchCarts } from './store/cart'
 import {me} from './store'
 
 /**
@@ -56,6 +57,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
+      dispatch(fetchCarts())
     }
   }
 }
