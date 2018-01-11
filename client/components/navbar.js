@@ -29,7 +29,7 @@ class Navbar extends Component {
     const {isLoggedIn, handleClick, category} = this.props
     return (
       <div id="navbar" className="ui menu">
-        <Link className="item" to="/home">
+        <Link className="item" to="/">
           <img id="logo" src="/images/logo.png" />
         </Link>
         <div className="ui dropdown item" onMouseEnter={this.displayCategories}>
