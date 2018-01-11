@@ -6,8 +6,5 @@
 export {default as Main} from './main'
 export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
-<<<<<<< HEAD
 export { Cart } from './Cart'
-=======
 export {Navbar} from './navbar'
->>>>>>> origin
