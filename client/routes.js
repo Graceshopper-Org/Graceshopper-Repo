@@ -5,12 +5,14 @@ import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome} from './components'
 import {me} from './store'
+import {fetchCategories} from './store/category'
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
   componentDidMount () {
+    const categoryThunk = fetchCategories()
     this.props.loadInitialData()
   }
 
@@ -55,6 +57,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
+      dispatch(fetchCategories())
     }
   }
 }

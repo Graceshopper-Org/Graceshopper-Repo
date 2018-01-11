@@ -20,6 +20,12 @@ form div {
   display: inline-block;
 }
 
+#navbar{
+  margin-top: -5px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
 #logo{
   display: block;
   max-width: 250px;
