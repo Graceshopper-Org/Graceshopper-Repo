@@ -63,8 +63,9 @@ class AllProducts extends Component {
           All Products
         </div>
         {
-          this.props.products
-            .map(product => <SingleProduct product={product} key={product.id} />)
+          this.props.products ?
+            this.props.products
+              .map(product => <SingleProduct product={product} key={product.id} />) : <div />
         }
       </div>
     )
@@ -87,7 +88,12 @@ class AllProducts extends Component {
 
 }
 
-const mapStateToProps = ({ products }) => ({ products });
+const mapStateToProps = (state) => {
+  return {
+    products: state.products,
+    user: state.user
+  }
+}
 
 const mapDispatchToProps = { addProduct };
 

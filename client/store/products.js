@@ -54,7 +54,7 @@ export const updateProduct = product => dispatch => {
   axios.put(`/api/products/${product.id}`, product)
     .then(res => {
       dispatch(editProduct(res.data))
-      history.push(`/products`)
+      history.push(`/products/${product.id}`)
     })
     .catch(err => console.error(`Error updating product: ${product}`, err));
 }
@@ -62,5 +62,8 @@ export const updateProduct = product => dispatch => {
 export const removeProduct = id => dispatch => {
   dispatch(deleteProduct(id));
   axios.delete(`/api/products/${id}`)
+  .then(() => {
+    history.push(`/`)
+    })
     .catch(err => console.error(`Error deleting product: ${id}!`, err));
 }

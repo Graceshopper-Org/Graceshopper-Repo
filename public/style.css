@@ -22,6 +22,7 @@ form div {
 
 textarea {
    resize: none;
+ }
 
 #navbar {
   margin-top: -5px;
@@ -62,6 +63,8 @@ textarea {
   display: flex;
   justify-content: flex-start;
   margin-left: 1rem;
+  width: 500px;
+  background-color: lightgray;
 }
 
 .editProductform {
@@ -73,6 +76,11 @@ textarea {
 
 .editTitles {
   font-weight: bold;
+}
+
+.current-product {
+  display: flex;
+
 }
 
 #addProductsFrom {
