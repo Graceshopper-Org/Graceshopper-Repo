@@ -41,7 +41,7 @@ async function seed () {
   const products = await Promise.all([
     Product.create({
       title: 'password-shirt',
-      photo: './images/alexaimages_shirts_bags/shirt4',
+      photo: '/images/alexaimages_shirts_bags/shirt4.jpg',
       description: 'Sweet T featuring Steve Carrell and insecure passwords',
       price: 3500,
       inventory: 1}),
@@ -54,14 +54,14 @@ async function seed () {
     }),
     Product.create({
       title: 'liver-crossfit-koozie',
-      photo: './images/alexaimages_shirts_bags/coosy.jpg',
+      photo: '/images/alexaimages_shirts_bags/coosy.jpg',
       description: 'Liver crossfit koozie',
       price: 1000,
       inventory: 1
     }),
     Product.create({
       title: 'Don\'t act like you\'re not impressed',
-      photo: './images/alexaimages_shirts_bags/bag3.jpg',
+      photo: '/images/alexaimages_shirts_bags/bag3.jpg',
       description: 'Drawstring bag with Will Farrell...don\'t act like you\'re not impressed.',
       price: 10025,
       inventory: 17
@@ -111,11 +111,11 @@ async function seed () {
   ])
 
   const productCategory = [
-      {productId: 1, categoryId: 1},
-      {productId: 2, categoryId: 3},
-      {productId: 3, categoryId: 4},
-      {productId: 4, categoryId: 2},
-      {productId: 5, categoryId: 5}
+      {productId: 1, categoryId: 3},
+      {productId: 2, categoryId: 2},
+      {productId: 3, categoryId: 5},
+      {productId: 4, categoryId: 3},
+      {productId: 5, categoryId: 4}
   ]
 
   const categories = await Promise.all([
