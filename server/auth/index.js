@@ -20,22 +20,35 @@ router.post('/login', (req, res, next) => {
             status: 'open'
           }}
         )
-        .then(result => {
-          if (result !== null){
-            returnCart = result
-            ProductCart.findAll(
+        .then(oldCart => {
+          if (oldCart !== null){
+            returnCart = oldCart
+            ProductCart.findOne(
               {where: {
-                cartId: result.id
+                cartId: oldCart.id
               }}
             )
-            .then(nextResult => {
-              if (nextResult !== null){
+            .then(products => {
+              console.log('products', products)
+              if (products !== null){
                 Cart.destroy({
                   where: {id: req.cookies.cart}
                 })
                 .then(() => {
-                  console.log('returnCart', returnCart)
-                  res.json(returnCart)})
+                  res.json(user)})
+              } else {
+                Cart.destroy({
+                  where: {userId: user.id}
+                }).then(() => {
+                  Cart.findOne({where: {id: +req.cookies.cart}})
+                  .then(newCart => {
+                    Cart.update({userId: user.id}, {
+                      where: {id: req.cookies.cart}
+                    })
+                    .then(() => res.json(user))
+                  })
+                }
+              )
               }
             })
           }
