@@ -25,13 +25,10 @@ class SingleProduct extends Component {
             ${ product.price }
           </div>
         </div>
-          {/*
-// ============ REMOVE PRODUCT BUTTON: ADMIN ONLY ============  //
             <Button
             onClick={ this.removeProduct }>
             Remove
           </Button>
-          */}
       </div>
     )
   }
@@ -46,7 +43,7 @@ class SingleProduct extends Component {
 
 }
 
-const mapStateToProps = ({ Products }) => ({ Products });
+const mapStateToProps = ({ products }) => ({ products });
 
 const mapDispatchToProps = { removeProduct };
 

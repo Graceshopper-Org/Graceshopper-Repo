@@ -8,8 +8,6 @@ import { updateProduct } from '../../store/products';
 class ProductDetail extends Component {
   constructor(props) {
     super(props);
-
-    // this.enrollNewStudent = this.enrollNewStudent.bind(this);
     this.editProductInfo = this.editProductInfo.bind(this);
   }
 
@@ -21,119 +19,112 @@ class ProductDetail extends Component {
             {
               this.props.products.filter(product => product.id === this.props.product.id)
                 .map(product => (
+                  <div>
                     <div key={product.id}>
                       <h3> {product.title} </h3>
                       <img className="productImage" src={product.photo} />
-                      <h5>{product.price}</h5>
+                      <div className="editTitles">${product.price}</div>
                       <p>{product.description}</p>
                        <NavLink to={`/`}>
                          <h2>back to all products</h2>
                        </NavLink>
                     </div>
+                    <div className="product-edit-div">
+                      <div className="editProductform" key={product.id} onSubmit={this.editProductInfo}>
+                        <h4>Edit Product Details:</h4>
+                        <div className="editTitles">Title:</div>
+                        <input
+                          name="title"
+                          type="text"
+                          defaultValue={product.title}
+                          />
+                        <div className="editTitles">Price:</div>
+                        <input
+                          name="price"
+                          type="number"
+                          defaultValue={product.price}
+                          />
+                        <div className="editTitles">Description:</div>
+                        <textarea
+                          name="desc"
+                          type="textarea"
+                          defaultValue={product.description}
+                          />
+                        <div className="editTitles">Image Url:</div>
+                          <input
+                            name="desc"
+                            type="text"
+                            defaultValue={product.photo}
+                            />
+                        <div>
+                          <input
+                            type="submit"
+                            value="Submit"
+                            onClick={this.pageReloader}
+                            />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   )
                 )
-            }
+              }
           </div>
         </div>
-        <br />
-        <div>
-          {this.editProductTitle()}
-        </div>
-        <br />
-        <div>
-          {/*this.newStudentForm()*/}
-        </div>
-        <br />
-        <div>
-          {/*this.getStudentsInCampus()*/}
-        </div>
-        <br />
       </div>
     );
   }
 
+  /*
 
-//   getStudentsInCampus() {
-//     return (
-//       <div>
-//         <h4>Current Students: </h4>
-//         {
-//           this.props.students.filter(student => student.productId === this.props.product.id)
-//           .map(currentStudent => (
-//               <NavLink key={currentStudent.id} to={`/students/${currentStudent.id}`}>
-//               <h4> {currentStudent.fullname} </h4>
-//             </NavLink>)
-//           )
-//         }
-//       </div>
-//     )
-//   }
-//
-  editProductTitle() {
+  getStudentsInCampus() {
     return (
       <div>
-        <form onSubmit={this.editProductInfo}>
-          <div>
-            <h4>Edit Product Details: </h4>
-            <h4>
-              <input name="title" type="text" required placeholder="Enter New Product Title" />
-            </h4>
-          </div>
-          <div>
-            <input type="submit" value="Submit" onClick={this.pageReloader}
-            />
-          </div>
-        </form>
+        <h4>Current Students: </h4>
+        {
+          this.props.students.filter(student => student.productId === this.props.product.id)
+          .map(currentStudent => (
+              <NavLink key={currentStudent.id} to={`/students/${currentStudent.id}`}>
+              <h4> {currentStudent.fullname} </h4>
+            </NavLink>)
+          )
+        }
       </div>
     )
   }
-//
-//   newStudentForm() {
-//     return (
-//       <div>
-//         <form onSubmit={this.enrollNewStudent}>
-//           <div>
-//             <h4>Enroll New Student: </h4>
-//             <h4>
-//               <input name="firstName" type="text" required placeholder="First Name" />
-//             </h4>
-//             <h4>
-//               <input name="lastName" type="text" required placeholder="Last Name" />
-//             </h4>
-//             <h4>
-//               <input name="email" type="text" required placeholder="Student Email" />
-//             </h4>
-//           </div>
-//           <div>
-//             <input type="submit" value="Submit" onClick={this.pageReloader} />
-//           </div>
-//         </form>
-//       </div>
-//     )
-//   }
-//
-//   enrollNewStudent(event) {
-//     event.preventDefault();
-//     const student = {
-//       firstName: event.target.firstName.value,
-//       lastName: event.target.lastName.value,
-//       email: event.target.email.value,
-//       productId: this.props.product.id
-//     };
-//     this.props.addProduct(student);
-//     event.target.firstName.value = '';
-//     event.target.lastName.value = '';
-//     event.target.email.value = '';
-//   }
-//
+*/
+
+
+/*
+====== ignore this feature - possible backburner
+====== allows admins to UPLOAD images to server
+====== to add additional to product images
+
+uploadPhotos(){
+  return (
+    <div>
+      <form action="upload.php" method="post" enctype="multipart/form-data">
+        Select image to upload:
+        <input type="file" name="fileToUpload" id="fileToUpload" />
+        <input type="submit" value="Upload Image" name="submit" />
+      </ form>
+    </div>
+  )
+}
+*/
+
   editProductInfo(event) {
     event.preventDefault();
     const product = {
       id: this.props.product.id,
-      title: event.target.title.value
+      title: event.target.title.value,
+      price: event.target.price.value,
+      description: event.target.desc.value
     };
     this.props.updateProduct(product);
     event.target.title.value = '';
+    event.target.price.value = '';
+    event.target.desc.value = '';
   }
 //
   pageReloader(){

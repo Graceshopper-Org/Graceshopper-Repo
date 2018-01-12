@@ -1,4 +1,5 @@
 import axios from 'axios';
+import history from '../history'
 
 // PRODUCT ACTION TYPES
 const INIT_PRODUCTS = 'INIT_PRODUCTS';
@@ -51,7 +52,10 @@ export const addProduct = product => dispatch => {
 
 export const updateProduct = product => dispatch => {
   axios.put(`/api/products/${product.id}`, product)
-    .then(res => dispatch(editProduct(res.data)))
+    .then(res => {
+      dispatch(editProduct(res.data))
+      history.push(`/products`)
+    })
     .catch(err => console.error(`Error updating product: ${product}`, err));
 }
 

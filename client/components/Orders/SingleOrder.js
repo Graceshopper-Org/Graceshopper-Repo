@@ -32,6 +32,14 @@ class SingleOrder extends Component {
     this.getOrder(orderId)
   }
 
+  getFormattedTime (fourDigitTime) {
+    var hours24 = parseInt(fourDigitTime.substring(0, 2),10);
+    var hours = ((hours24 + 11) % 12) + 1;
+    var amPm = hours24 > 11 ? 'pm' : 'am';
+    var minutes = fourDigitTime.substring(2);
+    return hours + ':' + minutes + ' ' + amPm;
+  }
+
   render () {
 
     if (this.state.order.id) {
@@ -43,11 +51,15 @@ class SingleOrder extends Component {
         orderTotal += (+product.quantity * +product.price) / 100
       })
       order.total = orderTotal.toFixed(2)
+      console.log('CREATED AT: ', order.createdAt)
+      order.time = this.getFormattedTime((order.createdAt.slice(11, 13) + '') + (order.createdAt.slice(14, 16) + ''))
+      console.log('TIME: ', (order.createdAt.slice(11, 13) + '') + (order.createdAt.slice(14, 16) + ''))
 
       return (
         <div>
+          <h2>Order Details</h2>
           <h5>Click on Product No. for product info</h5>
-          <table>
+          <table className="ui single line table">
             <tbody>
                 <tr>
                   <th>Product No.</th>
@@ -65,9 +77,30 @@ class SingleOrder extends Component {
                 ))}
               </tbody>
             </table>
-            <h4>Shipping Address: { order.streetAddress }, { order.city }, { order.stateCode }, { order.zipCode }</h4>
-            <h4>Order Total: ${ order.total }</h4>
-            <h4>Order Status: { order.status }</h4>
+            <table className="ui definition table">
+                <tbody>
+                  <tr>
+                    <td>Date</td>
+                    <td>{ order.createdAt.slice(0, 10) }</td>
+                  </tr>
+                  <tr>
+                    <td>Time</td>
+                    <td>{ order.time }</td>
+                  </tr>
+                  <tr>
+                    <td>Shipping Address</td>
+                    <td>{ order.streetAddress }, { order.city }, { order.stateCode }, { order.zipCode }</td>
+                  </tr>
+                  <tr>
+                    <td>Total</td>
+                    <td>${ order.total }</td>
+                  </tr>
+                  <tr>
+                    <td>Status</td>
+                    <td>{ order.status }</td>
+                  </tr>
+                </tbody>
+            </table>
         </div>
       )
       } else {

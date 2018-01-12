@@ -82,6 +82,7 @@ class Navbar extends Component {
           </div>
           <a className="item">Cart</a>
         </div>
+
       </div>
     )
   }
