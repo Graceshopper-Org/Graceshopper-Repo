@@ -37,8 +37,8 @@ export const fetchCarts = () => dispatch => {
     .catch(err => console.error('Error fetching cart', err))
 }
 
-// export const deleteCart = (cart) => dispatch => {
-//   dispatch(removeCart(cart.id))
-//   axios.delete(`/api/carts/${cart.id}`)
-//     .catch(err => console.error(`Error deleting cart: ${cart}`, err))
-// }
+export const deleteProduct = (product) => dispatch => {
+  dispatch(removeProduct(product.id))
+  axios.delete(`/api/products/${product.id}`)
+    .catch(err => console.error(`Error deleting product: ${product}`, err))
+}

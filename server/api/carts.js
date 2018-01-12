@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
     .then(carts => res.json(carts))
     .catch(next)
 })
-//
+
 router.get('/:id', (req, res, next) => {
   let id = req.params.id
   Cart.findAll({
