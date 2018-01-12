@@ -18,7 +18,6 @@ const Main = (props) => {
   return (
     <div>
       <Navbar />
-
       {children}
     </div>
   )
