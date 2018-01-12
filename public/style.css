@@ -66,10 +66,11 @@ textarea {
   background-color: lightgray;
 }
 
-.editProductform {
+form {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  background-color: lightgray;
   align-items: flex-start;
 }
 

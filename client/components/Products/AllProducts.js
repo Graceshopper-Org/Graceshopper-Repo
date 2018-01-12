@@ -45,7 +45,7 @@ class AllProducts extends Component {
               <label> Select Category: </label>
               <select name="category" type="text" placeholder="Product category">
               {
-                this.props.category.map(cat => <option>{cat.categoryName}</option>)
+                this.props.category.map(cat => <option value={cat.categoryName}>{cat.categoryName}</option>)
                 }
               </select>
               <label> Price: </label>

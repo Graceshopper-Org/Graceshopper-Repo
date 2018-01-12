@@ -23,9 +23,7 @@ class SingleProduct extends Component {
             </div>
         </div>
       </NavLink>
-      <div id="productPrice">
-        ${ product.price }
-      </div>
+        { product.inventory > 0 ? <div id="productPrice">${product.price}</div> :<div id="productPrice">SOLD OUT</div> }
           { this.props.user.isAdmin ?
             (
               <Button onClick={ this.removeProduct }>
