@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import { fetchCarts } from './store/cart'
+import { fetchCarts, setCart } from './store/cart'
 import {Main, Login, Signup, UserHome, UserOrders, SingleOrder, UserAccount, Cart, AllOrders, SingleAdminOrder} from './components'
 import {fetchCategories} from './store/category'
 import AllProducts from './components/Products/AllProducts'
@@ -22,7 +22,6 @@ import { fetchReviews } from './store/reviews'
 
 class Routes extends Component {
   componentDidMount () {
-    fetchCarts()
     const categoryThunk = fetchCategories()
     const productsThunk = fetchProducts();
     this.props.loadInitialData()
@@ -121,13 +120,16 @@ const mapState = (state) => {
 }
 
 const mapDispatch = (dispatch) => {
+  let cookie = Number(document.cookie.slice(document.cookie.indexOf('=')+1))
   return {
+
     loadInitialData () {
       dispatch(me())
-      dispatch(fetchCarts())
       dispatch(fetchCategories())
       dispatch(fetchProducts())
       dispatch(fetchReviews())
+      console.log('COOKIE: ', cookie)
+      dispatch(setCart(cookie))
     }
   }
 }
