@@ -3,11 +3,13 @@ import { render } from 'react-dom'
 import {connect} from 'react-redux'
 import { Tab, Divider, Form, Select, Input, Button } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom'
+import { addReview } from '../store/reviews'
 
 class Reviews extends Component {
   constructor(props){
     super(props)
     this.averageStars = this.averageStars.bind(this)
+    this.submitHandler = this.submitHandler.bind(this)
   }
 
   averageStars(){
@@ -20,8 +22,21 @@ class Reviews extends Component {
       totalReviews += review.stars
       count++
     })
-    console.log('yup')
+
     return (totalReviews/count).toString()
+  }
+
+  submitHandler(event){
+    event.preventDefault()
+    const {user, productId} = this.props
+
+    let review = {
+      description: event.target.review.value,
+      stars: Number(event.target.stars.value),
+      productId,
+      userId: user.id
+    }
+    addReview(review)
   }
 
   render(){
@@ -45,17 +60,17 @@ class Reviews extends Component {
           {menuItem: 'Write a Review', render: () => <Tab.Pane attached={false}>
             {
               isLoggedIn ?
-                  <Form>
+                  <Form onSubmit={this.submitHandler}>
                     <h4 className="review-spacing">Review by: {user.firstName || 'anonymous'}</h4>
                     <Form.Group>
-                      <Form.Field control={Select} options={[
-                        {key: 5, text: 5, value: 5},
-                        {key: 4, text: 4, value: 4},
-                        {key: 3, text: 3, value: 3},
-                        {key: 2, text: 2, value: 2},
-                        {key: 1, text: 1, value: 1}
-                      ]} placeholder="Stars" />
-                      <Form.Field control={Input} placeholder="What'd you think?" />
+                      <Form.Field name="stars" control="select">
+                        <option value="5">5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                      </Form.Field>
+                      <Form.Field name="review" control={Input} placeholder="What'd you think?" />
                     </Form.Group>
                       <Form.Field control={Button}>Submit</Form.Field>
                     <Form.Group>
@@ -86,4 +101,8 @@ const mapStateToProps = ({reviews, user}, ownProps) => {
 
 }
 
-export default withRouter(connect(mapStateToProps)(Reviews))
+const mapDispatch = (dispatch) => {
+
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatch)(Reviews))
