@@ -49,8 +49,9 @@ class UserOrders extends Component {
 
     return (
       <div>
+      <h2>My Orders</h2>
         <h4>Click on Order No. for order details</h4>
-        <table>
+        <table className="ui celled table">
           <tbody>
             <tr>
               <th>Order No.</th>
