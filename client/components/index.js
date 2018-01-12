@@ -11,6 +11,9 @@ export {default as Cart} from './Cart'
 
 export {default as UserOrders} from './Orders/UserOrders'
 export {default as SingleOrder} from './Orders/SingleOrder'
+export {default as AllOrders} from './Orders/AllOrders'
+export {default as SingleAdminOrder} from './Orders/SingleAdminOrder'
+
 export {default as Navbar} from './navbar'
 export {AllProducts} from './Products/AllProducts'
 export {default as Reviews} from './reviews'

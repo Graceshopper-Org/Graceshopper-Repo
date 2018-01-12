@@ -101,6 +101,11 @@ textarea {
   align-self: center;
 }
 
+#admin-order-select {
+  width: 15%;
+  margin: 0 0 5px 0;
+}
+
 #reviewscontainer{
   margin: 0 5rem;
 }
