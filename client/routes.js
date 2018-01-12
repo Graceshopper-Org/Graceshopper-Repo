@@ -48,7 +48,7 @@ class Routes extends Component {
 
             <Route
               exact
-              path='/'
+              path="/"
               component={AllProducts}
               />
             <Route
@@ -57,7 +57,7 @@ class Routes extends Component {
               component={ProductDetail} />
             <Route
               exact
-              path='/category/:id'
+              path="/category/:id"
               component={Category}
             />
             <Route
