@@ -28,7 +28,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const {isLoggedIn, handleClick, category, products} = this.props
+    const {isLoggedIn, handleClick, category, products, isAdmin, user} = this.props
     return (
       <div id="navbar" className="ui menu">
         <Link className="item" to="/">
@@ -57,10 +57,18 @@ class Navbar extends Component {
             <div className="menu" id="accountmenu" onMouseLeave={this.hideAccountInfo}>
               {
                 isLoggedIn
-                  ? <div>
-                        <Link to="#" className="item">My Account</Link>
-                        <a href="#" onClick={handleClick} className="item">Log Out</a>
-                    </div>
+                  ? (
+                    isAdmin ?
+                      <div>
+                          <Link to={`/user/${user.id}`} className="item">My Account</Link>
+                          <Link to="/admin" className="item">Admin Page</Link>
+                          <a href="#" onClick={handleClick} className="item">Log Out</a>
+                      </div> :
+                      <div>
+                          <Link to="#" className="item">My Account</Link>
+                          <a href="#" onClick={handleClick} className="item">Log Out</a>
+                      </div>
+                    )
                   : <div>
                       <div className="item">
                         <Link to="/login">Log In</Link>
@@ -74,6 +82,7 @@ class Navbar extends Component {
           </div>
           <a className="item">Cart</a>
         </div>
+
       </div>
     )
   }
@@ -84,8 +93,10 @@ class Navbar extends Component {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: !!state.user.id,
+    isAdmin: state.user.isAdmin,
     category: state.category,
-    products: state.prodcuts
+    products: state.prodcuts,
+    user: state.user
   }
 }
 

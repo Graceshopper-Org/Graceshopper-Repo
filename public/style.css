@@ -153,3 +153,25 @@ form {
   text-align: center;
   align-self: center;
 }
+
+#admin-order-select {
+  width: 15%;
+  margin: 0 0 5px 0;
+}
+
+#reviewscontainer{
+  margin: 0 5rem;
+}
+
+.review-spacing{
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 0;
+}
+
+.review-author{
+  font-size: 1rem;
+  color: rgb(153, 153, 153);
+  font-weight: normal;
+  padding-left: .5rem;
+}

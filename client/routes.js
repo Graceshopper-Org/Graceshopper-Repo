@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, UserOrders, SingleOrder} from './components'
+import { fetchCarts } from './store/cart'
+import {Main, Login, Signup, UserHome, UserOrders, SingleOrder, UserAccount, Cart, AllOrders, SingleAdminOrder} from './components'
 import {fetchCategories} from './store/category'
 import AllProducts from './components/Products/AllProducts'
 import ProductDetail from './components/Products/ProductDetail'
@@ -11,6 +12,9 @@ import { fetchProducts } from './store/products'
 import { me } from './store'
 import Category from './components/category'
 import SearchBar from './components/search'
+import Reviews from './components/reviews'
+import { fetchReviews } from './store/reviews'
+
 
 /**
  * COMPONENT
@@ -18,6 +22,7 @@ import SearchBar from './components/search'
 
 class Routes extends Component {
   componentDidMount () {
+    fetchCarts()
     const categoryThunk = fetchCategories()
     const productsThunk = fetchProducts();
     this.props.loadInitialData()
@@ -31,9 +36,13 @@ class Routes extends Component {
         <Main>
           <Switch>
             {/* Routes placed here are available to all visitors */}
+
+
+            <Route exact path="/cart" component={Cart} />
+
             <Route
               exact
-              path='/'
+              path="/"
               component={AllProducts}
               />
             <Route
@@ -42,7 +51,7 @@ class Routes extends Component {
               component={ProductDetail} />
             <Route
               exact
-              path='/category/:id'
+              path="/category/:id"
               component={Category}
             />
             <Route
@@ -53,13 +62,40 @@ class Routes extends Component {
               path="/signup"
               component={Signup}
               />
+            <Route
+              path="/testreview/:id"
+              component={Reviews}
+            />
             {
               isLoggedIn &&
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
-                  <Route path="/home" component={UserHome, AllProducts} />
-                  <Route exact path="/orders" component={UserOrders} />
-                  <Route exact path="/orders/:orderId" component={SingleOrder} />
+
+
+                  <Route
+                   path="/home"
+                   component={UserHome, AllProducts}
+                  />
+                  <Route
+                   exact path="/orders"
+                   component={UserOrders}
+                  />
+                  <Route
+                   exact path="/orders/:orderId"
+                   component={SingleOrder}
+                  />
+                  <Route
+                   exact path="/users/:userId"
+                   component={UserAccount}
+                  />
+                  <Route
+                   exact path="/admin/orders"
+                   component={AllOrders}
+                  />
+                  <Route
+                   exact path="/admin/orders/:orderId"
+                   component={SingleAdminOrder}
+                  />
                 </Switch>
             }
             {/* Displays our Login component as a fallback */}
@@ -88,8 +124,10 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
+      dispatch(fetchCarts())
       dispatch(fetchCategories())
       dispatch(fetchProducts())
+      dispatch(fetchReviews())
     }
   }
 }

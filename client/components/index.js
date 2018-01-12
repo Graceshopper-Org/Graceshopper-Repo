@@ -6,7 +6,15 @@
 export {default as Main} from './main'
 export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
+
+export {default as Cart} from './Cart'
+
 export {default as UserOrders} from './Orders/UserOrders'
 export {default as SingleOrder} from './Orders/SingleOrder'
+export {default as AllOrders} from './Orders/AllOrders'
+export {default as SingleAdminOrder} from './Orders/SingleAdminOrder'
+
 export {default as Navbar} from './navbar'
 export {AllProducts} from './Products/AllProducts'
+export {default as Reviews} from './reviews'
+export {default as UserAccount} from './UserAccount'
