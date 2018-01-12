@@ -21,7 +21,7 @@ class AllProducts extends Component {
     return (
       <div>
         <div>
-          {this.newProductForm()}
+            { this.props.user.isAdmin ? (this.newProductForm()) : <div /> }
         </div>
         <div>
           {this.getProducts()}
@@ -39,11 +39,19 @@ class AllProducts extends Component {
             <h4> Add Product: </h4>
             <div>
               <label> Title: </label>
-              <input name="title" type="text" required placeholder="Product Title" />
+              <input name="title" type="text" required placeholder="Product title" />
               <label> Description: </label>
               <textarea name="desc" type="text" form="addProductsFrom" placeholder="Enter description here..." />
+              <label> Select Category: </label>
+              <select name="category" type="text" placeholder="Product category">
+              {
+                this.props.category.map(cat => <option value={cat.categoryName}>{cat.categoryName}</option>)
+                }
+              </select>
               <label> Price: </label>
-              <input name="price" type="number" required placeholder="enter price" />
+              <input name="price" type="number" required placeholder="Enter price" />
+              <label> Inventory: </label>
+              <input name="inventory" type="number" required placeholder="Enter inventory" />
               <label> Image Url: </label>
               <input name="imageUrl" type="text" defaultValue="/images/defaultphoto.jpg" />
             </div>
@@ -63,8 +71,9 @@ class AllProducts extends Component {
           All Products
         </div>
         {
-          this.props.products
-            .map(product => <SingleProduct product={product} key={product.id} />)
+          this.props.products ?
+            this.props.products
+              .map(product => <SingleProduct product={product} key={product.id} />) : <div />
         }
       </div>
     )
@@ -76,18 +85,28 @@ class AllProducts extends Component {
       title: event.target.title.value,
       description: event.target.desc.value,
       price: event.target.price.value,
-      photo: event.target.imageUrl.value
+      inventory: event.target.inventory.value,
+      photo: event.target.imageUrl.value,
+      categories: [event.target.category.value]
     };
     this.props.addProduct(product);
     event.target.title.value = '';
     event.target.desc.value = '';
+    event.target.category.value = '';
     event.target.price.value = '';
+    event.target.inventory.value = '';
     event.target.imageUrl.value = '';
   }
 
 }
 
-const mapStateToProps = ({ products }) => ({ products });
+const mapStateToProps = (state) => {
+  return {
+    products: state.products,
+    user: state.user,
+    category: state.category
+  }
+}
 
 const mapDispatchToProps = { addProduct };
 

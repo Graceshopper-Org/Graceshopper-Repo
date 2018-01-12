@@ -70,9 +70,11 @@ class Routes extends Component {
               isLoggedIn &&
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
+
+
                   <Route
                    path="/home"
-                   component={UserHome}
+                   component={UserHome, AllProducts}
                   />
                   <Route
                    exact path="/orders"
@@ -139,5 +141,3 @@ Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
-
-

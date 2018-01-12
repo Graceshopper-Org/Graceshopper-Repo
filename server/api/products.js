@@ -64,13 +64,46 @@ router.post('/', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   let id = req.params.id
-  Product.findById(id)
+  Product.findOne({
+    where: { id },
+    include: [{
+      model: Category
+    }]
+  })
   .then(product => {
     product.update(req.body)
   })
-  .then(() => res.sendStatus(200))
+  .then(() => res.json(req.body).status(200))
   .catch(next)
 })
+
+/*
+THIS IS THE ATTEMPT AT THE ROUTE TO UPDATE PRODUCT + Category
+
+:( no working sad
+
+router.put('/:id', (req, res, next) => {
+  let id = req.params.id
+  Product.findOne({
+    where: { id },
+    include: [{
+      model: Category
+    }]
+  })
+  .then(product => {
+    Category.findOne({
+      where: {
+        id: product.categories[0].dataValues.id
+      }
+    })
+    .then(totalproduct => {
+      totalproduct.update(req.body)
+    })
+  })
+  .then(() => res.json(req.body).status(200))
+  .catch(next)
+})
+*/
 
 router.delete('/:id', (req, res, next) => {
   let id = req.params.id
