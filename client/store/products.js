@@ -11,7 +11,7 @@ const DELETE_PRODUCT = 'DELETE_PRODUCT';
 const initProduct = products => ({ type: INIT_PRODUCTS, products});
 const createProduct = product => ({ type: CREATE_PRODUCT, product });
 const editProduct = product => ({ type: EDIT_PRODUCT, product});
-const deleteProduct = product => ({ type: DELETE_PRODUCT, product});
+const deleteProduct = id => ({ type: DELETE_PRODUCT, id });
 
 // PRODUCT REDUCER
 export default function reducer(products = [], action) {
@@ -29,7 +29,7 @@ export default function reducer(products = [], action) {
       ));
 
     case DELETE_PRODUCT:
-      return products.filter(product => product.id !== action.product.id);
+      return products.filter(product => product.id !== action.id);
 
     default:
       return products;
@@ -62,8 +62,5 @@ export const updateProduct = product => dispatch => {
 export const removeProduct = id => dispatch => {
   dispatch(deleteProduct(id));
   axios.delete(`/api/products/${id}`)
-  .then(() => {
-    history.push(`/`)
-    })
     .catch(err => console.error(`Error deleting product: ${id}!`, err));
 }

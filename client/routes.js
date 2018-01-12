@@ -18,7 +18,6 @@ import SearchBar from './components/search'
 
 class Routes extends Component {
   componentDidMount () {
-
     const categoryThunk = fetchCategories()
     const productsThunk = fetchProducts();
     this.props.loadInitialData()
@@ -58,7 +57,7 @@ class Routes extends Component {
               isLoggedIn &&
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
-                  <Route path="/home" component={UserHome} />
+                  <Route path="/home" component={UserHome, AllProducts} />
                   <Route exact path="/orders" component={UserOrders} />
                   <Route exact path="/orders/:orderId" component={SingleOrder} />
                 </Switch>
@@ -104,5 +103,3 @@ Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
-
-

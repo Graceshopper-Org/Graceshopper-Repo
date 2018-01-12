@@ -15,21 +15,23 @@ class SingleProduct extends Component {
     const { product } = this.props;
     return (
       <div className="productView">
+        <NavLink className="single-product-link" activeClassName="active" to={`/products/${product.id}`}>
         <img className="productImage" src={ product.photo } />
         <div className="productInfo">
-          <NavLink className="single-product-link" activeClassName="active" to={`/products/${product.id}`}>
             <div id="productTitle">
               { product.title }
             </div>
-          </NavLink>
-          <div id="productPrice">
-            ${ product.price }
-          </div>
         </div>
-            <Button
-            onClick={ this.removeProduct }>
-            Remove
-          </Button>
+      </NavLink>
+      <div id="productPrice">
+        ${ product.price }
+      </div>
+          { this.props.user.isAdmin ?
+            (
+              <Button onClick={ this.removeProduct }>
+                Remove
+              </Button>
+            ) : <div /> }
       </div>
     )
   }

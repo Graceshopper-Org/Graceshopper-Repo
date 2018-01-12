@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import _ from 'lodash';
-import { updateProduct } from '../../store/products';
-import { addProduct } from '../../store/products';
-import { removeProduct } from '../../store/products';
+import { updateProduct, addProduct, removeProduct } from '../../store/products';
 import { Button } from 'semantic-ui-react'
 import history from '../../history'
 
 
 class ProductDetail extends Component {
+
   constructor(props) {
     super(props);
     this.editProductInfo = this.editProductInfo.bind(this);
@@ -20,24 +19,30 @@ class ProductDetail extends Component {
   render() {
     return (
       <div className="singleProductView">
-        <div className="current-product">
-          <div>
             {
               this.props.products.filter(product => product.id === this.props.product.id)
                 .map(product => (
-                  <div>
-                    <div key={product.id}>
-                      <h3> {product.title} </h3>
-                      <img className="productImage" src={product.photo} />
-                      <div className="editTitles">${product.price}</div>
-                      <p>{product.description}</p>
-                       <NavLink to={`/`}>
-                         <h2>back to all products</h2>
+                    <div className="current-product-header" key={product.id}>
+                      <div className="current-product">
+                      <img className="product-view-image" src={product.photo} />
+                      <div className="product-view-info">
+                      <div className="product-view-title"> {product.title} </div>
+                      <div className="product-view-price">${product.price}</div>
+                      <div className="product-view-desc">{product.description}</div>
+                      <div className="product-view-category">category :
+                        <NavLink to={`/category/${this.props.category[0].id}`}>
+                        {this.props.category[0].categoryName}
                        </NavLink>
-                    </div>
+                       </div>
+                      <button>add to cart</button>
+                       <NavLink to={`/`}>
+                         <h3>back to all products</h3>
+                       </NavLink>
+                     </div>
+                   </div>
                         { this.props.user.isAdmin ? (
                           <div className="product-edit-div">
-                            <div className="editProductform" key={product.id} onSubmit={this.editProductInfo}>
+                            <form className="editProductform" key={product.id} onSubmit={this.editProductInfo}>
                               <h4> ADMIN ONLY </h4>
                               <h4>Edit Product Details:</h4>
                               <div className="editTitles">Title:</div>
@@ -58,6 +63,12 @@ class ProductDetail extends Component {
                                 type="text"
                                 defaultValue={product.description}
                                 />
+                              <div className="editTitles">Category:</div>
+                                <input
+                                  name="category"
+                                  type="text"
+                                  defaultValue={this.props.category[0].categoryName}
+                                  />
                               <div className="editTitles">Image Url:</div>
                               <input
                                 name="photo"
@@ -75,7 +86,7 @@ class ProductDetail extends Component {
                                 onClick={ this.removeProduct }>
                                 Remove
                               </Button>
-                            </div>
+                            </form>
                           </div>
                         ) : <div />
                     }
@@ -83,15 +94,11 @@ class ProductDetail extends Component {
                   )
                 )
               }
-          </div>
-        </div>
       </div>
     );
   }
 
   /*
-
-
 
 /*
 ====== ignore this feature - possible backburner
@@ -116,16 +123,16 @@ removeProduct(event) {
   event.stopPropagation();
   removeProduct(product.id);
   history.push('/')
-
 }
 
   editProductInfo(event) {
     event.preventDefault();
     const product = {
-      id: this.props.product.id,
+      id: this.props.products.id,
       title: event.target.title.value,
       price: event.target.price.value,
       description: event.target.desc.value,
+      categories: [event.target.category.value],
       photo: event.target.photo.value
     };
     this.props.updateProduct(product)
@@ -137,12 +144,13 @@ removeProduct(event) {
 
 }
 
-const mapStateToProps = ({ products, user }, ownProps) => {
+const mapStateToProps = ({ products, user, category }, ownProps) => {
   const productParamId = Number(ownProps.match.params.id);
   return {
     product: _.find(products, product => product.id === productParamId),
     products,
-    user
+    user,
+    category
   };
 }
 
