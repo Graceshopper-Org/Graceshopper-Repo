@@ -29,7 +29,7 @@ router.get('/:id', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   Review.findOrCreate({
-    where:{
+    where: {
       description: req.body.description,
       stars: req.body.stars,
       productId: req.body.productId,

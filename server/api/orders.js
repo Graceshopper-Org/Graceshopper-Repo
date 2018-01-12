@@ -14,6 +14,15 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
+router.get('/users/:userId', (req, res, next) => {
+  let userId = req.params.userId
+  Order.findAll({
+    where: { userId }
+  })
+  .then(orders => res.json(orders))
+  .catch(next)
+})
+
 router.get('/:id', (req, res, next) => {
   let id = req.params.id
   Order.findById(id)
@@ -22,12 +31,7 @@ router.get('/:id', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  Order.findOrCreate({
-    where: {
-      products: req.body.products
-    }
-  })
-  .spread(order => order)
+  Order.create(req.body)
   .then(order => res.json(order))
   .catch(next)
 })

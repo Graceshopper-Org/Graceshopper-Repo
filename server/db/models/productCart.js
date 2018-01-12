@@ -6,7 +6,7 @@ const productCart = db.define('productCart', {
     type: Sequelize.INTEGER
   },
   price: {
-    type: Sequelize.DECIMAL(10, 2)
+    type: Sequelize.INTEGER
   }
 })
 

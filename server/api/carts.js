@@ -81,20 +81,40 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   let id = req.params.id
   let promiseArray = []
-  req.body.products.forEach(productElem => {
-    promiseArray.push(
-      productCart.findOne({
-        where: {
-          productId: productElem.id,
-          cartId: id
-        }
+
+  if (req.body.newProduct) {
+    Cart.findById(id)
+      .then(cart => {
+          Product.findById(req.body.newProduct.id)
+          .then(product => {
+            productCart.create({
+              cartId: cart.id,
+              productId: req.body.newProduct.id,
+              quantity: req.body.newProduct.quantity,
+              price: product.price
+            })
+          })
       })
-      .then(productCartRow => productCartRow.update({ quantity: productElem.quantity }))
-    )
-  })
-  Promise.all(promiseArray)
-  .then(() => res.sendStatus(200))
-  .catch(next)
+      .then(() => res.sendStatus(200))
+      .catch(next)
+    }
+    /// do we need an ability to update the product price in a cart?
+  if (req.body.products) {
+    req.body.products.forEach(productElem => {
+      promiseArray.push(
+        productCart.findOne({
+          where: {
+            productId: productElem.id,
+            cartId: id
+          }
+        })
+        .then(productCartRow => productCartRow.update({ quantity: productElem.quantity }))
+      )
+    })
+    Promise.all(promiseArray)
+      .then(() => res.sendStatus(200))
+      .catch(next)
+  }
 })
 
 router.delete('/:id', (req, res, next) => {
