@@ -1,8 +1,11 @@
 const router = require('express').Router()
 const User = require('../db/models/user')
+const Cart = require('../db/models/cart')
+const ProductCart = require('../db/models/productCart')
 module.exports = router
 
 router.post('/login', (req, res, next) => {
+  let returnCart
   User.findOne({where: {email: req.body.email}})
     .then(user => {
       if (!user) {
@@ -10,7 +13,34 @@ router.post('/login', (req, res, next) => {
       } else if (!user.correctPassword(req.body.password)) {
         res.status(401).send('Incorrect password')
       } else {
-        req.login(user, err => (err ? next(err) : res.json(user)))
+        req.login(user, err => (err ? next(err)
+        : Cart.findOne(
+          {where: {
+            userId: user.id,
+            status: 'open'
+          }}
+        )
+        .then(result => {
+          if (result !== null){
+            returnCart = result
+            ProductCart.findAll(
+              {where: {
+                cartId: result.id
+              }}
+            )
+            .then(nextResult => {
+              if (nextResult !== null){
+                Cart.destroy({
+                  where: {id: req.cookies.cart}
+                })
+                .then(() => {
+                  console.log('returnCart', returnCart)
+                  res.json(returnCart)})
+              }
+            })
+          }
+        })
+        ))
       }
     })
     .catch(next)
@@ -19,7 +49,18 @@ router.post('/login', (req, res, next) => {
 router.post('/signup', (req, res, next) => {
   User.create(req.body)
     .then(user => {
-      req.login(user, err => (err ? next(err) : res.json(user)))
+      req.login(user, err => (err ? next(err)
+      : Cart.findOne(
+        {where: {
+          id: req.cookies.cart
+        }})
+        .then(() => {
+          Cart.update({where: {userId: user.id}})
+        })
+        .then(() => {
+          res.json(user)
+        })
+      ))
     })
     .catch(err => {
       if (err.name === 'SequelizeUniqueConstraintError') {
@@ -36,7 +77,17 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res) => {
-  res.json(req.user)
+  let cartId
+  if (!req.cookies.cart){
+    Cart.create()
+    .then(cart => {cartId = cart.dataValues.id})
+    .then(() => {
+      res.cookie('cart', cartId).json(req.user)
+    })
+  } else {
+    console.log('COOKIE', req.cookies.cart)
+    res.json(req.user)
+  }
 })
 
 router.use('/google', require('./google'))
