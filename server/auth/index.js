@@ -96,6 +96,7 @@ router.get('/me', (req, res) => {
     Cart.create()
     .then(cart => {cartId = cart.dataValues.id})
     .then(() => {
+      console.log('CREATED COOKIE!: ', cartId)
       res.cookie('cart', cartId).json(req.user)
     })
   } else {
