@@ -16,8 +16,8 @@ router.post('/login', (req, res, next) => {
         req.login(user, err => (err ? next(err)
         : Cart.findOne(
           {where: {
-            userId: user.id,
-            status: 'open'
+            $and: [{userId: user.id},
+              {status: 'open'}]
           }}
         )
         .then(oldCart => {
@@ -29,7 +29,6 @@ router.post('/login', (req, res, next) => {
               }}
             )
             .then(products => {
-              console.log('products', products)
               if (products !== null){
                 Cart.destroy({
                   where: {id: req.cookies.cart}
@@ -51,6 +50,8 @@ router.post('/login', (req, res, next) => {
               )
               }
             })
+          } else {
+            Cart.update({userId: user.id}, {where: {id: req.cookies.cart}})
           }
         })
         ))
@@ -68,7 +69,7 @@ router.post('/signup', (req, res, next) => {
           id: req.cookies.cart
         }})
         .then(() => {
-          Cart.update({where: {userId: user.id}})
+          Cart.update({userId: user.id}, {where: {id: req.cookies.cart}})
         })
         .then(() => {
           res.json(user)
@@ -86,7 +87,7 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/logout', (req, res) => {
   req.logout()
-  res.redirect('/')
+  res.clearCookie('cart').redirect('/home')
 })
 
 router.get('/me', (req, res) => {
