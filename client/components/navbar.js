@@ -31,6 +31,9 @@ class Navbar extends Component {
     const {isLoggedIn, handleClick, category, products} = this.props
     return (
       <div id="navbar" className="ui menu">
+
+        <img id="logo" src="/images/logo.png" />
+
         <Link className="item" to="/">
           <img id="logo" src="/images/logo.png" />
         </Link>
@@ -74,6 +77,7 @@ class Navbar extends Component {
           </div>
           <a className="item">Cart</a>
         </div>
+
       </div>
     )
   }
