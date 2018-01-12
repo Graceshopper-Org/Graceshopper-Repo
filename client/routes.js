@@ -16,6 +16,8 @@ import { fetchProducts } from './store/products'
 import { me } from './store'
 import Category from './components/category'
 import SearchBar from './components/search'
+import Reviews from './components/reviews'
+import { fetchReviews } from './store/reviews'
 
 
 /**
@@ -68,7 +70,10 @@ class Routes extends Component {
               path="/signup"
               component={Signup}
               />
-
+            <Route
+              path="/testreview/:id"
+              component={Reviews}
+            />
             {
               isLoggedIn &&
                 <Switch>
@@ -117,12 +122,10 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
-
       dispatch(fetchCarts())
-
       dispatch(fetchCategories())
       dispatch(fetchProducts())
-
+      dispatch(fetchReviews())
     }
   }
 }

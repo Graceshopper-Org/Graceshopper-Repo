@@ -100,3 +100,20 @@ textarea {
   text-align: center;
   align-self: center;
 }
+
+#reviewscontainer{
+  margin: 0 5rem;
+}
+
+.review-spacing{
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 0;
+}
+
+.review-author{
+  font-size: 1rem;
+  color: rgb(153, 153, 153);
+  font-weight: normal;
+  padding-left: .5rem;
+}
