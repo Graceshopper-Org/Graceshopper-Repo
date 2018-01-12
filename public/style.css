@@ -100,3 +100,8 @@ textarea {
   text-align: center;
   align-self: center;
 }
+
+#admin-order-select {
+  width: 15%;
+  margin: 0 0 5px 0;
+}

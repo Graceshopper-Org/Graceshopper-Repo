@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { updateOrderThunkCreator } from '../../store/adminOrders'
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleSubmit: (orderId, status) => {
+      let updateThunk = updateOrderThunkCreator(orderId, status)
+      dispatch(updateThunk)
+    }
+  }
+}
 
-
-class SingleOrder extends Component {
+class SingleAdminOrder extends Component {
 
   constructor() {
     super()
     this.state = {
-      order: {}
+      order: {},
+      status: ''
     }
     this.getOrder = this.getOrder.bind(this)
+    this.getFormattedTime = this.getFormattedTime.bind(this)
+    this.localHandleSubmit = this.localHandleSubmit.bind(this)
   }
 
   getOrder(orderId) {
@@ -21,7 +33,8 @@ class SingleOrder extends Component {
       })
       .then(order => {
         this.setState({
-          order: order
+          order: order,
+          status: order.status
         })
       })
       .catch(err => console.error(err))
@@ -40,6 +53,15 @@ class SingleOrder extends Component {
     return hours + ':' + minutes + ' ' + amPm;
   }
 
+  localHandleSubmit (evt) {
+    evt.preventDefault()
+    let status = evt.target.status.value
+    this.setState({
+      status
+    })
+    this.props.handleSubmit(this.state.order.id, status)
+  }
+
   render () {
 
     if (this.state.order.id) {
@@ -55,7 +77,7 @@ class SingleOrder extends Component {
 
       return (
         <div>
-          <h2>Order Details</h2>
+          <h2>Customer Order Details</h2>
           <h5>Click on Product No. for product info</h5>
           <table className="ui single line table">
             <tbody>
@@ -95,10 +117,19 @@ class SingleOrder extends Component {
                   </tr>
                   <tr>
                     <td>Status</td>
-                    <td>{ order.status }</td>
+                    <td>{ this.state.status }</td>
                   </tr>
                 </tbody>
             </table>
+            <form onSubmit={ this.localHandleSubmit }>
+              <select className="ui fluid selection dropdown" id="admin-order-select" name="status">
+                <option value="Created">Created</option>
+                <option value="Processing">Processing</option>
+                <option value="Cancelled">Cancelled</option>
+                <option value="Completed">Completed</option>
+              </select>
+              <button type="submit" className="ui button" role="button">Update status</button>
+            </form>
         </div>
       )
       } else {
@@ -107,7 +138,8 @@ class SingleOrder extends Component {
         )
       }
   }
-
 }
 
-export default SingleOrder
+const ConnectedSingleAdminOrder = connect('', mapDispatchToProps)(SingleAdminOrder)
+
+export default ConnectedSingleAdminOrder

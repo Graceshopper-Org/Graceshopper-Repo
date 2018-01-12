@@ -35,9 +35,6 @@ class UserOrders extends Component {
 
 
     if (this.props.orders.length > 0) {
-
-      console.log('ORDERS: ', this.props.orders)
-
       this.props.orders.forEach(order => {
         let orderTotal = 0;
         let orderProducts = order.products.map(product => JSON.parse(product))

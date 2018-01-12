@@ -3,12 +3,8 @@ import { connect } from 'react-redux'
 import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-
-
 import { fetchCarts } from './store/cart'
-
-
-import {Main, Login, Signup, UserHome, UserOrders, SingleOrder, UserAccount, Cart} from './components'
+import {Main, Login, Signup, UserHome, UserOrders, SingleOrder, UserAccount, Cart, AllOrders, SingleAdminOrder} from './components'
 import {fetchCategories} from './store/category'
 import AllProducts from './components/Products/AllProducts'
 import ProductDetail from './components/Products/ProductDetail'
@@ -24,13 +20,9 @@ import SearchBar from './components/search'
 
 class Routes extends Component {
   componentDidMount () {
-
     fetchCarts()
-
-
     const categoryThunk = fetchCategories()
     const productsThunk = fetchProducts();
-
     this.props.loadInitialData()
   }
 
@@ -89,6 +81,14 @@ class Routes extends Component {
                    exact path="/users/:userId"
                    component={UserAccount}
                   />
+                  <Route
+                   exact path="/admin/orders"
+                   component={AllOrders}
+                  />
+                  <Route
+                   exact path="/admin/orders/:orderId"
+                   component={SingleAdminOrder}
+                  />
                 </Switch>
             }
             {/* Displays our Login component as a fallback */}
@@ -117,9 +117,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
-
       dispatch(fetchCarts())
-
       dispatch(fetchCategories())
       dispatch(fetchProducts())
 
