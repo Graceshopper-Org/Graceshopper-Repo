@@ -117,11 +117,26 @@ router.put('/:id', (req, res, next) => {
   }
 })
 
-router.delete('/:id', (req, res, next) => {
-  let id = req.params.id
+router.delete('/:cartId', (req, res, next) => {
+  let id = req.params.cartId
   Cart.destroy({
     where: {
       id
+    }
+  })
+  .then(() => {
+    res.sendStatus(204)
+  })
+  .catch(next)
+})
+
+router.delete('/:cartId/delete-product/:productId', (req, res, next) => {
+  let cartId = req.params.cartId
+  let productId = req.params.productId
+  productCart.destroy({
+    where: {
+      cartId,
+      productId
     }
   })
   .then(() => {
