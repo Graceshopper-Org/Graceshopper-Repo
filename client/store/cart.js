@@ -42,12 +42,20 @@ export const fetchCarts = () => dispatch => {
     .catch(err => console.error('Error fetching cart', err))
 }
 
-export const setCart = (session) => dispatch => {
-  axios.get(`/api/carts/${session}`)
+export const setCart = (cartId, userId) => dispatch => {
+  if(userId){
+    axios.get(`/api/carts/user/${userId}`)
     .then(res => {
       dispatch(setActiveCart(res.data))
     })
     .catch(err => console.error('Error fetching cart', err))
+  }else{
+    axios.get(`/api/carts/${cartId}`)
+    .then(res => {
+      dispatch(setActiveCart(res.data))
+    })
+    .catch(err => console.error('Error fetching cart', err))
+  }
 }
 
 export const deleteProduct = (product) => dispatch => {

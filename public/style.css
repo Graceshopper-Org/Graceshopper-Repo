@@ -175,3 +175,23 @@ form {
   font-weight: normal;
   padding-left: .5rem;
 }
+
+#cart{
+  margin: 0 2rem;
+  max-width: 500px;
+}
+
+.cart-options{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+    align-items: center;
+    margin-top: 1rem;
+    width: 125px;
+}
+
+.price{
+  font-weight: bold;
+  color: rgb(36, 181, 36);
+  padding-top: 1rem;
+}

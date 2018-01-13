@@ -24,7 +24,15 @@ class Routes extends Component {
   componentDidMount () {
     const categoryThunk = fetchCategories()
     const productsThunk = fetchProducts();
-    this.props.loadInitialData()
+    const {isLoggedIn, userId} = this.props
+
+    let cookie = Number(document.cookie.slice(document.cookie.indexOf('=')+1))
+
+    if(isLoggedIn){
+      this.props.loadInitialData(cookie, userId)
+    }else{
+      this.props.loadInitialData(cookie)
+    }
   }
 
   render () {
@@ -115,21 +123,22 @@ const mapState = (state) => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userId: state.user.id
   }
 }
 
 const mapDispatch = (dispatch) => {
-  let cookie = Number(document.cookie.slice(document.cookie.indexOf('=')+1))
   return {
 
-    loadInitialData () {
+    loadInitialData (cookie, userId) {
       dispatch(me())
       dispatch(fetchCategories())
       dispatch(fetchProducts())
       dispatch(fetchReviews())
       console.log('COOKIE: ', cookie)
-      dispatch(setCart(cookie))
+      console.log('USER ID: ', userId)
+      dispatch(setCart(cookie, userId))
     }
   }
 }
