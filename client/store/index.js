@@ -16,7 +16,7 @@ const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
   createLogger({collapsed: true})
 ))
-const store = createStore(reducer, middleware)
+export const store = createStore(reducer, middleware)
 
 export default store
 export * from './user'
