@@ -4,7 +4,7 @@ import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import { fetchCarts } from './store/cart'
-import {Main, Login, Signup, UserHome, UserOrders, SingleOrder, UserAccount, Cart, AllOrders, SingleAdminOrder} from './components'
+import {Main, Login, Signup, UserHome, UserOrders, SingleOrder, UserAccount, Cart, AllOrders, SingleAdminOrder, Admin, AllUsers} from './components'
 import {fetchCategories} from './store/category'
 import AllProducts from './components/Products/AllProducts'
 import ProductDetail from './components/Products/ProductDetail'
@@ -36,10 +36,7 @@ class Routes extends Component {
         <Main>
           <Switch>
             {/* Routes placed here are available to all visitors */}
-
-
             <Route exact path="/cart" component={Cart} />
-
             <Route
               exact
               path="/"
@@ -87,12 +84,20 @@ class Routes extends Component {
                    component={UserAccount}
                   />
                   <Route
+                   exact path="/admin"
+                   component={Admin}
+                  />
+                  <Route
                    exact path="/admin/orders"
                    component={AllOrders}
                   />
                   <Route
                    exact path="/admin/orders/:orderId"
                    component={SingleAdminOrder}
+                  />
+                  <Route
+                   exact path="/users"
+                   component={AllUsers}
                   />
                 </Switch>
             }
