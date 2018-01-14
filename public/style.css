@@ -22,7 +22,7 @@ form div {
 
 textarea {
    resize: none;
-}
+ }
 
 #navbar {
   margin-top: -5px;
@@ -61,20 +61,73 @@ textarea {
 
 .product-edit-div {
   display: flex;
-  justify-content: flex-start;
-  margin-left: 1rem;
+  justify-content: center;
+  align-content: center;
+  background-color: lightgray;
 }
 
-.editProductform {
+form {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  background-color: lightgray;
   align-items: flex-start;
 }
 
 .editTitles {
   font-weight: bold;
 }
+
+.singleProductView {
+  display: flex;
+  flex-direction: column;
+}
+
+.current-product-header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.current-product {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.product-view-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 6rem;
+}
+
+.product-view-title {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  padding-bottom: 2rem;
+}
+
+.product-view-image {
+  width: 30%;
+  height: 30%;
+}
+
+.product-view-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: green;
+}
+
+.product-view-desc {
+  display: flex;
+  font-style: italic;
+  width: 300px;
+  overflow-wrap: break-word;
+}
+
 
 #addProductsFrom {
   display: flex;
@@ -121,4 +174,24 @@ textarea {
   color: rgb(153, 153, 153);
   font-weight: normal;
   padding-left: .5rem;
+}
+
+#cart{
+  margin: 0 2rem;
+  max-width: 500px;
+}
+
+.cart-options{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+    align-items: center;
+    margin-top: 1rem;
+    width: 125px;
+}
+
+.price{
+  font-weight: bold;
+  color: rgb(36, 181, 36);
+  padding-top: 1rem;
 }

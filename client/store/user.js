@@ -46,8 +46,9 @@ export const logout = () =>
     axios.post('/auth/logout')
       .then(_ => {
         dispatch(removeUser())
-        history.push('/login')
+        return axios.get('/auth/me')
       })
+      .then(() => location.reload(true))
       .catch(err => console.log(err))
 
 /**

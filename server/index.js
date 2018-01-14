@@ -11,6 +11,7 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+const cookieParser = require('cookie-parser')
 module.exports = app
 
 /**
@@ -34,6 +35,9 @@ passport.deserializeUser((id, done) =>
 const createApp = () => {
   // logging middleware
   app.use(morgan('dev'))
+
+  // cookie parsing middleware
+  app.use(cookieParser())
 
   // body parsing middleware
   app.use(bodyParser.json())

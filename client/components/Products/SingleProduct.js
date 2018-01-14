@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { removeProduct } from '../../store/products';
 import { Button } from 'semantic-ui-react'
+import history from '../../history'
 
 class SingleProduct extends Component {
   constructor(props) {
@@ -14,21 +15,21 @@ class SingleProduct extends Component {
     const { product } = this.props;
     return (
       <div className="productView">
+        <NavLink className="single-product-link" activeClassName="active" to={`/products/${product.id}`}>
         <img className="productImage" src={ product.photo } />
         <div className="productInfo">
-          <NavLink className="single-product-link" activeClassName="active" to={`/products/${product.id}`}>
             <div id="productTitle">
               { product.title }
             </div>
-          </NavLink>
-          <div id="productPrice">
-            ${ product.price }
-          </div>
         </div>
-            <Button
-            onClick={ this.removeProduct }>
-            Remove
-          </Button>
+      </NavLink>
+        { product.inventory > 0 ? <div id="productPrice">${product.price}</div> :<div id="productPrice">SOLD OUT</div> }
+          { this.props.user.isAdmin ?
+            (
+              <Button onClick={ this.removeProduct }>
+                Remove
+              </Button>
+            ) : <div /> }
       </div>
     )
   }
@@ -36,14 +37,18 @@ class SingleProduct extends Component {
   removeProduct(event) {
     const { removeProduct, product } = this.props;
     event.stopPropagation();
-    alert('are you sure you want to remove this product?')
     removeProduct(product.id);
-    window.location.reload()
+    history.push('/')
   }
 
 }
 
-const mapStateToProps = ({ products }) => ({ products });
+const mapStateToProps = (state) => {
+  return {
+    products: state.products,
+    user: state.user
+  }
+}
 
 const mapDispatchToProps = { removeProduct };
 
