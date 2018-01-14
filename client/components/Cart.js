@@ -66,4 +66,3 @@ export default connect(mapStateToProps, mapDispatch)(Cart)
 //Add product
 //remove product
 //increase or decrease quantity
-
