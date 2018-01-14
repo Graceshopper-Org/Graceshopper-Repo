@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { updateProduct, addProduct, removeProduct } from '../../store/products';
 import { Button } from 'semantic-ui-react'
 import history from '../../history'
+import Reviews from '../reviews'
 
 
 class ProductDetail extends Component {
@@ -72,6 +73,7 @@ class ProductDetail extends Component {
                   )
                 )
               }
+              <Reviews />
       </div>
     );
   }

@@ -66,10 +66,6 @@ class Routes extends Component {
               path="/signup"
               component={Signup}
               />
-            <Route
-              path="/testreview/:id"
-              component={Reviews}
-            />
             {
               isLoggedIn &&
                 <Switch>
