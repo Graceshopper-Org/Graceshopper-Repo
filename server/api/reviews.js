@@ -28,16 +28,31 @@ router.get('/:id', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
+  let reviewId
   Review.findOrCreate({
     where: {
       description: req.body.description,
       stars: req.body.stars,
       productId: req.body.productId,
       userId: req.body.userId
-    }
+    },
+    include: [User]
   })
   .spread(review => review)
-  .then(review => res.json(review))
+  .then(review => reviewId=review.id)
+  .then(() => {
+    Review.findOne({
+      where: {
+        id: reviewId
+      },
+      include: [{
+        model: User,
+        attributes: ['firstName', 'lastName']
+      }]
+    })
+    .then(review => res.json(review))
+    .catch(next)
+  })
   .catch(next)
 })
 
