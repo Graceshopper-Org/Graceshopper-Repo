@@ -120,9 +120,6 @@ class ProductDetail extends Component {
               )
             )
           }
-                  </div>
-                  )
-                )
               }
               <Reviews />
       </div>
