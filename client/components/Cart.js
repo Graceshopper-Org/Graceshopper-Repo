@@ -1,12 +1,11 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { deleteProduct, setCart, store } from '../store'
-import { Button, Icon, Item, Image as ImageComponent, Dropdown, Menu } from 'semantic-ui-react'
+import { deleteProduct } from '../store/cart'
+import { Button, Item, Image as ImageComponent, Dropdown, Menu } from 'semantic-ui-react'
 
 const Cart = props => {
 
-    const { submit, carts, userId } = props
-    console.log('userId in Cart component', userId)
+    const { carts } = props
 
     const quantityOptions = [
       {key: 1, text: '1', value: 1},
@@ -20,8 +19,6 @@ const Cart = props => {
       {key: 9, text: '9', value: 9},
       {key: 10, text: '10', value: 10}
     ]
-    console.log('carts in Cart component: ', carts)
-    console.log('carts.length', carts.length)
 
     return (
       <div id="cart">
@@ -29,8 +26,6 @@ const Cart = props => {
         <Item.Group divided>
         {
           carts.length && carts[0].products.map(product => {
-            console.log('Product', product)
-            console.log('product.title', product.title)
             return (
                 <Item key={product.id}>
                   <Item.Image size='small' src={product.photo} />
@@ -44,7 +39,12 @@ const Cart = props => {
                   <Item>
                   <Dropdown text={product.productCart.quantity.toString()} scrolling options={quantityOptions} />
                   </Item>
-                  <button value={product.id} onClick={submit}>Remove</button>
+                  <Button
+                    onClick={() =>
+                    props.deleteProduct(product.productCart.cartId, product.id)
+                    }>
+                    x
+                  </Button>
                   </div>
                   </Item.Content>
                 </Item>
@@ -61,23 +61,11 @@ const Cart = props => {
 const mapStateToProps = state => {
   return {
     carts: state.carts,
-    user: state.user,
-    userId: state.user.id
-  }
-
-}
-
-const mapDispatch = dispatch => {
-  return {
-    submit(event) {
-      console.log("EVENT: ", event)
-      event.preventDefault()
-      const currentProduct = event.target.value
-      console.log('Current Product: ', currentProduct)
-      dispatch(deleteProduct(currentProduct))
-    }
+    user: state.user
   }
 }
+
+const mapDispatch = { deleteProduct }
 
 export default connect(mapStateToProps, mapDispatch)(Cart)
 
