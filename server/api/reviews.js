@@ -60,6 +60,7 @@ router.put('/:id', (req, res, next) => {
   let id = req.params.id
   Review.findById(id)
   .then(review => {
+    // REVIEW: lotso params
     review.update(req.body)
   })
   .then(() => res.sendStatus(200))

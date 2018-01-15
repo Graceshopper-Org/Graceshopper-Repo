@@ -38,7 +38,10 @@ router.put('/:id', (req, res, next) => {
   let id = req.params.id
   User.findById(id)
   .then(user => {
-    user.update(req.body)
+    // REVIEW: dangerous acceptance of params
+    // req.body === { isAdmin: true }
+    user.update(_.pick(req.body, *User.paramsThatAUserCanUpdate))
+    // user.update(_.pick(req.body, *User.paramsThatAnAdminCanUpdate))
   })
   .then(() => res.sendStatus(200))
   .catch(next)

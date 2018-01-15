@@ -43,6 +43,7 @@ router.get(`/user/:userId`, (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
+  // REVIEW: very nested
   Cart.create()
     .then(cart => {
 

@@ -29,6 +29,54 @@ router.get('/:id', (req, res, next) => {
   .catch(next)
 })
 
+// const adminGateway = (req, res, next) => {
+//  if (req.user.isAdmin) {
+//    next()
+//  }
+//  else {
+//    next('ADMINS ONLY')
+//  }
+// }
+//
+// router.get('/some-url', adminGateway, (req, res, next) => {
+//
+// })
+//
+// OR
+//
+// register this before ALL OTHER admin urls
+// router.user('/admin', adminGateway)
+//
+// === orders.js
+// router = new express.Router()
+//
+// router.param('id', async (req, res, next) => {
+//  const order = await Order.findById(req.params.id)
+//  if (req.user.isAdmin || req.user.id === order.userId) {
+//    next()
+//  }
+//  else {
+//    next('THIS IS NOT YOUR ORDER!')
+//  }
+// })
+// router.get('/:id', (req, res, next) => {
+//  if (user.isAdmin) {
+//   res.json(req.order)
+//  }
+//  else if (user.isSupportStaff) {
+//    res.json(/* get the params that support can see */)
+//  }
+//  else {
+//
+//  }
+// })
+// router.put('/:id', ...
+
+get /api/admin/order/:id admin
+get /api/order/:id customer
+get /api/support/:id customer support
+
+
 router.post('/', (req, res, next) => {
   Product.findOrCreate({
     where: {

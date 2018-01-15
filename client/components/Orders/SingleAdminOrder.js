@@ -27,6 +27,7 @@ class SingleAdminOrder extends Component {
   }
 
   getOrder(orderId) {
+    // REVIEW: why isn't this in redux?
     axios.get(`/api/orders/${ orderId }`)
       .then(res => {
         return res.data

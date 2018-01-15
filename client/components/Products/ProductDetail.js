@@ -21,6 +21,7 @@ class ProductDetail extends Component {
   }
 
   render() {
+    // REVIEW: INDENTATION/LINTING/LINE LENGTH
     return (
       <div className="singleProductView">
             {

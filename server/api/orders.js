@@ -4,6 +4,8 @@ const Promise = require('bluebird')
 
 module.exports = router
 
+// REVIEW: access control??
+
 router.get('/', (req, res, next) => {
   Order.findAll({
     include: [{
