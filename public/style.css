@@ -160,7 +160,7 @@ form {
 }
 
 #reviewscontainer{
-  margin: 0 5rem;
+  margin: 2rem 5rem;
 }
 
 .review-spacing{
@@ -194,4 +194,21 @@ form {
   font-weight: bold;
   color: rgb(36, 181, 36);
   padding-top: 1rem;
+}
+
+#review-form{
+  background-color: white
+}
+
+.center{
+  text-align: center;
+  width: 96%
+}
+
+#review{
+  width: 800px;
+}
+
+#stars{
+  width: 50px;
 }
