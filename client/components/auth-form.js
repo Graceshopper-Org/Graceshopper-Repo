@@ -6,15 +6,9 @@ import {auth, setCart, store} from '../store'
 /**
  * COMPONENT
  */
-class AuthForm extends Component {
-  componentWillUnmount(){
-    const {userId} = this.props
+const AuthForm = props => {
 
-    store.dispatch(setCart(userId))
-  }
-
-  render(){
-    const {name, displayName, handleSubmit, error} = this.props
+    const {name, displayName, handleSubmit, error} = props
 
     return (
       <div>
@@ -36,7 +30,7 @@ class AuthForm extends Component {
       </div>
     )
   }
-}
+
 
 /**
  * CONTAINER

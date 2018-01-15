@@ -15,23 +15,29 @@ import SearchBar from './components/search'
 import Reviews from './components/reviews'
 import { fetchReviews } from './store/reviews'
 
-
 /**
  * COMPONENT
  */
 
 class Routes extends Component {
   componentDidMount () {
+    const {loadInitialData} = this.props
     const categoryThunk = fetchCategories()
     const productsThunk = fetchProducts();
-
-    let cookie = Number(document.cookie.slice(document.cookie.lastIndexOf('=') + 1))
-
-    this.props.loadInitialData(cookie)
+    loadInitialData()
   }
 
   render () {
-    const {isLoggedIn} = this.props
+    const {isLoggedIn, userId, setActiveCart, setDefaultCart} = this.props
+
+    console.log('isLoggedIn in render', isLoggedIn)
+    let cookie = Number(document.cookie.slice(document.cookie.lastIndexOf('=') + 1))
+
+    if (isLoggedIn){
+      setActiveCart(userId)
+    } else {
+      setDefaultCart(cookie)
+    }
 
     return (
       <Router history={history}>
@@ -127,13 +133,16 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
 
   return {
-
-    loadInitialData (cookie) {
+    loadInitialData () {
       dispatch(me())
       dispatch(fetchCategories())
       dispatch(fetchProducts())
       dispatch(fetchReviews())
-      console.log('COOKIE: ', cookie)
+    },
+    setActiveCart (userId) {
+      dispatch(setCart(userId))
+    },
+    setDefaultCart (cookie) {
       dispatch(fetchInitialCart(cookie))
     }
   }

@@ -3,14 +3,9 @@ import { connect } from 'react-redux'
 import { deleteProduct, setCart, store } from '../store'
 import { Button, Icon, Item, Image as ImageComponent, Dropdown, Menu } from 'semantic-ui-react'
 
-class Cart extends Component {
-    componentDidMount() {
-      const {userId} = this.props
-      store.dispatch(setCart(userId))
-    }
+const Cart = props => {
 
-    render(){
-    const { submit, carts, userId } = this.props
+    const { submit, carts, userId } = props
     console.log('userId in Cart component', userId)
 
     const quantityOptions = [
@@ -37,7 +32,7 @@ class Cart extends Component {
             console.log('Product', product)
             console.log('product.title', product.title)
             return (
-                <Item>
+                <Item key={product.id}>
                   <Item.Image size='small' src={product.photo} />
                   <Item.Content>
                   <Item.Header>{product.title}</Item.Header>
@@ -47,7 +42,7 @@ class Cart extends Component {
                   </Item.Meta>
                   <div className="cart-options">
                   <Item>
-                  <Dropdown text={product.productCart.quantity} scrolling options={quantityOptions} />
+                  <Dropdown text={product.productCart.quantity.toString()} scrolling options={quantityOptions} />
                   </Item>
                   <button value={product.id} onClick={submit}>Remove</button>
                   </div>
@@ -60,7 +55,7 @@ class Cart extends Component {
       </div>
   )
 }
-}
+
 
 //container
 const mapStateToProps = state => {
