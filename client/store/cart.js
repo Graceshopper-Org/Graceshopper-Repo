@@ -58,7 +58,6 @@ export const setCart = (userId) => dispatch => {
 
 export const deleteProduct = (cartId, productId) => dispatch => {
   dispatch(removeProduct(productId))
-  dispatch(fetchInitialCart(cartId))
   axios.delete(`/api/carts/${cartId}/delete-product/${productId}`)
     .catch(err => console.error(`Error deleting product: ${productId}`, err))
 }
