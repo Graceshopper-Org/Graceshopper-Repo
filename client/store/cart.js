@@ -46,7 +46,7 @@ export const fetchInitialCart = cartId => dispatch => {
 
 //the cookie is the cartId
 export const setCart = (userId) => dispatch => {
-  if (userId){
+  if(userId){
 
     axios.get(`/api/carts/user/${userId}`)
     .then(res => {

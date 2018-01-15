@@ -23,12 +23,12 @@ class Reviews extends Component {
       count++
     })
 
-    return (totalReviews/count).toString()
+    return (totalReviews/count).toFixed(2)
   }
 
   submitHandler(event){
     event.preventDefault()
-    const {user, productId} = this.props
+    const {user, productId, addNewReview} = this.props
 
     let review = {
       description: event.target.review.value,
@@ -36,7 +36,8 @@ class Reviews extends Component {
       productId,
       userId: user.id
     }
-    addReview(review)
+    addNewReview(review)
+    document.getElementById('review-form').reset()
   }
 
   render(){
@@ -60,22 +61,24 @@ class Reviews extends Component {
           {menuItem: 'Write a Review', render: () => <Tab.Pane attached={false}>
             {
               isLoggedIn ?
-                  <Form onSubmit={this.submitHandler}>
+                  <form id="review-form" onSubmit={this.submitHandler}>
                     <h4 className="review-spacing">Review by: {user.firstName || 'anonymous'}</h4>
-                    <Form.Group>
-                      <Form.Field name="stars" control="select">
+                    <div className="center">
+                      <select name="stars" class="ui search dropdown" id="stars">
                         <option value="5">5</option>
                         <option value="4">4</option>
                         <option value="3">3</option>
                         <option value="2">2</option>
                         <option value="1">1</option>
-                      </Form.Field>
-                      <Form.Field name="review" control={Input} placeholder="What'd you think?" />
-                    </Form.Group>
-                      <Form.Field control={Button}>Submit</Form.Field>
-                    <Form.Group>
-                    </Form.Group>
-                  </Form>
+                      </select>
+                      <div class="ui input">
+                        <input name="review" placeholder="What'd you think?" id="review"></input>
+                      </div>
+                    </div>
+                    <div className="center">
+                      <button type="submit" class="ui button">Submit</button>
+                    </div>
+                  </form>
                 :
                 <div>
                   Please <Link to="/login">Log-In</Link> to leave a review.
@@ -102,7 +105,13 @@ const mapStateToProps = ({reviews, user}, ownProps) => {
 }
 
 const mapDispatch = (dispatch) => {
+  return{
 
+    addNewReview(review){
+      dispatch(addReview(review))
+    }
+
+  }
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatch)(Reviews))

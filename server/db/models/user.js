@@ -24,10 +24,14 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-  streetAddress:{
+  needsPasswordReset: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  streetAddress: {
     type: Sequelize.STRING
   },
-  city:{
+  city: {
     type: Sequelize.STRING
   },
   stateCode: {

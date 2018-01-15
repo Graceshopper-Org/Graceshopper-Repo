@@ -25,6 +25,25 @@ class AllOrders extends Component {
     this.props.getAllOrders()
   }
 
+  statusFilterFunc() {
+    let input, filter, table, tr, td, i;
+    input = document.getElementById("statusInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("ordersTable");
+    tr = table.getElementsByTagName("tr");
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[5];
+      if (td) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
   render () {
     if (this.props.orders.length > 0) {
       this.props.orders.forEach(order => {
@@ -39,8 +58,12 @@ class AllOrders extends Component {
     return (
       <div>
       <h2>Customer Orders</h2>
+        <div className="ui icon input">
+          <input type="text" id="statusInput" onKeyUp={ this.statusFilterFunc } placeholder="Search for status..." />
+          <i aria-hidden="true" className="search icon" />
+        </div>
         <h4>Click on Order No. for order details</h4>
-        <table className="ui single line table">
+        <table className="ui single line table" id="ordersTable">
           <tbody>
             <tr>
               <th>Order No.</th>
