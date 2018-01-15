@@ -9,15 +9,13 @@ import {auth, setCart, store} from '../store'
 class AuthForm extends Component {
   componentWillUnmount(){
     const {userId} = this.props
-    let cookie = Number(document.cookie.slice(document.cookie.indexOf('=')+1))
 
-    store.dispatch(setCart(cookie, userId))
-
+    store.dispatch(setCart(userId))
   }
 
   render(){
     const {name, displayName, handleSubmit, error} = this.props
-    console.log(handleSubmit)
+
     return (
       <div>
         <form onSubmit={handleSubmit} name={name}>
@@ -52,7 +50,8 @@ const mapLogin = (state) => {
     name: 'login',
     displayName: 'Login',
     error: state.user.error,
-    userId: state.user.id
+    userId: state.user.id,
+    isLoggedIn: !!state.user.id
   }
 }
 
@@ -67,7 +66,6 @@ const mapDispatch = (dispatch) => {
 
   return {
     handleSubmit (evt) {
-      console.log("HANDLE SUBMIT!")
       evt.preventDefault()
       const formName = evt.target.name
       const email = evt.target.email.value

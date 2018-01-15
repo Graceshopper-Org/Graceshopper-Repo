@@ -1,11 +1,17 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { deleteProduct } from '../store/cart'
+import { deleteProduct, setCart, store } from '../store'
 import { Button, Icon, Item, Image as ImageComponent, Dropdown, Menu } from 'semantic-ui-react'
 
-const Cart = props => {
+class Cart extends Component {
+    componentDidMount() {
+      const {userId} = this.props
+      store.dispatch(setCart(userId))
+    }
 
-    const { submit, carts, user } = props
+    render(){
+    const { submit, carts, userId } = this.props
+    console.log('userId in Cart component', userId)
 
     const quantityOptions = [
       {key: 1, text: '1', value: 1},
@@ -19,34 +25,34 @@ const Cart = props => {
       {key: 9, text: '9', value: 9},
       {key: 10, text: '10', value: 10}
     ]
+    console.log('carts in Cart component: ', carts)
+    console.log('carts.length', carts.length)
 
     return (
       <div id="cart">
         <h1>Cart</h1>
         <Item.Group divided>
         {
-
           carts.length && carts[0].products.map(product => {
+            console.log('Product', product)
+            console.log('product.title', product.title)
             return (
-
                 <Item>
                   <Item.Image size='small' src={product.photo} />
                   <Item.Content>
                   <Item.Header>{product.title}</Item.Header>
                   <Item.Description>{product.description}</Item.Description>
                   <Item.Meta>
-                  <span className='price'>${product.price/100}</span>
+                  <span className='price'>${product.price/ 100}</span>
                   </Item.Meta>
                   <div className="cart-options">
                   <Item>
-                  <Dropdown text={product.productCart.quantity} scrolling options={quantityOptions}/>
+                  <Dropdown text={product.productCart.quantity} scrolling options={quantityOptions} />
                   </Item>
                   <button value={product.id} onClick={submit}>Remove</button>
-
                   </div>
                   </Item.Content>
                 </Item>
-
             )
           })
         }
@@ -54,12 +60,14 @@ const Cart = props => {
       </div>
   )
 }
+}
 
 //container
 const mapStateToProps = state => {
   return {
     carts: state.carts,
-    user: state.user
+    user: state.user,
+    userId: state.user.id
   }
 
 }
@@ -74,7 +82,6 @@ const mapDispatch = dispatch => {
       dispatch(deleteProduct(currentProduct))
     }
   }
-
 }
 
 export default connect(mapStateToProps, mapDispatch)(Cart)
@@ -83,4 +90,3 @@ export default connect(mapStateToProps, mapDispatch)(Cart)
 //Add product
 //remove product
 //increase or decrease quantity
-
