@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import _ from 'lodash';
 import { updateProduct, addProduct, removeProduct } from '../../store/products';
 import { addCategory } from '../../store/category'
+import { addItemToCartThunkCreator } from '../../store/cart'
 import { Button } from 'semantic-ui-react'
 import history from '../../history'
 import Reviews from '../reviews'
@@ -16,7 +17,7 @@ class ProductDetail extends Component {
     this.editProductDetails = this.editProductDetails.bind(this);
     this.removeProduct = this.removeProduct.bind(this)
     this.createACategory = this.createACategory.bind(this)
-    // this.addToCart = this.addToCart.bind(this)
+    this.addToCart = this.addToCart.bind(this)
   }
 
   render() {
@@ -49,14 +50,16 @@ class ProductDetail extends Component {
                            product.inventory > 0 ?
                            <div className="addtocartform">
                              <p><u>quantity</u></p>
-                             <select>
-                               <option name="quantity" type="number">1</option>
-                               <option name="quantity" type="number">2</option>
-                               <option name="quantity" type="number">3</option>
-                               <option name="quantity" type="number">4</option>
-                               <option name="quantity" type="number">5</option>
-                             </select>
-                           <button onClick={this.addToCart}>add to cart</button>
+                             <form onSubmit={this.addToCart}>
+                              <select name="productQuantity" id={this.props.carts[0].id}>
+                                <option name="quantity" type="number" value="1">1</option>
+                                <option name="quantity" type="number" value="2">2</option>
+                                <option name="quantity" type="number" value="3">3</option>
+                                <option name="quantity" type="number" value="4">4</option>
+                                <option name="quantity" type="number" value="5">5</option>
+                              </select>
+                              <button type="submit">add to cart</button>
+                            </form>
                          </div>
                            :
                            <div />
@@ -146,16 +149,14 @@ class ProductDetail extends Component {
   */
 
   // ========= Add To Cart ========= \\
-  // addToCart(event){
-  //   event.preventDefault();
-  //   const productToCart = {
-  //     id: this.props.cart.id,
-  //     productId: this.props.product.id,
-  //     quantity: event.target.quantity.value,
-  //   };
-  //   this.props.addToCart(productToCart);
-  //   event.target.quantity.value = '1';
-  // }
+  addToCart(event){
+    event.preventDefault();
+    const quantity = event.target.productQuantity.value
+    const cartId = this.props.carts[0].id
+    const product = this.props.product
+    this.props.addItemToCartThunkCreator(cartId, product, quantity);
+    // event.target.productQuantity.value = '1';
+  }
 
   // ========= Admin: Remove Product ========= \\
   removeProduct(event) {
@@ -199,16 +200,17 @@ class ProductDetail extends Component {
 
 }
 
-const mapStateToProps = ({ products, user, category }, ownProps) => {
+const mapStateToProps = ({ products, user, category, carts }, ownProps) => {
   const productParamId = Number(ownProps.match.params.id);
   return {
     product: _.find(products, product => product.id === productParamId),
     products,
     user,
-    category
+    category,
+    carts
   };
 }
 
-const mapDispatchToProps = { addProduct, updateProduct, removeProduct, addCategory };
+const mapDispatchToProps = { addProduct, updateProduct, removeProduct, addCategory, addItemToCartThunkCreator };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
