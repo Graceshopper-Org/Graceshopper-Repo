@@ -74,6 +74,6 @@ export const setCart = (userId) => dispatch => {
 
 export const deleteProduct = (cartId, productId) => dispatch => {
   dispatch(removeProduct(productId))
-  axios.delete(`/${cartId}/delete-product/${productId}`)
+  axios.delete(`/api/carts/${cartId}/delete-product/${productId}`)
     .catch(err => console.error(`Error deleting product: ${productId}`, err))
 }

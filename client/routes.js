@@ -30,7 +30,6 @@ class Routes extends Component {
   render () {
     const {isLoggedIn, userId, setActiveCart, setDefaultCart} = this.props
 
-    console.log('isLoggedIn in render', isLoggedIn)
     let cookie = Number(document.cookie.slice(document.cookie.lastIndexOf('=') + 1))
 
     if (isLoggedIn){
