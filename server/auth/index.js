@@ -6,6 +6,7 @@ module.exports = router
 
 router.post('/login', (req, res, next) => {
   let returnCart
+  console.log('INFOR SENT TO BACKEND UPON LOGIN: ', req.body)
   User.findOne({where: {email: req.body.email}})
     .then(user => {
       if (!user) {
@@ -52,6 +53,7 @@ router.post('/login', (req, res, next) => {
             })
           } else {
             Cart.update({userId: user.id}, {where: {id: req.cookies.cart}})
+            .then(() => res.json(user))
           }
         })
         ))
@@ -96,6 +98,7 @@ router.get('/me', (req, res) => {
     Cart.create()
     .then(cart => {cartId = cart.dataValues.id})
     .then(() => {
+      console.log('CREATED COOKIE!: ', cartId)
       res.cookie('cart', cartId).json(req.user)
     })
   } else {

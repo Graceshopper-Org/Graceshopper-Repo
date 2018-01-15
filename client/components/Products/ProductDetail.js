@@ -6,6 +6,7 @@ import { updateProduct, addProduct, removeProduct } from '../../store/products';
 import { addCategory } from '../../store/category'
 import { Button } from 'semantic-ui-react'
 import history from '../../history'
+import Reviews from '../reviews'
 
 
 class ProductDetail extends Component {
@@ -119,6 +120,11 @@ class ProductDetail extends Component {
               )
             )
           }
+                  </div>
+                  )
+                )
+              }
+              <Reviews />
       </div>
     );
   }

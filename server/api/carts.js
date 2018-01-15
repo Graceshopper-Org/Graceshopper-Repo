@@ -26,6 +26,22 @@ router.get('/:id', (req, res, next) => {
   .catch(next)
 })
 
+router.get(`/user/:userId`, (req, res, next) => {
+  let userId = req.params.userId
+  Cart.findOne(
+    {where: {
+      $and: [{userId: userId},
+        {status: 'open'}]
+    },
+    include: [{
+      model: Product
+    }]
+  }
+  )
+  .then(cart => res.json(cart))
+  .catch(next)
+})
+
 router.post('/', (req, res, next) => {
   Cart.create()
     .then(cart => {

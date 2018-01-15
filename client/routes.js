@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import { fetchCarts } from './store/cart'
-import {Main, Login, Signup, UserHome, UserOrders, SingleOrder, UserAccount, Cart, AllOrders, SingleAdminOrder} from './components'
+import {Main, Login, Signup, UserHome, UserOrders, SingleOrder, UserAccount, Cart, AllOrders, SingleAdminOrder, Admin, AllUsers} from './components'
+import { fetchCarts, setCart } from './store/cart'
 import {fetchCategories} from './store/category'
 import AllProducts from './components/Products/AllProducts'
 import ProductDetail from './components/Products/ProductDetail'
@@ -22,10 +22,17 @@ import { fetchReviews } from './store/reviews'
 
 class Routes extends Component {
   componentDidMount () {
-    fetchCarts()
     const categoryThunk = fetchCategories()
     const productsThunk = fetchProducts();
-    this.props.loadInitialData()
+    const {isLoggedIn, userId} = this.props
+
+    let cookie = Number(document.cookie.slice(document.cookie.indexOf('=')+1))
+
+    if(isLoggedIn){
+      this.props.loadInitialData(cookie, userId)
+    }else{
+      this.props.loadInitialData(cookie)
+    }
   }
 
   render () {
@@ -36,10 +43,7 @@ class Routes extends Component {
         <Main>
           <Switch>
             {/* Routes placed here are available to all visitors */}
-
-
             <Route exact path="/cart" component={Cart} />
-
             <Route
               exact
               path="/"
@@ -62,10 +66,6 @@ class Routes extends Component {
               path="/signup"
               component={Signup}
               />
-            <Route
-              path="/testreview/:id"
-              component={Reviews}
-            />
             {
               isLoggedIn &&
                 <Switch>
@@ -89,12 +89,20 @@ class Routes extends Component {
                    component={UserAccount}
                   />
                   <Route
+                   exact path="/admin"
+                   component={Admin}
+                  />
+                  <Route
                    exact path="/admin/orders"
                    component={AllOrders}
                   />
                   <Route
                    exact path="/admin/orders/:orderId"
                    component={SingleAdminOrder}
+                  />
+                  <Route
+                   exact path="/users"
+                   component={AllUsers}
                   />
                 </Switch>
             }
@@ -116,18 +124,22 @@ const mapState = (state) => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userId: state.user.id
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData () {
+
+    loadInitialData (cookie, userId) {
       dispatch(me())
-      dispatch(fetchCarts())
       dispatch(fetchCategories())
       dispatch(fetchProducts())
       dispatch(fetchReviews())
+      console.log('COOKIE: ', cookie)
+      console.log('USER ID: ', userId)
+      dispatch(setCart(cookie, userId))
     }
   }
 }

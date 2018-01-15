@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { Link, withRouter } from 'react-router-dom'
 import {logout} from '../store'
 import {connect} from 'react-redux'
-import { Search } from 'semantic-ui-react'
+import { Search, Icon } from 'semantic-ui-react'
 import SearchBar from './search'
 
 class Navbar extends Component {
@@ -58,9 +58,9 @@ class Navbar extends Component {
               {
                 isLoggedIn
                   ? (
-                    isAdmin ?
+                    this.props.user.isAdmin ?
                       <div>
-                          <Link to={`/user/${user.id}`} className="item">My Account</Link>
+                          <Link to={`/users/${user.id}`} className="item">My Account</Link>
                           <Link to="/admin" className="item">Admin Page</Link>
                           <a href="#" onClick={handleClick} className="item">Log Out</a>
                       </div> :
@@ -70,17 +70,17 @@ class Navbar extends Component {
                       </div>
                     )
                   : <div>
-                      <div className="item">
-                        <Link to="/login">Log In</Link>
+                      <div>
+                        <Link to="/login" className="item">Log In</Link>
                       </div>
-                      <div className="item">
-                        <Link to="/signup">Sign Up</Link>
+                      <div>
+                        <Link to="/signup" className="item">Sign Up</Link>
                       </div>
                     </div>
               }
             </div>
           </div>
-          <a className="item">Cart</a>
+          <Link to="/cart" className="item"><Icon name="shopping cart"/></Link>
         </div>
 
       </div>
