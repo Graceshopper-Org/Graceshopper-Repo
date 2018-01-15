@@ -8,8 +8,8 @@ const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
 // const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART'
 
 //action creators
-const initCart = carts => ({type: INIT_CART, carts})
-const setActiveCart = cart => ({type: SET_ACTIVE_CART, cart})
+const fetchCart = carts => ({type: INIT_CART, carts})
+const setActiveCart = carts => ({type: SET_ACTIVE_CART, carts})
 const removeProduct = product => ({type: REMOVE_PRODUCT, product})
 const updateQuantity = product => ({type: UPDATE_QUANTITY, product})
 // const addItemToCart = product => ({type: ADD_ITEM_TO_CART, product})
@@ -21,7 +21,7 @@ export default function reducer(carts = [], action) {
       return action.carts
 
     case SET_ACTIVE_CART:
-      return action.cart
+      return action.carts
 
     case REMOVE_PRODUCT:
       return carts.filter(product => product.id !== action.product.id)
@@ -37,23 +37,18 @@ export default function reducer(carts = [], action) {
 }
 
 //thunks
-export const fetchCarts = () => dispatch => {
-  axios.get('/api/carts')
+export const fetchInitialCart = cartId => dispatch => {
+  axios.get(`api/carts/${cartId}`)
     .then(res => {
-      dispatch(initCart(res.data))})
-    .catch(err => console.error('Error fetching cart', err))
+      dispatch(fetchCart(res.data))})
+    .catch(err => console.error('Error fetching initial cart', err))
 }
 
-
-export const setCart = (cartId, userId) => dispatch => {
+//the cookie is the cartId
+export const setCart = (userId) => dispatch => {
   if(userId){
+
     axios.get(`/api/carts/user/${userId}`)
-    .then(res => {
-      dispatch(setActiveCart(res.data))
-    })
-    .catch(err => console.error('Error fetching cart', err))
-  }else{
-    axios.get(`/api/carts/${cartId}`)
     .then(res => {
       dispatch(setActiveCart(res.data))
     })
@@ -61,8 +56,8 @@ export const setCart = (cartId, userId) => dispatch => {
   }
 }
 
-export const deleteProduct = (product) => dispatch => {
-  dispatch(removeProduct(product.id))
-  axios.delete(`/api/products/${product.id}`)
-    .catch(err => console.error(`Error deleting product: ${product}`, err))
+export const deleteProduct = (cartId, productId) => dispatch => {
+  dispatch(removeProduct(productId))
+  axios.delete(`/${cartId}/delete-product/${productId}`)
+    .catch(err => console.error(`Error deleting product: ${productId}`, err))
 }

@@ -38,7 +38,7 @@ router.get(`/user/:userId`, (req, res, next) => {
     }]
   }
   )
-  .then(cart => res.json(cart))
+  .then(cart => res.json([cart]))
   .catch(next)
 })
 

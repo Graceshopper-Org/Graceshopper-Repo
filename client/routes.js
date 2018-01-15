@@ -4,7 +4,7 @@ import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome, UserOrders, SingleOrder, UserAccount, Cart, AllOrders, SingleAdminOrder, Admin, AllUsers} from './components'
-import { fetchCarts, setCart } from './store/cart'
+import { fetchInitialCart, setCart } from './store/cart'
 import {fetchCategories} from './store/category'
 import AllProducts from './components/Products/AllProducts'
 import ProductDetail from './components/Products/ProductDetail'
@@ -24,15 +24,10 @@ class Routes extends Component {
   componentDidMount () {
     const categoryThunk = fetchCategories()
     const productsThunk = fetchProducts();
-    const {isLoggedIn, userId} = this.props
 
-    let cookie = Number(document.cookie.slice(document.cookie.indexOf('=')+1))
+    let cookie = Number(document.cookie.slice(document.cookie.lastIndexOf('=') + 1))
 
-    if(isLoggedIn){
-      this.props.loadInitialData(cookie, userId)
-    }else{
-      this.props.loadInitialData(cookie)
-    }
+    this.props.loadInitialData(cookie)
   }
 
   render () {
@@ -130,16 +125,16 @@ const mapState = (state) => {
 }
 
 const mapDispatch = (dispatch) => {
+
   return {
 
-    loadInitialData (cookie, userId) {
+    loadInitialData (cookie) {
       dispatch(me())
       dispatch(fetchCategories())
       dispatch(fetchProducts())
       dispatch(fetchReviews())
       console.log('COOKIE: ', cookie)
-      console.log('USER ID: ', userId)
-      dispatch(setCart(cookie, userId))
+      dispatch(fetchInitialCart(cookie))
     }
   }
 }
