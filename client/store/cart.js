@@ -5,12 +5,14 @@ const INIT_CART = 'INIT_CART'
 const SET_ACTIVE_CART = 'SET_ACTIVE_CART'
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
+// const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART'
 
 //action creators
 const initCart = carts => ({type: INIT_CART, carts})
 const setActiveCart = cart => ({type: SET_ACTIVE_CART, cart})
 const removeProduct = product => ({type: REMOVE_PRODUCT, product})
 const updateQuantity = product => ({type: UPDATE_QUANTITY, product})
+// const addItemToCart = product => ({type: ADD_ITEM_TO_CART, product})
 
 //reducer
 export default function reducer(carts = [], action) {
@@ -41,6 +43,7 @@ export const fetchCarts = () => dispatch => {
       dispatch(initCart(res.data))})
     .catch(err => console.error('Error fetching cart', err))
 }
+
 
 export const setCart = (cartId, userId) => dispatch => {
   if(userId){
