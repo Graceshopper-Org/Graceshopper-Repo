@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {createNewOrder} from '../store/orders'
 import {clearUserCart} from '../store/cart'
+import { Form, Button } from 'semantic-ui-react'
 
 const Checkout = props => {
   const { user, carts, createOrder } = props
@@ -12,7 +13,9 @@ const Checkout = props => {
     <h1>Checkout</h1>
     <h2>Email & Shipping Address:</h2>
     {
-    <div>
+    <div className="checkout-form">
+      <Form>
+      <Form.Group>
     <form onSubmit={createOrder} id={products + 'graceShopper' + user.id + 'graceShopper' + user.email + 'graceShopper' + carts[0].id}>
       <label>
         Email
@@ -34,8 +37,10 @@ const Checkout = props => {
         Zip
         <input type="text" name="zipCode" defaultValue={user.zipCode} required />
       </label>
-      <button type="submit">Complete Order</button>
+      <Button className="checkout-button" type="submit">Complete Order</Button>
     </form>
+    </Form.Group>
+    </Form>
     </div>
     }
     </div>
