@@ -48,9 +48,10 @@ const { submit, carts, userId } = props
                       </Item>
                     </div>
                     <Button
-                    onClick={() => props.deleteProduct(product.productCart.cartId, product.id)}>
-                    x
-                   </Button>
+                    icon="trash"
+                    onClick={() => props.deleteProduct(product.productCart.cartId, product.id)} />
+
+
                   </Item.Content>
                 </Item>
               </Item.Group>
