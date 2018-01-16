@@ -46,6 +46,7 @@ dispatch =>
 export const updateUserThunkCreator = (userId, key, value) =>
   dispatch => {
     const action = updateUser(userId, key, value)
+    console.log('ACTION OBJECT :', action)
     dispatch(action)
     axios.put(`/api/users/${userId}`, { [key]: value })
       .catch(err => console.error(err))
