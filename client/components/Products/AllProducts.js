@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addProduct } from '../../store/products';
 import SingleProduct from './SingleProduct';
+import Carousel from '../carousel'
 import { Form, Button } from 'semantic-ui-react'
 
 
@@ -21,6 +22,9 @@ class AllProducts extends Component {
   render() {
     return (
       <div>
+        <div className="headerforall">
+        <Carousel />
+        </div>
         <div>
             { this.props.user.isAdmin ? (this.newProductForm()) : <div /> }
         </div>
@@ -70,9 +74,8 @@ class AllProducts extends Component {
   getProducts() {
     return (
       <div className="productsDisplay">
-        <div className="pageTitle">
-          All Products
-        </div>
+        <div className="divider" />
+        <div id="peruse"> peruse our lovely products </div>
         {
           this.props.products ?
             this.props.products
