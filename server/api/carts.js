@@ -160,3 +160,8 @@ router.delete('/:cartId/delete-product/:productId', (req, res, next) => {
   })
   .catch(next)
 })
+
+router.put('/clearCart/:id', (req, res, next) => {
+  productCart.destroy({where: {cartId: req.params.id}})
+  .then(err => console.error('Could not clear products', err))
+})

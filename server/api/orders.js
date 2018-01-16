@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Order, User, Cart } = require('../db/models')
+const { Order, User, productCart } = require('../db/models')
 
 module.exports = router
 
@@ -64,8 +64,10 @@ router.get('/:id', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
+  res.clearCookie('cart')
   Order.create(req.body)
     .then(order => {
+      res.json(order)
       User.findById(req.body.userId)
         .then(user => {
           mailOptionsCreatedOrder.to = user.email.toString()
@@ -74,12 +76,6 @@ router.post('/', (req, res, next) => {
             else console.log(info)
           })
         })
-      Cart.findById(req.body.cartId)
-        .then(cart => {
-          cart.update({status: req.body.cartStatus})
-          cart.create()
-        })
-      res.json(order)
     })
     .catch(next)
 })
