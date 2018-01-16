@@ -23,7 +23,7 @@ const { submit, carts, userId } = props
       return (<div></div>)
     }
     return (
-      <div id="cart">
+      <div id="cart" className="marginClass">
         <h1>Cart</h1>
         {
           carts[0].products.length === 0 ? <h1>Your cart is empty!</h1> : carts[0].products.map(product => {

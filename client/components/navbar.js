@@ -62,11 +62,11 @@ class Navbar extends Component {
                       <div>
                           <Link to={`/orders`} className="item">My Orders</Link>
                           <Link to="/admin" className="item">Admin Page</Link>
-                          <a href="#" onClick={handleClick} className="item">Log Out</a>
+                          <a href='/' onClick={handleClick} className="item">Log Out</a>
                       </div> :
                       <div>
                           <Link to={`/orders`} className="item">My Orders</Link>
-                          <a href="#" onClick={handleClick} className="item">Log Out</a>
+                          <a href='/' onClick={handleClick} className="item">Log Out</a>
                       </div>
                     )
                   : <div>

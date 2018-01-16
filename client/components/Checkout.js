@@ -9,7 +9,7 @@ const Checkout = props => {
   const products = JSON.stringify(carts[0].products)
 
   return (
-  <div>
+  <div className="marginClass">
     <h1>Checkout</h1>
     <h2>Email & Shipping Address:</h2>
     {
