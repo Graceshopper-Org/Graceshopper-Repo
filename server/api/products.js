@@ -70,22 +70,6 @@ router.post('/', adminGateway, (req, res, next) => {
     .catch(next)
 })
 
-// router.put('/:id', adminGateway, (req, res, next) => {
-//   let id = req.params.id
-//   Product.findOne({
-//     where: { id },
-//     include: [{
-//       model: Category
-//     }]
-//   })
-//   .then(product => {
-//     product.update(req.body)
-//   })
-//   .then(() => res.json(req.body).status(200))
-//   .catch(next)
-// })
-
-
 router.put('/:id', adminGateway, (req, res, next) => {
   let id = req.params.id
   Product.findOne({
@@ -128,48 +112,6 @@ router.put('/:id', adminGateway, (req, res, next) => {
   .then(() => res.json(req.body).status(200))
   .catch(next)
 })
-
-// router.put('/:id', (req, res, next) => {
-//   let id = req.params.id
-//   Product.findOne({
-//     where: { id },
-//     include: [{
-//       model: Category
-//     }]
-//   })
-//   .then(product => {
-//     product.update(req.body)
-//     // console.log('product id : ', product.id)
-//     // console.log('product id test : ', product.categories[0])
-//      console.log('LOGGGGGGGGGG:', product.categories)
-//     productCategory.destroy({
-//       where: {
-//         productId: +product.id,
-//         categoryId: +product.categories[0].id
-//       }
-//     })
-//     // Category.findOne({
-//     //   where: {
-//     //     id: product.categories[0].id
-//     //   }
-//     // })
-//     // .then(category => {
-//     //   })
-//   })
-//   // .then(product => {
-//   //   .then(category => {
-//   //     // console.log('LOGGGGGGGGGG:', product.categories[0].productCategory.dataValues.categoryId)
-//   //     product.categories[0].productCategory.destroy({
-//   //       where: {
-//   //         productId: product.id,
-//   //         categoryId: category.id
-//   //       }
-//   //     })
-//   //   })
-//   // })
-//   .then(() => res.json(req.body).status(200))
-//   .catch(next)
-// })
 
 router.delete('/:id', adminGateway, (req, res, next) => {
   let id = req.params.id
