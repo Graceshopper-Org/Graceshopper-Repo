@@ -11,12 +11,14 @@ const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART'
 const fetchCart = carts => ({type: INIT_CART, carts})
 const setActiveCart = carts => ({type: SET_ACTIVE_CART, carts})
 const removeProduct = product => ({type: REMOVE_PRODUCT, product})
-const updateQuantity = product => ({type: UPDATE_QUANTITY, product})
+const updateQuantity = (product, addOrSubstract) => ({type: UPDATE_QUANTITY, product, addOrSubstract})
 const addItemToCart = (cartId, product, quantity) => ({type: ADD_ITEM_TO_CART, cartId, product, quantity})
+
 
 //reducer
 export default function reducer(carts = [], action) {
   let newCarts = carts.slice()
+  let copy = JSON.parse(JSON.stringify(carts))
   switch (action.type) {
     case INIT_CART:
       return action.carts
@@ -28,9 +30,19 @@ export default function reducer(carts = [], action) {
       return carts.filter(product => product.id !== action.product.id)
 
     case UPDATE_QUANTITY:
-      return carts.map(product => (
-        product.id === action.product.id ? action.product : product
-      ))
+      var newProducts = copy[0].products.slice()
+      var finalProducts = newProducts.map(product => {
+        if (product.id === action.product.id) {
+          if (action.addOrSubstract === 'add') {
+            product.productCart.quantity++
+          } else {
+            product.productCart.quantity--
+          }
+        }
+        return product
+      })
+      newCarts[0].products = finalProducts
+      return newCarts
 
     case ADD_ITEM_TO_CART:
       var products = newCarts[0].products
@@ -60,10 +72,22 @@ export const addItemToCartThunkCreator = (cartId, product, quantity) =>
       .catch(err => console.error(err))
   }
 
+export const updateProductQuantityThunkCreator = (cartId, product, addOrSubstract) =>
+  dispatch => {
+    const action = updateQuantity(product, addOrSubstract)
+    dispatch(action)
+    if (addOrSubstract === 'add') {
+      product.productCart.quantity++
+    } else {
+      product.productCart.quantity--
+    }
+    axios.put(`/api/carts/${cartId}`, { products: [product] })
+      .catch(err => console.error(err))
+  }
+
 //the cookie is the cartId
 export const setCart = (userId) => dispatch => {
-  if(userId){
-
+  if (userId) {
     axios.get(`/api/carts/user/${userId}`)
     .then(res => {
       dispatch(setActiveCart(res.data))

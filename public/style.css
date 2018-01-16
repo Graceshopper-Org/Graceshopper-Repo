@@ -184,7 +184,6 @@ form {
 .cart-options{
     display: flex;
     justify-content: space-between;
-    padding: 0 1rem;
     align-items: center;
     margin-top: 1rem;
     width: 125px;
@@ -211,4 +210,9 @@ form {
 
 #stars{
   width: 50px;
+}
+
+.quantityInline {
+  display: inline;
+  margin: 0 3px 3px 3px;
 }
