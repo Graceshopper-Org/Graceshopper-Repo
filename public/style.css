@@ -26,8 +26,9 @@ textarea {
 
 #navbar {
   margin-top: -5px;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  width: 100%;
+  position: fixed;
+  z-index: 2;
 }
 
 .pageTitle {
@@ -284,7 +285,44 @@ textarea {
   width: 50px;
 }
 
+
 .quantityInline {
   display: inline;
   margin: 0 3px 3px 3px;
+}
+
+.headerforall{
+  display: flex;
+  justify-content: center;
+}
+
+.divider {
+  width: 90%;
+  height: 2px;
+  background-color: red;
+  margin: 1rem;
+}
+
+#peruse {
+  font-size: 24px;
+  font-style: italic;
+  margin: 2rem;
+  display: flex;
+  justify-content: center;
+  width: 90%;
+}
+.carousel {
+  margin-top: 6rem;
+  width: 1150px;
+  height: 400px;
+}
+
+.carousel .carousel-image {
+  position: absolute;
+  opacity: 1;
+  transition: opacity .5s;
+}
+
+.carousel .carousel-image.hidden {
+  opacity: 0;
 }
