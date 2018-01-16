@@ -10,6 +10,7 @@ import orders from './orders'
 import adminOrders from './adminOrders'
 import reviews from './reviews'
 
+
 const reducer = combineReducers({user, products, orders, category, reviews, carts, adminOrders})
 
 const middleware = composeWithDevTools(applyMiddleware(
