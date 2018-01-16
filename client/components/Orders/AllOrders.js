@@ -48,7 +48,7 @@ class AllOrders extends Component {
     if (this.props.orders.length > 0) {
       this.props.orders.forEach(order => {
         let orderTotal = 0;
-        let orderProducts = order.products.map(product => JSON.parse(product))
+        let orderProducts = order.products
         orderProducts.forEach(product => {
           orderTotal += (+product.quantity * +product.price) / 100
         })

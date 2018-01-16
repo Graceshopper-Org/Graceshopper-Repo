@@ -3,10 +3,8 @@ import {connect} from 'react-redux'
 import {createNewOrder} from '../store/orders'
 
 const Checkout = props => {
-  const { order, user, carts, createOrder } = props
+  const { user, carts, createOrder } = props
   const products = JSON.stringify(carts[0].products)
-//posting the order
-//changing the cart status
 
   return (
 
@@ -17,7 +15,7 @@ const Checkout = props => {
     <p>{props.user.city}, {props.user.stateCode} {props.user.zipCode}</p>
     {
     <div>
-    <form onSubmit={createOrder} id={products + 'graceShopper' + user.id}>
+    <form onSubmit={createOrder} id={products + 'graceShopper' + user.id + 'graceShopper' + user.email}>
       <label>
         Street Address
         <input type="text" name="address" defaultValue={user.streetAddress} required />
@@ -76,7 +74,6 @@ const mapDispatchToProps = dispatch => {
         stateCode: eventTargetObj.state.value,
         zipCode: +eventTargetObj.zipCode.value
       }
-      console.log('order', order)
       dispatch(createNewOrder(order))
     }
   }
