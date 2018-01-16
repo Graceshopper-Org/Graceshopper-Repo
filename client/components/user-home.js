@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import axios from 'axios'
+import AllProducts from './Products/AllProducts'
 
 
 /**
@@ -10,24 +11,23 @@ import axios from 'axios'
 export const UserHome = (props) => {
   const {email, user} = props
 
-  // Note from Niharika: need to run below plan for password reset by someone
+  function updatePassword (userId, password) {
+    axios.put(`/api/users/${ userId }`, { password, needsPasswordReset: false })
+    .catch(err => console.error(err))
+  }
 
-  // function updatePassword (userId, password) {
-  //   axios.put(`/api/users/${ userId }`, { password, needsPasswordReset: false })
-  //   .catch(err => console.error(err))
-  // }
-
-  // if (user.needsPasswordReset) {
-  //   let newPassword = prompt('Your password has expired. Please provide a new password to reset it and click OK.')
-  //   while (newPassword === null) {
-  //     newPassword = prompt('You must enter a new password to proceed. Please provide a new password and click OK.')
-  //   }
-  //   updatePassword(user.id, newPassword)
-  // }
+  if (user.needsPasswordReset) {
+    let newPassword = prompt('Your password has expired. Please provide a new password to reset it and click OK.')
+    while (newPassword === null) {
+      newPassword = prompt('You must enter a new password to proceed. Please provide a new password and click OK.')
+    }
+    updatePassword(user.id, newPassword)
+  }
 
   return (
     <div>
       <h3>Welcome, {email}</h3>
+      <AllProducts />
     </div>
   )
 }

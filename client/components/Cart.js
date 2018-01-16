@@ -1,12 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { deleteProduct } from '../store/cart'
+import { deleteProduct, setCart, store, updateProductQuantityThunkCreator } from '../store'
 import { Link } from 'react-router-dom'
 import { Button, Item, Dropdown } from 'semantic-ui-react'
 
 const Cart = props => {
-
-    const { carts } = props
+const { submit, carts, userId } = props
 
     const quantityOptions = [
       {key: 1, text: '1', value: 1},
@@ -29,24 +28,29 @@ const Cart = props => {
           carts.length && carts[0].products.map(product => {
             return (
                 <Item key={product.id}>
-                  <Item.Image size='small' src={product.photo} />
+                  <Item.Image size="small" src={product.photo} />
                   <Item.Content>
-                  <Item.Header>{product.title}</Item.Header>
-                  <Item.Description>{product.description}</Item.Description>
-                  <Item.Meta>
-                  <span className='price'>${product.price/ 100}</span>
-                  </Item.Meta>
-                  <div className="cart-options">
-                  <Item>
-                  <Dropdown text={product.productCart.quantity.toString()} scrolling options={quantityOptions} />
-                  </Item>
-                  <Button
+                    <Item.Header>{product.title}</Item.Header>
+                    <Item.Description>{product.description}</Item.Description>
+                    <Item.Meta>
+                      <span className="price">${product.price / 100}</span>
+                    </Item.Meta>
+                    <div className="cart-options">
+                      <Item>
+                        <div>
+                          <button onClick={() => props.updateQuantity(carts[0].id, product, 'subtract')} className="quantityInline">-</button>
+                          <h5 id="cartProdQuantity" className="quantityInline">{product.productCart.quantity.toString()}</h5>
+                          <button onClick={() => props.updateQuantity(carts[0].id, product, 'add')} className="quantityInline">+</button>
+                        </div>
+                      </Item>
+                    </div>
+                    <Button
                     onClick={() =>
                     props.deleteProduct(product.productCart.cartId, product.id)
                     }>
                     x
-                  </Button>
-                  </div>
+                   </Button>
+
                   </Item.Content>
                 </Item>
             )
@@ -67,11 +71,14 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatch = { deleteProduct }
+const mapDispatch = dispatch => {
+  return {
+    updateQuantity(cartId, product, addOrSubstract) {
+      dispatch(updateProductQuantityThunkCreator(cartId, product, addOrSubstract))
+    },
+    deleteProduct
+  }
+}
 
 export default connect(mapStateToProps, mapDispatch)(Cart)
 
-//Actions for cart
-//Add product
-//remove product
-//increase or decrease quantity

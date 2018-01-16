@@ -114,7 +114,7 @@ router.put('/:id', (req, res, next) => {
       .then(() => res.sendStatus(200))
       .catch(next)
     }
-    /// do we need an ability to update the product price in a cart?
+
   if (req.body.products) {
     req.body.products.forEach(productElem => {
       promiseArray.push(
@@ -124,7 +124,7 @@ router.put('/:id', (req, res, next) => {
             cartId: id
           }
         })
-        .then(productCartRow => productCartRow.update({ quantity: productElem.quantity }))
+        .then(productCartRow => productCartRow.update({ quantity: productElem.productCart.quantity }))
       )
     })
     Promise.all(promiseArray)
