@@ -16,7 +16,7 @@ nav a {
 }
 
 form div {
-  margin: 1em;
+  margin: .1rem;
   display: inline-block;
 }
 
@@ -38,14 +38,17 @@ textarea {
   padding-left: 2rem;
   padding-bottom: 2rem;
 }
+
 .productsDisplay {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .productView {
   padding-bottom: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .productImage {
@@ -120,6 +123,40 @@ textarea {
   overflow-wrap: break-word;
 }
 
+#quantitylabel {
+  display: flex;
+}
+.quantitySelect {
+  display: flex;
+  background-color: white;
+  margin: 0;
+  width: 4rem;
+}
+
+.quantSelectDesign {
+  display: flex;
+  margin: 0;
+}
+
+.addtocartform {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  font-style: italic;
+}
+
+#backtoproducts {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: .5rem;
+  padding-left: .5rem;
+  border-width: 1px;
+  background-color: lightgray;
+  color: blue;
+}
 
 #adminForm {
   display: flex;
@@ -139,9 +176,8 @@ textarea {
 }
 
 #customButton {
-  width: auto;
+  display: flex;
   background-color: lightgray;
-  padding: 1rem;
 }
 
 #adminForm input {

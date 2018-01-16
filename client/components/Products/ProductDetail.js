@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { updateProduct, addProduct, removeProduct } from '../../store/products';
 import { addCategory } from '../../store/category'
 import { addItemToCartThunkCreator } from '../../store/cart'
-import { Button, Form } from 'semantic-ui-react'
+import { Button, Form, Select } from 'semantic-ui-react'
 import history from '../../history'
 import Reviews from '../reviews'
 
@@ -32,12 +32,12 @@ class ProductDetail extends Component {
                       <div className="product-view-title"> {product.title} </div>
                       {
                         product.inventory ?
-                        <div className="product-view-price">${product.price}</div>
+                        <div className="product-view-price">${+product.price / 100}</div>
                         :
                         <div className="product-view-price">SOLD OUT</div>
                       }
                       <div className="product-view-desc">{product.description}</div>
-                      <div className="product-view-category"><u>Category</u>:
+                      <div className="product-view-category">Category:
                         { product.categories.length ?
                           <NavLink to={`/category/${product.categories[0].id}`}>
                             {product.categories[0].categoryName}
@@ -48,23 +48,27 @@ class ProductDetail extends Component {
                          {
                            product.inventory ?
                            <div className="addtocartform">
-                             <p><u>quantity</u></p>
                              <form onSubmit={this.addToCart}>
-                              <select name="productQuantity" id={this.props.carts[0].id}>
+                               <div id="quantSelectDesign">
+                               <label id="quantitylabel">Quantity</label>
+                              <select className="quantitySelect" name="productQuantity" id={this.props.carts[0].id}>
                                 <option name="quantity" type="number" value="1">1</option>
                                 <option name="quantity" type="number" value="2">2</option>
                                 <option name="quantity" type="number" value="3">3</option>
                                 <option name="quantity" type="number" value="4">4</option>
                                 <option name="quantity" type="number" value="5">5</option>
                               </select>
-                              <button id="customButton" type="submit">add to cart</button>
+                            </div>
+                              <div>
+                                <Button primary type="submit">add to cart</Button>
+                              </div>
                             </form>
                          </div>
                            :
                            <div />
                          }
                        <NavLink to={`/`}>
-                         <h3>back to all products</h3>
+                         <Button secondary>back to all products</Button>
                        </NavLink>
                      </div>
                    </div>

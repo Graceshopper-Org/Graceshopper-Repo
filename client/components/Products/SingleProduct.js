@@ -17,20 +17,21 @@ class SingleProduct extends Component {
     return (
       <div className="productView">
         <NavLink className="single-product-link" activeClassName="active" to={`/products/${product.id}`}>
-        <img className="productImage" src={ product.photo } />
-        <div className="productInfo">
+          <img className="productImage" src={ product.photo } />
+          <div className="productInfo">
             <div id="productTitle">
               { product.title }
             </div>
-        </div>
-      </NavLink>
-        { product.inventory > 0 ? <div id="productPrice">${product.price}</div> :<div id="productPrice">SOLD OUT</div> }
-          { this.props.user.isAdmin ?
-            (
-              <Button onClick={ this.removeProduct }>
-                Remove
-              </Button>
-            ) : <div /> }
+          </div>
+        </NavLink>
+      { product.inventory > 0 ? <div id="productPrice">${+product.price / 100}</div> :<div id="productPrice">SOLD OUT</div> }
+        { this.props.user.isAdmin ?
+          (
+            <Button onClick={ this.removeProduct }>
+              Remove
+            </Button>
+          ) : <div />
+        }
       </div>
     )
   }
