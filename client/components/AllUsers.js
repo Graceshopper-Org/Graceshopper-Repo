@@ -28,6 +28,15 @@ const mapDispatchToProps = (dispatch) => {
       document.getElementById(userId + 'admin' + userIsAdmin).className = currentClassName.includes('on') ? 'off toggle icon' : 'on toggle icon'
       const updateUserThunk = updateUserThunkCreator(userId, 'isAdmin', !userIsAdmin)
       return dispatch(updateUserThunk)
+    },
+    handlePasswordClick: (evt) => {
+      const evtArray = evt.target.id.split('password')
+      const userId = +evtArray[0]
+      const userNeedsPasswordReset = (evtArray[1] === 'true')
+      const currentClassName = userNeedsPasswordReset ? 'on toggle icon' : 'off toggle icon'
+      document.getElementById(userId + 'password' + userNeedsPasswordReset).className = currentClassName.includes('on') ? 'off toggle icon' : 'on toggle icon'
+      const updateUserThunk = updateUserThunkCreator(userId, 'needsPasswordReset', !userNeedsPasswordReset)
+      return dispatch(updateUserThunk)
     }
   }
 }
@@ -62,7 +71,11 @@ class AllUsers extends Component {
                   id={ user.id + 'admin' + user.isAdmin }
                   onClick={ this.props.handleAdminClick } />
                 </td>
-                <td>Yes</td>
+                <td><i
+                  className={ user.needsPasswordReset ? 'on toggle icon' : 'off toggle icon' }
+                  id={ user.id + 'password' + user.needsPasswordReset }
+                  onClick={ this.props.handlePasswordClick } />
+                </td>
                 <td>
                   <button
                     className="ui negative button" role="button"
