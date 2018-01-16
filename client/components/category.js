@@ -11,23 +11,19 @@ class Category extends Component {
 
   render(){
     const {category, products, categoryId} = this.props
-    console.log('CATEGORY: ', category)
-    console.log('PRODUCTS: ', this.props.products)
     return(
       <div className="productsDisplay">
         <div className="pageTitle">
           {category.length && category[0].categoryName}
         </div>
-        <div>
-          {
-            (products.length > 0) ?
-              products.filter(product => product.categories[0]).filter(product => product.categories[0].id === categoryId).map(product =>
-                <SingleProduct product={product} key={product.id} />
-              )
-              :
-              <h1>no</h1>
-          }
-        </div>
+        {
+          (products.length > 0) ?
+          products.filter(product => product.categories[0]).filter(product => product.categories[0].id === categoryId).map(product =>
+            <SingleProduct product={product} key={product.id} />
+          )
+          :
+          <h1>no</h1>
+        }
       </div>
     )
   }
