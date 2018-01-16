@@ -54,7 +54,7 @@ class SingleOrder extends Component {
       order.time = this.getFormattedTime((order.createdAt.slice(11, 13) + '') + (order.createdAt.slice(14, 16) + ''))
 
       return (
-        <div>
+        <div  className="marginClass">
           <h2>Order Details</h2>
           <h5>Click on Product No. for product info</h5>
           <table className="ui single line table">
