@@ -15,6 +15,9 @@ export {default as SingleOrder} from './Orders/SingleOrder'
 export {default as AllOrders} from './Orders/AllOrders'
 export {default as SingleAdminOrder} from './Orders/SingleAdminOrder'
 
+export {default as Admin} from './Admin'
+export {default as AllUsers} from './AllUsers'
+
 export {default as Navbar} from './navbar'
 export {AllProducts} from './Products/AllProducts'
 export {default as Reviews} from './reviews'

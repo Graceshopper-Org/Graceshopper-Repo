@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { removeProduct } from '../../store/products';
 import { Button } from 'semantic-ui-react'
 import history from '../../history'
+import Reviews from '../reviews'
 
 class SingleProduct extends Component {
   constructor(props) {

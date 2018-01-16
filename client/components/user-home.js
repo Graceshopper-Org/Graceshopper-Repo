@@ -1,12 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import axios from 'axios'
+
 
 /**
  * COMPONENT
  */
 export const UserHome = (props) => {
-  const {email} = props
+  const {email, user} = props
+
+  // Note from Niharika: need to run below plan for password reset by someone
+
+  // function updatePassword (userId, password) {
+  //   axios.put(`/api/users/${ userId }`, { password, needsPasswordReset: false })
+  //   .catch(err => console.error(err))
+  // }
+
+  // if (user.needsPasswordReset) {
+  //   let newPassword = prompt('Your password has expired. Please provide a new password to reset it and click OK.')
+  //   while (newPassword === null) {
+  //     newPassword = prompt('You must enter a new password to proceed. Please provide a new password and click OK.')
+  //   }
+  //   updatePassword(user.id, newPassword)
+  // }
 
   return (
     <div>
@@ -20,7 +37,8 @@ export const UserHome = (props) => {
  */
 const mapState = (state) => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    user: state.user
   }
 }
 

@@ -12,10 +12,11 @@ const fetchCart = carts => ({type: INIT_CART, carts})
 const setActiveCart = carts => ({type: SET_ACTIVE_CART, carts})
 const removeProduct = product => ({type: REMOVE_PRODUCT, product})
 const updateQuantity = product => ({type: UPDATE_QUANTITY, product})
-const addItemToCart = product => ({type: ADD_ITEM_TO_CART, product})
+const addItemToCart = (cartId, product, quantity) => ({type: ADD_ITEM_TO_CART, cartId, product, quantity})
 
 //reducer
 export default function reducer(carts = [], action) {
+  let newCarts = carts.slice()
   switch (action.type) {
     case INIT_CART:
       return action.carts
@@ -30,6 +31,12 @@ export default function reducer(carts = [], action) {
       return carts.map(product => (
         product.id === action.product.id ? action.product : product
       ))
+    case ADD_ITEM_TO_CART:
+      var products = newCarts[0].products
+      products.push(action.product)
+      products[products.length - 1].productCart = {quantity: +action.quantity, price: action.product.price, productId: action.product.id, cartId: action.cartId}
+      return newCarts
+
     case ADD_ITEM_TO_CART:
       var products = newCarts[0].products
       products.push(action.product)
@@ -60,7 +67,7 @@ export const addItemToCartThunkCreator = (cartId, product, quantity) =>
 
 //the cookie is the cartId
 export const setCart = (userId) => dispatch => {
-  if (userId){
+  if(userId){
 
     axios.get(`/api/carts/user/${userId}`)
     .then(res => {
