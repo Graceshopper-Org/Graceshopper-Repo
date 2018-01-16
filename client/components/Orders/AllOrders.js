@@ -50,13 +50,14 @@ class AllOrders extends Component {
         let orderTotal = 0;
         let orderProducts = order.products
         orderProducts.forEach(product => {
-          orderTotal += (+product.quantity * +product.price) / 100
+          let currentProduct = JSON.parse(product)
+          orderTotal += (+currentProduct.quantity * +currentProduct.price) / 100
         })
         order.total = orderTotal.toFixed(2)
       })
 
     return (
-      <div>
+      <div className="marginClass">
       <h2>Customer Orders</h2>
         <div className="ui icon input">
           <input type="text" id="statusInput" onKeyUp={ this.statusFilterFunc } placeholder="Search for status..." />

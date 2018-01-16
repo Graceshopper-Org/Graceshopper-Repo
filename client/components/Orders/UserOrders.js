@@ -36,13 +36,14 @@ class UserOrders extends Component {
         let orderTotal = 0;
         let orderProducts = order.products
         orderProducts.forEach(product => {
-          orderTotal += (+product.quantity * +product.price) / 100
+          let currentProduct = JSON.parse(product)
+          orderTotal += (+currentProduct.quantity * +currentProduct.price) / 100
         })
         order.total = orderTotal.toFixed(2)
       })
 
     return (
-      <div>
+      <div className="marginClass">
       <h2>My Orders</h2>
         <h4>Click on Order No. for order details</h4>
         <table className="ui celled table">

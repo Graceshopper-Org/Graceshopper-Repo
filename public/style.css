@@ -293,6 +293,7 @@ textarea {
   margin: 0 3px 3px 3px;
 }
 
+
 .headerforall{
   display: flex;
   justify-content: center;
@@ -327,4 +328,12 @@ textarea {
 
 .carousel .carousel-image.hidden {
   opacity: 0;
+}
+
+.marginClass {
+  margin: 0 20px 0 20px;
+}
+
+.checkout-form {
+  padding-left: 1em
 }
