@@ -58,7 +58,6 @@ router.post('/', (req, res, next) => {
             return product
           })
           .then(product => {
-              // Note: Niharika had to use Find All and return results below in the interest of time, because Find One by itself wouldn't work
               productCart.findAll()
               .then(productCarts => {
                 return productCarts
@@ -114,7 +113,7 @@ router.put('/:id', (req, res, next) => {
       .then(() => res.sendStatus(200))
       .catch(next)
     }
-    /// do we need an ability to update the product price in a cart?
+
   if (req.body.products) {
     req.body.products.forEach(productElem => {
       promiseArray.push(
@@ -124,7 +123,7 @@ router.put('/:id', (req, res, next) => {
             cartId: id
           }
         })
-        .then(productCartRow => productCartRow.update({ quantity: productElem.quantity }))
+        .then(productCartRow => productCartRow.update({ quantity: productElem.productCart.quantity }))
       )
     })
     Promise.all(promiseArray)

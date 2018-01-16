@@ -65,7 +65,7 @@ class Navbar extends Component {
                           <a href="#" onClick={handleClick} className="item">Log Out</a>
                       </div> :
                       <div>
-                          <Link to="#" className="item">My Account</Link>
+                          <Link to={`/users/${user.id}`} className="item">My Account</Link>
                           <a href="#" onClick={handleClick} className="item">Log Out</a>
                       </div>
                     )
