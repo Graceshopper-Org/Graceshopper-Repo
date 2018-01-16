@@ -51,7 +51,7 @@ class AllUsers extends Component {
 
     if (this.props.users.length > 0) {
       return (
-        <table className="ui single line table">
+        <table className="ui single line table marginClass">
           <tbody>
             <tr>
               <th>User No.</th>
@@ -91,7 +91,7 @@ class AllUsers extends Component {
       )
     } else {
       return (
-        <h1>Users Loading...</h1>
+        <h1 className="marginClass">Users Loading...</h1>
       )
     }
   }
