@@ -11,8 +11,6 @@ class Category extends Component {
 
   render(){
     const {category, products, categoryId} = this.props
-    console.log('CATEGORY: ', category)
-    console.log('PRODUCTS: ', this.props.products)
     return(
       <div className="productsDisplay">
         <div className="pageTitle">

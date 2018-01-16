@@ -20,21 +20,21 @@ async function seed () {
   // executed until that promise resolves!
 
   const users = await Promise.all([
-    User.create({email: 'guy@aemail.com',
+    User.create({email: 'guy@example.org',
     password: 'asjeas', isAdmin: true}),
-    User.create({email: 'person@yahHOOOOO.com',
+    User.create({email: 'person@example.org',
     password: 'awesomepassword'}),
-    User.create({email: 'nipbelter@hotmail.com',
+    User.create({email: 'nipbelter@example.org',
     password: 'nippy'}),
-    User.create({email: 'hermet_elbowton@yooohooo.com',
+    User.create({email: 'hermet_elbowton@example.org',
     password: 'hermybaby'}),
-    User.create({email: 'uncleTerry@heybro.com',
+    User.create({email: 'uncleTerry@example.org',
     password: 'YEAHBROTHER'}),
-    User.create({email: 'clydeDavis@countryman.com',
+    User.create({email: 'clydeDavis@example.org',
     password: 'yeeeehaw'}),
-    User.create({email: 'orangeFeet@getsomesocks.com',
+    User.create({email: 'orangeFeet@example.org',
     password: 'help'}),
-    User.create({email: 'rebecca@rebec.com',
+    User.create({email: 'rebecca@example.org',
     password: 'iamrebecca', needsPasswordReset: true}),
     User.create({email: 'alexa.billings@gmail.com', password: 'alexa'})
   ])
@@ -433,8 +433,6 @@ async function seed () {
       categories[2].addProduct(products[46].id)
 
     })
-
-    console.log(products[0].id)
   })
 
   const productCategory = [
@@ -456,14 +454,14 @@ async function seed () {
   ])
 
   const orders = await Promise.all([
-    Order.create({products: ['{\"id\": 1, \"name\":\"password-shirt\", \"quantity\": 3, \"price\": 1495}', '{\"id\": 2, \"name\":\"putting out the fire mug\", \"quantity\": 4, \"price\": 1705}'], status: 'created', userId: 1, streetAddress: '200 Wonderful Rd', city: 'Wonderfulness', stateCode: 'IL', zipCode: 61616}),
-    Order.create({products: ['{\"id\": 1, \"name\":\"password-shirt\", \"quantity\": 3, \"price\": 1495}'], status: 'cancelled', userId: 1, streetAddress: '200 Wonderful Rd', city: 'Wonderfulness', stateCode: 'IL', zipCode: 61616}),
-    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}', '{\"id\": 2, \"quantity\": 1, \"price\": 2295}'], status: 'processing', userId: 2}),
-    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'cancelled', userId: 3}),
-    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'complete', userId: 4}),
-    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'created', userId: 5}),
-    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'processing', userId: 6}),
-    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'cancelled', userId: 7})
+    Order.create({products: ['{\"id\": 1, \"name\":\"password-shirt\", \"quantity\": 3, \"price\": 1495}', '{\"id\": 2, \"name\":\"putting out the fire mug\", \"quantity\": 4, \"price\": 1705}'], status: 'Created', userId: 1, streetAddress: '200 Wonderful Rd', city: 'Wonderfulness', stateCode: 'IL', zipCode: 61616}),
+    Order.create({products: ['{\"id\": 1, \"name\":\"password-shirt\", \"quantity\": 3, \"price\": 1495}'], status: 'Cancelled', userId: 1, streetAddress: '200 Wonderful Rd', city: 'Wonderfulness', stateCode: 'IL', zipCode: 61616}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}', '{\"id\": 2, \"quantity\": 1, \"price\": 2295}'], status: 'Processing', userId: 2, streetAddress: '8 Javascript Ave', city: 'Javascript', stateCode: 'HI', zipCode: 32312}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'Cancelled', userId: 3, streetAddress: '8 Javascript Ave', city: 'Javascript', stateCode: 'HI', zipCode: 32312}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'Complete', userId: 4, streetAddress: '8 Ruby Ave', city: 'Ruby', stateCode: 'NE', zipCode: 43131}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'Created', userId: 5, streetAddress: '12 React Ave', city: 'React', stateCode: 'GA', zipCode: 12345}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'Processing', userId: 6, streetAddress: '3453 React Redux Ave', city: 'Redux', stateCode: 'IL', zipCode: 65412}),
+    Order.create({products: ['{\"id\": 1, \"quantity\": 3, \"price\": 1495}'], status: 'Cancelled', userId: 7, streetAddress: '1111 Express Ave', city: 'Sequelize', stateCode: 'MI', zipCode: 71631})
   ])
 
   const reviews = await Promise.all([
@@ -472,22 +470,23 @@ async function seed () {
     Review.create({description: 'very nice', stars: 4, productId: 3, userId: 3}),
     Review.create({description: 'needs improvement', stars: 2, productId: 4, userId: 4}),
     Review.create({description: 'bad', stars: 1, productId: 5, userId: 5}),
-    Review.create({description: 'good stuff', stars: 3, productId: 1, userId: 6})
+    Review.create({description: 'good stuff', stars: 3, productId: 1, userId: 6}),
+    Review.create({description: 'cool shirt!', stars: 4, productId: 1, userId: 3})
   ])
 
   const productCarts = await Promise.all([
-    productCart.create({quantity: 1, price: 1500, productId: 1, cartId: 1}),
-    productCart.create({quantity: 1, price: 100, productId: 2, cartId: 1}),
-    productCart.create({quantity: 1, price: 775, productId: 3, cartId: 1}),
-    productCart.create({quantity: 2, price: 1899, productId: 4, cartId: 2}),
-    productCart.create({quantity: 1, price: 10001, productId: 5, cartId: 3}),
-    productCart.create({quantity: 2, price: 1500, productId: 1, cartId: 4}),
-    productCart.create({quantity: 1, price: 10001, productId: 5, cartId: 4}),
-    productCart.create({quantity: 2, price: 775, productId: 3, cartId: 5}),
-    productCart.create({quantity: 1, price: 1899, productId: 4, cartId: 5}),
-    productCart.create({quantity: 3, price: 100, productId: 2, cartId: 6}),
-    productCart.create({quantity: 1, price: 1899, productId: 4, cartId: 7}),
-    productCart.create({quantity: 5, price: 1600, productId: 3, cartId: 7})
+    productCart.create({quantity: 1, price: 3500, productId: 1, cartId: 1}),
+    productCart.create({quantity: 1, price: 899, productId: 2, cartId: 1}),
+    productCart.create({quantity: 1, price: 1000, productId: 3, cartId: 1}),
+    productCart.create({quantity: 2, price: 500, productId: 4, cartId: 2}),
+    productCart.create({quantity: 1, price: 10025, productId: 5, cartId: 3}),
+    productCart.create({quantity: 2, price: 3500, productId: 1, cartId: 4}),
+    productCart.create({quantity: 1, price: 10025, productId: 5, cartId: 4}),
+    productCart.create({quantity: 2, price: 1000, productId: 3, cartId: 5}),
+    productCart.create({quantity: 1, price: 500, productId: 4, cartId: 5}),
+    productCart.create({quantity: 3, price: 899, productId: 2, cartId: 6}),
+    productCart.create({quantity: 1, price: 500, productId: 4, cartId: 7}),
+    productCart.create({quantity: 5, price: 1000, productId: 3, cartId: 7})
     ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!

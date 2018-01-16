@@ -60,12 +60,12 @@ class Navbar extends Component {
                   ? (
                     this.props.user.isAdmin ?
                       <div>
-                          <Link to={`/users/${user.id}`} className="item">My Account</Link>
+                          <Link to={`/orders`} className="item">My Orders</Link>
                           <Link to="/admin" className="item">Admin Page</Link>
                           <a href="#" onClick={handleClick} className="item">Log Out</a>
                       </div> :
                       <div>
-                          <Link to={`/users/${user.id}`} className="item">My Account</Link>
+                          <Link to={`/orders`} className="item">My Orders</Link>
                           <a href="#" onClick={handleClick} className="item">Log Out</a>
                       </div>
                     )
