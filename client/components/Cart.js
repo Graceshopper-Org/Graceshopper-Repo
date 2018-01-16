@@ -1,7 +1,8 @@
-import React, {Component} from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { deleteProduct } from '../store/cart'
-import { Button, Item, Image as ImageComponent, Dropdown, Menu } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+import { Button, Item, Dropdown } from 'semantic-ui-react'
 
 const Cart = props => {
 
@@ -52,6 +53,7 @@ const Cart = props => {
           })
         }
         </Item.Group>
+        <Link to="/checkout">Continue to Checkout</Link>
       </div>
   )
 }

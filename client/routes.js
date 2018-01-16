@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, UserOrders, SingleOrder, UserAccount, Cart, AllOrders, SingleAdminOrder, Admin, AllUsers} from './components'
+import {Main, Login, Signup, UserHome, UserOrders, SingleOrder, UserAccount, Cart, Checkout, AllOrders, SingleAdminOrder, Admin, AllUsers} from './components'
 import { fetchInitialCart, setCart } from './store/cart'
 import {fetchCategories} from './store/category'
 import AllProducts from './components/Products/AllProducts'
@@ -14,6 +14,8 @@ import Category from './components/category'
 import SearchBar from './components/search'
 import Reviews from './components/reviews'
 import { fetchReviews } from './store/reviews'
+import { fetchOrders } from './store/orders'
+
 
 /**
  * COMPONENT
@@ -44,6 +46,9 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are available to all visitors */}
             <Route exact path="/cart" component={Cart} />
+
+            <Route exact path="/checkout" component={Checkout} />
+
             <Route
               exact
               path="/"
@@ -140,9 +145,11 @@ const mapDispatch = (dispatch) => {
     },
     setActiveCart (userId) {
       dispatch(setCart(userId))
+      dispatch(fetchOrders(userId))
     },
     setDefaultCart (cookie) {
       dispatch(fetchInitialCart(cookie))
+      dispatch(me())
     }
   }
 }

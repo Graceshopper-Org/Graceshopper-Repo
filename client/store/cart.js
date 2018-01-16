@@ -31,6 +31,11 @@ export default function reducer(carts = [], action) {
       return carts.map(product => (
         product.id === action.product.id ? action.product : product
       ))
+    case ADD_ITEM_TO_CART:
+      var products = newCarts[0].products
+      products.push(action.product)
+      products[products.length - 1].productCart = {quantity: +action.quantity, price: action.product.price, productId: action.product.id, cartId: action.cartId}
+      return newCarts
 
     case ADD_ITEM_TO_CART:
       var products = newCarts[0].products
