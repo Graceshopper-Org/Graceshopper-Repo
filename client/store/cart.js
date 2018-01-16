@@ -8,9 +8,10 @@ const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
 const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART'
 
 //action creators
+//removeProduct(cartId, productId)
 const fetchCart = carts => ({type: INIT_CART, carts})
 const setActiveCart = carts => ({type: SET_ACTIVE_CART, carts})
-const removeProduct = product => ({type: REMOVE_PRODUCT, product})
+const removeProduct = (cartId, productId) => ({type: REMOVE_PRODUCT, cartId, productId})
 const updateQuantity = (product, addOrSubstract) => ({type: UPDATE_QUANTITY, product, addOrSubstract})
 const addItemToCart = (cartId, product, quantity) => ({type: ADD_ITEM_TO_CART, cartId, product, quantity})
 
@@ -27,7 +28,8 @@ export default function reducer(carts = [], action) {
       return action.carts
 
     case REMOVE_PRODUCT:
-      return carts.filter(product => product.id !== action.product.id)
+      newCarts[0].products = newCarts[0].products.filter(product => product.id !== action.productId)
+      return newCarts
 
     case UPDATE_QUANTITY:
       var newProducts = copy[0].products.slice()
@@ -97,7 +99,7 @@ export const setCart = (userId) => dispatch => {
 }
 
 export const deleteProduct = (cartId, productId) => dispatch => {
-  dispatch(removeProduct(productId))
+  dispatch(removeProduct(cartId, productId))
   axios.delete(`/api/carts/${cartId}/delete-product/${productId}`)
     .catch(err => console.error(`Error deleting product: ${productId}`, err))
 }

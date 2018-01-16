@@ -19,14 +19,17 @@ const { submit, carts, userId } = props
       {key: 9, text: '9', value: 9},
       {key: 10, text: '10', value: 10}
     ]
-
+    if (!carts[0] || !carts[0].products){
+      return (<div></div>)
+    }
     return (
       <div id="cart">
         <h1>Cart</h1>
-        <Item.Group divided>
         {
-          carts.length && carts[0].products.map(product => {
+          carts[0].products.length === 0 ? <h1>Your cart is empty!</h1> : carts[0].products.map(product => {
             return (
+              <div>
+              <Item.Group divided>
                 <Item key={product.id}>
                   <Item.Image size="small" src={product.photo} />
                   <Item.Content>
@@ -45,19 +48,17 @@ const { submit, carts, userId } = props
                       </Item>
                     </div>
                     <Button
-                    onClick={() =>
-                    props.deleteProduct(product.productCart.cartId, product.id)
-                    }>
+                    onClick={() => props.deleteProduct(product.productCart.cartId, product.id)}>
                     x
                    </Button>
-
                   </Item.Content>
                 </Item>
+              </Item.Group>
+            <Link to="/checkout">Continue to Checkout</Link>
+            </div>
             )
           })
         }
-        </Item.Group>
-        <Link to="/checkout">Continue to Checkout</Link>
       </div>
   )
 }
@@ -73,10 +74,12 @@ const mapStateToProps = state => {
 
 const mapDispatch = dispatch => {
   return {
-    updateQuantity(cartId, product, addOrSubstract) {
+    updateQuantity: (cartId, product, addOrSubstract) => {
       dispatch(updateProductQuantityThunkCreator(cartId, product, addOrSubstract))
     },
-    deleteProduct
+    deleteProduct: (cartId, productId) => {
+      dispatch(deleteProduct(cartId, productId))
+    }
   }
 }
 
