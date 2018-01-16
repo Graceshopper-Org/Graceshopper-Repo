@@ -6,6 +6,7 @@ const SET_ACTIVE_CART = 'SET_ACTIVE_CART'
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
 const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART'
+const UPDATE_STATUS = 'UPDATE_STATUS'
 
 //action creators
 //removeProduct(cartId, productId)
@@ -14,6 +15,7 @@ const setActiveCart = carts => ({type: SET_ACTIVE_CART, carts})
 const removeProduct = (cartId, productId) => ({type: REMOVE_PRODUCT, cartId, productId})
 const updateQuantity = (product, addOrSubstract) => ({type: UPDATE_QUANTITY, product, addOrSubstract})
 const addItemToCart = (cartId, product, quantity) => ({type: ADD_ITEM_TO_CART, cartId, product, quantity})
+const updateStatus = cartId => ({type: UPDATE_STATUS, cartId})
 
 
 //reducer

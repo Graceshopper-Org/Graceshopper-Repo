@@ -7,15 +7,14 @@ const Checkout = props => {
   const products = JSON.stringify(carts[0].products)
 
   return (
-
   <div>
     <h1>Checkout</h1>
     <h2>Current Shipping Address:</h2>
-    <p>{props.user.streetAddress}</p>
-    <p>{props.user.city}, {props.user.stateCode} {props.user.zipCode}</p>
+    <h4>{user.streetAddress}</h4>
+    <h4>{user.city}, {user.stateCode} {user.zipCode}</h4>
     {
     <div>
-    <form onSubmit={createOrder} id={products + 'graceShopper' + user.id + 'graceShopper' + user.email}>
+    <form onSubmit={createOrder} id={products + 'graceShopper' + user.id + 'graceShopper' + user.email + 'graceShopper' + carts[0].id}>
       <label>
         Street Address
         <input type="text" name="address" defaultValue={user.streetAddress} required />
@@ -68,11 +67,14 @@ const mapDispatchToProps = dispatch => {
       let order = {
         products: productsArr,
         userId: +array[1],
-        status: 'created',
+        cartId: +array[3],
+        status: 'Created',
+        email: array[2],
         streetAddress: eventTargetObj.address.value,
         city: eventTargetObj.city.value,
         stateCode: eventTargetObj.state.value,
-        zipCode: +eventTargetObj.zipCode.value
+        zipCode: +eventTargetObj.zipCode.value,
+        cartStatus: 'closed'
       }
       dispatch(createNewOrder(order))
     }

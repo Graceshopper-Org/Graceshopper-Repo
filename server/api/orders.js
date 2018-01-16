@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Order, User } = require('../db/models')
+const { Order, User, Cart } = require('../db/models')
 
 module.exports = router
 
@@ -66,7 +66,6 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
   Order.create(req.body)
     .then(order => {
-      res.json(order)
       User.findById(req.body.userId)
         .then(user => {
           mailOptionsCreatedOrder.to = user.email.toString()
@@ -75,6 +74,12 @@ router.post('/', (req, res, next) => {
             else console.log(info)
           })
         })
+      Cart.findById(req.body.cartId)
+        .then(cart => {
+          cart.update({status: req.body.cartStatus})
+          cart.create()
+        })
+      res.json(order)
     })
     .catch(next)
 })
@@ -102,7 +107,6 @@ router.put('/:id', (req, res, next) => {
             })
           }
         })
-
     })
     .then(() => res.sendStatus(200))
     .catch(next)
