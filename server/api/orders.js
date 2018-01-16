@@ -4,6 +4,15 @@ const Promise = require('bluebird')
 
 module.exports = router
 
+
+const adminGateway = (req, res, next) => {
+  if(req.user.isAdmin) {
+		next()
+	} else {
+		next('Sorry, This feature can be used by admins only.')
+	}
+}
+
 router.get('/', (req, res, next) => {
   Order.findAll({
     include: [{
@@ -36,7 +45,7 @@ router.post('/', (req, res, next) => {
   .catch(next)
 })
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', adminGateway, (req, res, next) => {
   let id = req.params.id
   Order.findById(id)
   .then(order => {
@@ -47,7 +56,7 @@ router.put('/:id', (req, res, next) => {
 })
 
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', adminGateway, (req, res, next) => {
   let id = req.params.id
   Order.destroy({
     where: { id }

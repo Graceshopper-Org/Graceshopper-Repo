@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addProduct } from '../../store/products';
 import SingleProduct from './SingleProduct';
+import { Form, Button } from 'semantic-ui-react'
 
 
 /*
@@ -14,7 +15,7 @@ import SingleProduct from './SingleProduct';
 class AllProducts extends Component {
   constructor(props) {
     super(props);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.addNewProduct = this.addNewProduct.bind(this);
   }
 
   render() {
@@ -31,19 +32,21 @@ class AllProducts extends Component {
   }
 
   newProductForm() {
+    const { product } = this.props
     return (
       <div>
-        <form id="addProductsFrom" onSubmit={this.onSubmit}>
+        <Form id="adminForm" onSubmit={(event) => this.addNewProduct(event, product)}>
           <div>
-            <h5> Admin-Only </h5>
-            <h4> Add Product: </h4>
+            <div className="adminOnlySign"> Admin-Only </div>
+            <div className="adminTitle"> Add Product: </div>
             <div>
               <label> Title: </label>
               <input name="title" type="text" required placeholder="Product title" />
               <label> Description: </label>
-              <textarea name="desc" type="text" form="addProductsFrom" placeholder="Enter description here..." />
+              <textarea name="desc" type="text" form="adminForm" placeholder="Enter description here..." />
               <label> Select Category: </label>
               <select name="category" type="text" placeholder="Product category">
+                <option value="choose here" disabled>Choose one</option>
               {
                 this.props.category.map(cat => <option value={cat.categoryName}>{cat.categoryName}</option>)
                 }
@@ -57,9 +60,9 @@ class AllProducts extends Component {
             </div>
           </div>
           <div>
-            <button type="submit" id="submitButton" value="Submit"> Add Product </button>
+            <Button type="submit" id="submitButton" value="Submit"> Add Product </Button>
           </div>
-        </form>
+        </Form>
       </div>
     )
   }
@@ -73,36 +76,35 @@ class AllProducts extends Component {
         {
           this.props.products ?
             this.props.products
-              .map(product => <SingleProduct product={product} key={product.id} />) : <div />
+              .map(product => <SingleProduct key={product.id} product={product} />) : <div />
         }
       </div>
     )
   }
 
-  onSubmit(event) {
+
+  addNewProduct(event, product) {
     event.preventDefault();
-    const product = {
-      title: event.target.title.value,
-      description: event.target.desc.value,
-      price: event.target.price.value,
-      inventory: event.target.inventory.value,
-      photo: event.target.imageUrl.value,
-      categories: [event.target.category.value]
-    };
-    this.props.addProduct(product);
-    event.target.title.value = '';
-    event.target.desc.value = '';
-    event.target.category.value = '';
-    event.target.price.value = '';
-    event.target.inventory.value = '';
-    event.target.imageUrl.value = '';
+    const updatedproduct = Object.assign({}, product,
+      {
+        title: event.target.title.value,
+        description: event.target.desc.value,
+        price: event.target.price.value,
+        inventory: event.target.inventory.value,
+        photo: event.target.imageUrl.value,
+        categories: [event.target.category.value]
+      }
+    )
+    this.props.addProduct(updatedproduct);
   }
+
 
 }
 
 const mapStateToProps = (state) => {
   return {
     products: state.products,
+    product: state.product,
     user: state.user,
     category: state.category
   }

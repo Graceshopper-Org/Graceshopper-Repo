@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import _ from 'lodash';
 import { updateProduct, addProduct, removeProduct } from '../../store/products';
 import { addCategory } from '../../store/category'
 import { addItemToCartThunkCreator } from '../../store/cart'
-import { Button } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 import history from '../../history'
 import Reviews from '../reviews'
 
 
 class ProductDetail extends Component {
 
-  constructor(props) {
-    super(props);
-    this.editProductDetails = this.editProductDetails.bind(this);
-    this.removeProduct = this.removeProduct.bind(this)
-    this.createACategory = this.createACategory.bind(this)
-    this.addToCart = this.addToCart.bind(this)
+    constructor(props) {
+      super(props);
+      this.editProductDetails = this.editProductDetails.bind(this);
+      this.removeProduct = this.removeProduct.bind(this)
+      this.createACategory = this.createACategory.bind(this)
+      this.addToCart = this.addToCart.bind(this)
   }
 
   render() {
@@ -32,14 +31,14 @@ class ProductDetail extends Component {
                       <div className="product-view-info">
                       <div className="product-view-title"> {product.title} </div>
                       {
-                        product.inventory > 0 ?
+                        product.inventory ?
                         <div className="product-view-price">${product.price}</div>
                         :
                         <div className="product-view-price">SOLD OUT</div>
                       }
                       <div className="product-view-desc">{product.description}</div>
                       <div className="product-view-category"><u>Category</u>:
-                        { product.categories.length > 0 ?
+                        { product.categories.length ?
                           <NavLink to={`/category/${product.categories[0].id}`}>
                             {product.categories[0].categoryName}
                           </NavLink>
@@ -47,7 +46,7 @@ class ProductDetail extends Component {
                         }
                        </div>
                          {
-                           product.inventory > 0 ?
+                           product.inventory ?
                            <div className="addtocartform">
                              <p><u>quantity</u></p>
                              <form onSubmit={this.addToCart}>
@@ -58,7 +57,7 @@ class ProductDetail extends Component {
                                 <option name="quantity" type="number" value="4">4</option>
                                 <option name="quantity" type="number" value="5">5</option>
                               </select>
-                              <button type="submit">add to cart</button>
+                              <button id="customButton" type="submit">add to cart</button>
                             </form>
                          </div>
                            :
@@ -71,34 +70,41 @@ class ProductDetail extends Component {
                    </div>
                   {
                     this.props.user.isAdmin ? (
-                     <form onSubmit={this.editProductDetails}>
+                     <Form id="adminFormEditProduct" onSubmit={(event) => this.editProductDetails(event, product)}>
                        <div>
                          <h4> ADMIN ONLY </h4>
                          <h4>Edit Product Details:</h4>
                          <div className="editProductForm">
-                           <p>title</p>
-                           <input name="title" type="text" defaultValue={product.title}/>
-                           <p>desc</p>
+                           <label>Title</label>
+                           <input name="title" type="text" defaultValue={product.title} />
+                           <label>Description</label>
                            <input name="desc" type="text" defaultValue={product.description} />
-                           <p>price</p>
+                           <label>Price</label>
                            <input name="price" type="number" defaultValue={product.price} />
-                           <p>Inventory</p>
+                           <label>Inventory</label>
                            <input name="inventory" type="number" defaultValue={product.inventory} />
-                           <p>image url</p>
+                           <label>Image Url</label>
                            <input name="photoURL" type="text" defaultValue={product.photo} />
-                           <p>category</p>
-                            {
-                              product.categories.length > 0 ?
+                           <label>Category</label>
+                           <select name="category" type="text">
+                           {
+                               this.props.category.map(cat =>
+                                 <option value={JSON.stringify(cat)}>{cat.categoryName}</option>)
+                           }
+                             </select>
+                            {/*
+                              product.categories.length ?
                               <input name="category" type="text" defaultValue={product.categories[0].categoryName} />
                               :
                               <p> no current categories </p>
-                            }
+                            */}
                          </div>
                        </div>
                        <div>
-                         <input type="submit" value="Update Product"/>
+                         <Button input type="submit"> Update Product </Button>
+                         <Button onClick={this.removeProduct}> Remove Product </Button>
                        </div>
-                     </form>
+                     </Form>
                     ) :
                    <div />
                   }
@@ -134,7 +140,6 @@ class ProductDetail extends Component {
   ====== ignore this feature - possible backburner
   ====== allows admins to UPLOAD images to server
   ====== to add additional to product images
-
   uploadPhotos(){
     return (
       <div>
@@ -167,24 +172,20 @@ class ProductDetail extends Component {
   }
 
   // ========= Admin: Edit Product ========= \\
-  editProductDetails(event) {
+  editProductDetails(event, product) {
     event.preventDefault();
-    const product = {
-      id: this.props.product.id,
-      title: event.target.title.value,
-      description: event.target.desc.value,
-      price: event.target.price.value,
-      inventory: event.target.inventory.value,
-      photo: event.target.photoURL.value,
-      // categoryName = [event.target.category.value],
-    };
-    this.props.updateProduct(product);
-    event.target.title.value = product.title;
-    event.target.desc.value = product.description;
-    event.target.price.value = product.price;
-    event.target.inventory.value = product.inventory;
-    event.target.photoURL.value = product.photo;
-    console.log('LOG PRODUCT UPDATE:', product)
+    const updatedproduct = Object.assign({}, product,
+      {
+        id: this.props.product.id,
+        title: event.target.title.value,
+        description: event.target.desc.value,
+        price: event.target.price.value,
+        inventory: event.target.inventory.value,
+        photo: event.target.photoURL.value,
+        categories: [JSON.parse(event.target.category.value)]
+      }
+    )
+    this.props.updateProduct(updatedproduct);
   }
 
   // ========= Admin: Create Category ========= \\
@@ -203,7 +204,7 @@ class ProductDetail extends Component {
 const mapStateToProps = ({ products, user, category, carts }, ownProps) => {
   const productParamId = Number(ownProps.match.params.id);
   return {
-    product: _.find(products, product => product.id === productParamId),
+    product: products.find(product => product.id === productParamId),
     products,
     user,
     category,
