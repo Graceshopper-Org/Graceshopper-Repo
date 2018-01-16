@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Order, User } = require('../db/models')
+const { Order, User, productCart } = require('../db/models')
 
 module.exports = router
 
@@ -73,6 +73,7 @@ router.get('/:id', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
+  res.clearCookie('cart')
   Order.create(req.body)
     .then(order => {
       res.json(order)
@@ -111,7 +112,6 @@ router.put('/:id', adminGateway, (req, res, next) => {
             })
           }
         })
-
     })
     .then(() => res.sendStatus(200))
     .catch(next)

@@ -6,6 +6,7 @@ const SET_ACTIVE_CART = 'SET_ACTIVE_CART'
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
 const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART'
+const CLEAR_CART = 'CLEAR_CART'
 
 //action creators
 //removeProduct(cartId, productId)
@@ -14,7 +15,7 @@ const setActiveCart = carts => ({type: SET_ACTIVE_CART, carts})
 const removeProduct = (cartId, productId) => ({type: REMOVE_PRODUCT, cartId, productId})
 const updateQuantity = (product, addOrSubstract) => ({type: UPDATE_QUANTITY, product, addOrSubstract})
 const addItemToCart = (cartId, product, quantity) => ({type: ADD_ITEM_TO_CART, cartId, product, quantity})
-
+const clearCart = () => ({type: CLEAR_CART})
 
 //reducer
 export default function reducer(carts = [], action) {
@@ -50,6 +51,10 @@ export default function reducer(carts = [], action) {
       var products = newCarts[0].products
       products.push(action.product)
       products[products.length - 1].productCart = {quantity: +action.quantity, price: action.product.price, productId: action.product.id, cartId: action.cartId}
+      return newCarts
+
+    case CLEAR_CART:
+      newCarts[0].products = []
       return newCarts
 
     default:
@@ -102,4 +107,10 @@ export const deleteProduct = (cartId, productId) => dispatch => {
   dispatch(removeProduct(cartId, productId))
   axios.delete(`/api/carts/${cartId}/delete-product/${productId}`)
     .catch(err => console.error(`Error deleting product: ${productId}`, err))
+}
+
+export const clearUserCart = cartId => dispatch => {
+  dispatch(clearCart())
+  axios.put(`/api/carts/clearCart/${cartId}`)
+  .catch(err => console.error('could not remove products', err))
 }

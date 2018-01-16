@@ -1,21 +1,23 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {createNewOrder} from '../store/orders'
+import {clearUserCart} from '../store/cart'
 
 const Checkout = props => {
   const { user, carts, createOrder } = props
   const products = JSON.stringify(carts[0].products)
 
   return (
-
   <div>
     <h1>Checkout</h1>
-    <h2>Current Shipping Address:</h2>
-    <p>{props.user.streetAddress}</p>
-    <p>{props.user.city}, {props.user.stateCode} {props.user.zipCode}</p>
+    <h2>Email & Shipping Address:</h2>
     {
     <div>
-    <form onSubmit={createOrder} id={products + 'graceShopper' + user.id + 'graceShopper' + user.email}>
+    <form onSubmit={createOrder} id={products + 'graceShopper' + user.id + 'graceShopper' + user.email + 'graceShopper' + carts[0].id}>
+      <label>
+        Email
+        <input type="text" name="email" defaultValue={user.email} required/>
+      </label>
       <label>
         Street Address
         <input type="text" name="address" defaultValue={user.streetAddress} required />
@@ -68,13 +70,16 @@ const mapDispatchToProps = dispatch => {
       let order = {
         products: productsArr,
         userId: +array[1],
-        status: 'created',
+        cartId: +array[3],
+        status: 'Created',
+        email: array[2],
         streetAddress: eventTargetObj.address.value,
         city: eventTargetObj.city.value,
         stateCode: eventTargetObj.state.value,
         zipCode: +eventTargetObj.zipCode.value
       }
       dispatch(createNewOrder(order))
+      dispatch(clearUserCart(order.cartId))
     }
   }
 }
