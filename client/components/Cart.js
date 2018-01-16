@@ -1,11 +1,24 @@
-import React, {Component} from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { deleteProduct, setCart, store, updateProductQuantityThunkCreator } from '../store'
-import { Button, Icon, Item, Image as ImageComponent, Dropdown, Menu } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+import { Button, Item, Dropdown } from 'semantic-ui-react'
 
 const Cart = props => {
+const { submit, carts, userId } = props
 
-    const { submit, carts, userId } = props
+    const quantityOptions = [
+      {key: 1, text: '1', value: 1},
+      {key: 2, text: '2', value: 2},
+      {key: 3, text: '3', value: 3},
+      {key: 4, text: '4', value: 4},
+      {key: 5, text: '5', value: 5},
+      {key: 6, text: '6', value: 6},
+      {key: 7, text: '7', value: 7},
+      {key: 8, text: '8', value: 8},
+      {key: 9, text: '9', value: 9},
+      {key: 10, text: '10', value: 10}
+    ]
 
     return (
       <div id="cart">
@@ -31,13 +44,20 @@ const Cart = props => {
                         </div>
                       </Item>
                     </div>
-                    <button value={product.id} onClick={submit}>Remove</button>
+                    <Button
+                    onClick={() =>
+                    props.deleteProduct(product.productCart.cartId, product.id)
+                    }>
+                    x
+                   </Button>
+
                   </Item.Content>
                 </Item>
             )
           })
         }
         </Item.Group>
+        <Link to="/checkout">Continue to Checkout</Link>
       </div>
   )
 }
@@ -47,28 +67,18 @@ const Cart = props => {
 const mapStateToProps = state => {
   return {
     carts: state.carts,
-    user: state.user,
-    userId: state.user.id
+    user: state.user
   }
-
 }
 
 const mapDispatch = dispatch => {
   return {
-    submit(event) {
-      event.preventDefault()
-      const currentProduct = event.target.value
-      dispatch(deleteProduct(currentProduct))
-    },
     updateQuantity(cartId, product, addOrSubstract) {
       dispatch(updateProductQuantityThunkCreator(cartId, product, addOrSubstract))
-    }
+    },
+    deleteProduct
   }
 }
 
 export default connect(mapStateToProps, mapDispatch)(Cart)
 
-//Actions for cart
-//Add product
-//remove product
-//increase or decrease quantity
