@@ -2,6 +2,15 @@ const router = require('express').Router()
 const { User } = require('../db/models')
 module.exports = router
 
+const adminGateway = (req, res, next) => {
+  console.log('i am logging the req here', req.session.user )
+  if (req.user.isAdmin) {
+		next()
+	} else {
+		next('Sorry, This feature can be used by admins only.')
+	}
+}
+
 router.get('/', (req, res, next) => {
   User.findAll({
     // explicitly select only the id and email fields - even though
@@ -34,7 +43,7 @@ router.post('/', (req, res, next) => {
   .catch(next)
 })
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', adminGateway, (req, res, next) => {
   let id = req.params.id
   User.findById(id)
   .then(user => {
@@ -44,7 +53,7 @@ router.put('/:id', (req, res, next) => {
   .catch(next)
 })
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', adminGateway, (req, res, next) => {
   let id = req.params.id
   User.destroy({
     where: { id }

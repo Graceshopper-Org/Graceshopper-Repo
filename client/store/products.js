@@ -59,6 +59,7 @@ export const updateProduct = product => dispatch => {
     .catch(err => console.error(`Error updating product: ${product}`, err));
 }
 
+
 export const removeProduct = id => dispatch => {
   dispatch(deleteProduct(id));
   axios.delete(`/api/products/${id}`)

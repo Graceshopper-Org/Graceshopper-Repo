@@ -1,6 +1,14 @@
 const router = require('express').Router()
 const { Category, Product } = require('../db/models')
 
+const adminGateway = (req, res, next) => {
+  if(req.user.isAdmin) {
+		next()
+	} else {
+		next('Sorry, This feature can be used by admins only.')
+	}
+}
+
 router.get('/', (req, res, next) => {
   Category.findAll({
     include: [{
@@ -23,7 +31,7 @@ router.get('/:id', (req, res, next) => {
   .catch(next)
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', adminGateway, (req, res, next) => {
   Category.findOrCreate({
     where: {
       categoryName: req.body.categoryName
@@ -34,7 +42,7 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', adminGateway, (req, res, next) => {
   let id = req.params.id
   Category.findById(id)
   .then(category => {
@@ -44,7 +52,7 @@ router.put('/:id', (req, res, next) => {
   .catch(next)
 })
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', adminGateway, (req, res, next) => {
   let id = req.params.id
   Category.destroy({
     where: { id }

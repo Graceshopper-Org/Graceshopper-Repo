@@ -66,14 +66,6 @@ textarea {
   background-color: lightgray;
 }
 
-form {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  background-color: lightgray;
-  align-items: flex-start;
-}
-
 .editTitles {
   font-weight: bold;
 }
@@ -129,10 +121,54 @@ form {
 }
 
 
-#addProductsFrom {
+#adminForm {
   display: flex;
   flex-direction: column;
+  background-color: #eff3f4;
+}
+
+#adminFormEditProduct {
+  display: flex;
+  flex-direction: column;
+  background-color: #eff3f4;
+}
+
+#adminFormEditProduct input {
+  display: flex;
+  width: 400px;
+}
+
+#customButton {
+  width: auto;
   background-color: lightgray;
+  padding: 1rem;
+}
+
+#adminForm input {
+  display: flex;
+  width: 400px;
+}
+
+
+
+
+
+
+.adminTitle {
+  display: flex;
+  width: auto;
+  color: red;
+}
+
+.adminOnlySign {
+  display: flex;
+  width: auto;
+  font-size: 30px;
+  font-weight: bold;
+  background-color: black;
+  padding: 2rem;
+  color: red;
+  margin: 0;
 }
 
 #logo{
